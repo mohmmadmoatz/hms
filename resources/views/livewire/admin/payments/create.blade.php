@@ -1,0 +1,117 @@
+<div class="card">
+    <div class="card-header p-0">
+        <h3 class="card-title">انشاء سند جديد</h3>
+        <div class="px-2 mt-4">
+            <ul class="breadcrumb mt-3 py-3 px-4 rounded" style="background-color: #e9ecef!important;">
+                <li class="breadcrumb-item"><a href="@route(getRouteName().'.home')" class="text-decoration-none">{{ __('Dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="@route(getRouteName().'.payments.read')" class="text-decoration-none">الحسابات</a></li>
+                <li class="breadcrumb-item active">{{ __('Create') }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <form class="form-horizontal" wire:submit.prevent="create" enctype="multipart/form-data">
+
+        <div class="card-body" x-data="{'account_type':@entangle('account_type')}">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>نوع الحساب</label>
+                        <select class="form-control" wire:model.lazy="account_type">
+                                <option value="">يرجى اختيار نوع الحساب</option>
+                                <option value="1">طبيب</option>
+                                <option value="2">مريض</option>
+                                <option value="3">نقدي</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" wire:ignore x-show="account_type ==1">
+                    <div class='form-group'>
+                        <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
+                        
+                        <select class="form-control selectpicker" data-live-search="true" wire:model="account_id">
+                            <option value="">يرجى اختيار طبيب</option>
+                            @foreach(App\Models\User::where('user_type','doctor')->get() as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+    
+                            @endforeach
+                        </select>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6" wire:ignore x-show="account_type ==2">
+                    <div class='form-group'>
+                        <label for='inputdoctor_id' class=' control-label'>المريض</label>
+                        
+                        <select class="form-control selectpicker" data-live-search="true" wire:model="account_id">
+                            <option value="">المريض</option>
+                            @foreach(App\Models\Patient::get() as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                        
+                    </div>
+                </div>
+
+                <div class="col-md-6" wire:ignore x-show="account_type ==3">
+                    <div class='form-group'>
+                        <label for='inputdoctor_id' class=' control-label'>الأسم</label>
+                        <input type="text" class="form-control" wire:model.lazy = "account_id">
+                    </div>
+                </div>
+       
+
+            </div>
+            
+            <!-- Payment_type Input -->
+            <div class='form-group'>
+                <label for='inputpayment_type' class='col-sm-2 control-label'>نوع السند</label>
+                <select @if($patinet_id) disabled @endif wire:model.lazy='payment_type' class="form-control @error('payment_type') is-invalid @enderror" id='inputpayment_type'>
+                <option value="1">صرف</option>
+                <option value="2">قبض</option>
+                </select>
+                @error('payment_type') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+            
+          <div class="row">
+            <div class="col-md-6">
+                <div class='form-group'>
+                    <label for='inputamount' class='col-sm-2 control-label'>دينار</label>
+                    <input type='number' wire:model.lazy='amount_iqd' class="form-control @error('amount_iqd') is-invalid @enderror" id='inputamount'>
+                    @error('amount_iqd') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+              </div>
+              <div class="col-md-6">
+                    <!-- Amount Input -->
+            <div class='form-group'>
+                <label for='inputamount' class='col-sm-2 control-label'>دولار</label>
+                <input type='number' wire:model.lazy='amount_usd' class="form-control @error('amount_usd') is-invalid @enderror" id='inputamount'>
+                @error('amount_usd') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+
+          
+              </div>
+
+            
+          </div>
+            
+            
+            <!-- Description Input -->
+            <div class='form-group'>
+                <label for='inputdescription' class='col-sm-2 control-label'>وذالك عن</label>
+                <textarea wire:model.lazy='description' class="form-control @error('description') is-invalid @enderror"></textarea>
+                @error('description') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+            
+           
+            
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info ml-4">{{ __('Create') }}</button>
+            <a href="@route(getRouteName().'.payments.read')" class="btn btn-default float-left">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+</div>
