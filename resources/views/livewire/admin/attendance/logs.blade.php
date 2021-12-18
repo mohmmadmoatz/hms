@@ -13,6 +13,50 @@
 
                   
                 </div>
+                   <div class="row justify-content-between mt-4 mb-4">
+                     <div class="col-md-4" wire:ignore>
+                            <div class="input-group">
+                               <select wire:model="search" class="form-control selectpicker" data-live-search="true">
+                                   <option value="">حسب الموظف</option>
+                                   @foreach(App\Models\Employee::get() as $item)
+                                   <option value="{{$item->userid}}">{{$item->name}}</option>
+                                   @endforeach
+                               </select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-default">
+                                        <a wire:target="search" wire:loading.remove><i class="fa fa-search"></i></a>
+                                        <a wire:loading wire:target="search"><i class="fas fa-spinner fa-spin" ></i></a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <select wire:model="optype" class="form-control">
+                                    <option value="">نوع العملية</option>
+                                    <option value="1">حظور</option>
+                                    <option value="2">انصراف</option>
+                                </select>
+                                 <div class="input-group-append">
+                                     <button class="btn btn-default">
+                                         <a wire:target="optype" wire:loading.remove><i class="fa fa-search"></i></a>
+                                         <a wire:loading wire:target="optype"><i class="fas fa-spinner fa-spin" ></i></a>
+                                     </button>
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="date" class="form-control" wire:model="date">
+                                 <div class="input-group-append">
+                                     <button class="btn btn-default">
+                                         <a wire:target="date" wire:loading.remove><i class="fa fa-search"></i></a>
+                                         <a wire:loading wire:target="date"><i class="fas fa-spinner fa-spin" ></i></a>
+                                     </button>
+                                 </div>
+                             </div>
+                        </div>
+                   </div>
             </div>
 
             <div class="card-body table-responsive p-0">
@@ -28,6 +72,17 @@
                         <td></td>
                     </tr>
 
+                    @foreach ($data as $item)
+                        <tr>
+                        <td>{{$item->user->name ??""}}</td>
+                        <td>{{$item->state}}</td>
+                        <td>{{$item->type}}</td>
+                        <td>{{$item->timestamp}}</td>
+                        
+                        
+                        <td></td>
+                        </tr>
+                    @endforeach
                    
                     </tbody>
                 </table>

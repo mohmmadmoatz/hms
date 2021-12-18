@@ -75,7 +75,7 @@
                                 </tr>
                                 @foreach($Grouped as $item)
                                 <tr>
-                                    <td>{{$item->Patient->name}}</td>
+                                    <td>{{$item->Patient->name ??""}}</td>
                                     
                                     <td>
                                         {{$item->totalincomeiqd}} دينار

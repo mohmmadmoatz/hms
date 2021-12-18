@@ -2,7 +2,7 @@
     <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">{{$payments->payment_type ==1 ?'صرف' :'قبض'}}</span> </td>
     <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">{{$payments->amount_usd}}</span> </td>
     <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">{{$payments->amount_iqd}}</span> </td>
-    <td> {{ $payments->user->name }} </td>
+    <td> {{ $payments->user->name ?? "" }} </td>
     <td> 
     
     @if($payments->account_type==1) <span> طبيب <hr> {{ $payments->doctor->name ??""}} </span> @endif

@@ -78,7 +78,7 @@
                             <hr>
 
                             صرف : @convert($setting->doctor_price) د.ع 
-                            الى {{$setting->doctor->name}}
+                            الى {{$setting->doctor->name ?? ""}}
 
                         </button>
                         @endif
