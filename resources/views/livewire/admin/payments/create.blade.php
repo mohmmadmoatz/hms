@@ -18,12 +18,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>نوع الحساب</label>
-                        <select class="form-control" wire:model.lazy="account_type">
+                        <select class="form-control @error('account_type') is-invalid @enderror" wire:model.lazy="account_type">
                                 <option value="">يرجى اختيار نوع الحساب</option>
                                 <option value="1">طبيب</option>
                                 <option value="2">مريض</option>
                                 <option value="3">نقدي</option>
                         </select>
+                        @error('account_type') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
                 </div>
                 

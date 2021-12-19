@@ -1,5 +1,6 @@
 @component('admin::layouts.app')
 @if(Auth::user()->user_type  == "superadmin")
+
 <div class="card-group">
  <div class="card border-right">
                         <div class="card-body">
@@ -68,6 +69,10 @@
                             </div>
                         </div>
                     </div>
+
+</div>
+<div  align="center">
+<img  src="{{asset('formimages/hmslogo.png')}}" width="70%" style="opacity:0.6">
 
 </div>
 @endif

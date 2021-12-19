@@ -34,6 +34,13 @@ class Create extends Component
     public $mother;
     public $Nationality;
     public $adress;
+
+    public $husbandname;
+    public $idSingle;
+    public $iddate;
+    public $idcreatejeha;
+    public $identity_number;
+
     protected $rules = [
         'name' => 'required',        
     ];
@@ -73,7 +80,14 @@ class Create extends Component
                 'job'=>$this->job,
                 'mother'=>$this->mother,
                 'Nationality'=>$this->Nationality,
-                'adress'=>            $this->adress,           
+                'adress'=>$this->adress,  
+
+                'husbandname'=>$this->husbandname,           
+                'idSingle'=>$this->idSingle,           
+                'iddate'=>$this->iddate,           
+                'idcreatejeha'=>$this->idcreatejeha   ,
+                'identity_number'=>$this->identity_number,
+                       
         ]);
         
         $this->reset();

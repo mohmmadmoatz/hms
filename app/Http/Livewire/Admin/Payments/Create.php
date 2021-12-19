@@ -26,7 +26,9 @@ class Create extends Component
     
     protected $rules = [
 
-        'payment_type' => 'required',        'amount_usd' => 'required', 'amount_iqd' => 'required',       'description' => 'required',        
+        'payment_type' => 'required',        'amount_usd' => 'required', 'amount_iqd' => 'required',       
+        'description' => 'required',        
+        'account_type' => 'required',        
 
 
     ];

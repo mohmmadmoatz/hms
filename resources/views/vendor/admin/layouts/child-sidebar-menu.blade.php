@@ -13,7 +13,7 @@
 
     <a class='sidebar-link has-arrow' href="javascript:void(0)" aria-expanded="false">
         <i data-feather="{{ get_icon('settings') }}" class="feather-icon"></i>
-        <span class="hide-menu">تهئية النظام</span>
+        <span class="hide-menu">تهيئة النظام</span>
     </a>
 
     <ul aria-expanded="false" class="collapse first-level base-level-line">

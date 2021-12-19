@@ -58,6 +58,7 @@
                     <div class='form-group'>
                         <label for='inputphone' class='control-label'> {{ __('date of birth') }}</label>
                         <input type='date' wire:model.lazy='age'
+                        max="2010-12-31"
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('age') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -109,7 +110,7 @@
                 <h3 class="px-2">المعلومات الشخصية</h3>
                 <hr>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class='form-group'>
                     <label class='control-label'> {{ __('الوظيفة') }}</label>
                     <input type='text' wire:model.lazy='job'
@@ -117,7 +118,15 @@
                   
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div class='form-group'>
+                    <label class=' control-label'> {{('أسم الزوج/ة') }}</label>
+                    <input type='text' wire:model.lazy='husbandname'
+                        class="form-control @error('name') is-invalid @enderror">
+                    
+                </div>
+            </div>
+            <div class="col-md-3">
                 <div class='form-group'>
                     <label class=' control-label'> {{('اسم الام الثلاثي') }}</label>
                     <input type='text' wire:model.lazy='mother'
@@ -127,7 +136,7 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class='form-group'>
                     <label for='inputname' class='control-label'> {{ __('الجنسية') }}</label>
                     <input type='text' wire:model.lazy='Nationality'
@@ -147,10 +156,9 @@
            <div class="col-md-12">
                <h3>دائرة الاحوال</h3>
                <hr>
-               
            </div>
 
-           <div class="col-md-4">
+           <div class="col-md-3">
             <div class='form-group'>
                 <label class='control-label'> {{ __('الدائرة') }}</label>
                 <input type='text' wire:model.lazy='identity_circule'
@@ -158,7 +166,7 @@
                 @error('identity_circule') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class='form-group'>
                 <label  class=' control-label'> {{('رقم الصحيفة') }}</label>
                 <input type='text' wire:model.lazy='identity_page'
@@ -166,12 +174,48 @@
                 @error('identity_page') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class='form-group'>
                 <label  class=' control-label'> {{('السجل') }}</label>
                 <input type='text' wire:model.lazy='identity_book'
                     class="form-control @error('identity_book') is-invalid @enderror">
                 @error('identity_book') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class='form-group'>
+                <label  class=' control-label'> {{('رقم الهوية') }}</label>
+                <input type='text' wire:model.lazy='identity_number'
+                    class="form-control @error('identity_number') is-invalid @enderror">
+                @error('identity_number') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <div class='form-group'>
+                <label class='control-label'> {{ __('رقم البطاقة الموحدة') }}</label>
+                <input type='text' wire:model.lazy='idSingle'
+                    class="form-control @error('idSingle') is-invalid @enderror">
+                @error('idSingle') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class='form-group'>
+                <label  class=' control-label'> {{('تاريخ الأنتهاء') }}</label>
+                <input type='date' wire:model.lazy='iddate'
+                    class="form-control @error('iddate') is-invalid @enderror">
+                @error('iddate') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class='form-group'>
+                <label  class=' control-label'> {{('جهة الأصدار') }}</label>
+                <input type='text' wire:model.lazy='idcreatejeha'
+                    class="form-control @error('idcreatejeha') is-invalid @enderror">
+                @error('idcreatejeha') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
         </div>
 

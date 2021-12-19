@@ -24,6 +24,12 @@ class Patient extends Model
          return $this->belongsTo("App\Models\User", 'doctor_id');
      }
 
+     public function room()
+     {
+         return $this->belongsTo("App\Models\Room", 'room_id');
+     }
+     
+
      /**
       * Get the operation that owns the Patient
       *

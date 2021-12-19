@@ -1,8 +1,8 @@
 <tr x-data="{ modalIsOpen : false }">
-    <td> {{ $checkup->patient->name }} </td>
+    <td> {{ $checkup->patient->name ??"" }} </td>
        <td><a target="blank" href="{{asset('storage/'.$checkup->image)}}">
     فتح الملف</a></td>
-    <td> {{ $checkup->doctor->name }} </td>
+    <td> {{ $checkup->doctor->name ??"" }} </td>
     <td> {{ $checkup->created_at }} </td>
     <td> {{ $checkup->notes }} </td>    
     @if(config('easy_panel.crud.checkup.delete') or config('easy_panel.crud.checkup.update'))

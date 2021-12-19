@@ -1,6 +1,6 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> {{ $clinic->name }} </td>
-    <td> {{ $clinic->user->name }} </td>    
+    <td> {{ $clinic->user->name ??"" }} </td>    
     @if(config('easy_panel.crud.clinic.delete') or config('easy_panel.crud.clinic.update'))
         <td>
 

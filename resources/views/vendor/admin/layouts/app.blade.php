@@ -51,7 +51,9 @@
                 <!-- Logo -->
                 <div class="navbar-brand">
                     <a href="@route(getRouteName().'.home')">
-                        <span class="logo-text">صحة المرأة</span>
+                        <span class="logo-text">
+                        <img  src="{{asset('formimages/hmslogo.png')}}" width="180px" >
+                        </span>
                     </a>
                 </div>
                 <!-- End Logo -->
@@ -74,7 +76,9 @@
                 <ul class="navbar-nav float-left ml-auto ml-3 pl-1">
                     <!-- Notification -->
 
+                    @if(Auth::user()->user_type  == "info" ||  Auth::user()->user_type  == "superadmin" )
                     <a href="@route(getRouteName().'.patient.create')"  class="btn btn-info"> مريض جديد <i class="fa fa-plus"></i> </a>
+                    @endif
 
                     @if(config('easy_panel.todo'))
                         <li class="nav-item dropdown">

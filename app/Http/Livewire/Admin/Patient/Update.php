@@ -35,7 +35,14 @@ class Update extends Component
     public $mother;
     public $Nationality;
     public $adress;
-    
+
+    public $husbandname;
+    public $idSingle;
+    public $iddate;
+    public $idcreatejeha;
+    public $identity_number;
+
+
     protected $rules = [
         'name' => 'required',        
     ];
@@ -62,6 +69,12 @@ class Update extends Component
         $this->mother = $this->patient->mother;
         $this->Nationality = $this->patient->Nationality;
         $this->adress = $this->patient->adress;
+
+        $this->husbandname = $this->patient->husbandname;
+        $this->idSingle = $this->patient->idSingle;
+        $this->iddate = $this->patient->iddate;
+        $this->idcreatejeha = $this->patient->idcreatejeha;
+        $this->identity_number = $this->patient->identity_number;
 
     }
 
@@ -100,6 +113,11 @@ class Update extends Component
             'mother'=>$this->mother,
             'Nationality'=>$this->Nationality,
             'adress'=>            $this->adress,
+            'husbandname'=>$this->husbandname,           
+                'idSingle'=>$this->idSingle,           
+                'iddate'=>$this->iddate,           
+                'idcreatejeha'=>$this->idcreatejeha ,
+                'identity_number'=>$this->identity_number,
 
                           
         ];
