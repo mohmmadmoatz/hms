@@ -244,6 +244,12 @@
                 <span class="hide-menu"> القوائم </span>
             </a>
         </li>
+        <li class="sidebar-item @isActive(getRouteName().'.'.'warehouseitem'.'.read')">
+            <a href="@route(getRouteName().'.warehouseitem.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'warehouseitem'.'.read')">
+                <span class="hide-menu"> المواد </span>
+            </a>
+        </li>
         <li class="sidebar-item @isActive(getRouteName().'.'.'warehouseexport'.'.read')">
             <a href="@route(getRouteName().'.warehouseexport.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'warehouseexport'.'.read')">

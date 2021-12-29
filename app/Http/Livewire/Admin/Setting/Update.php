@@ -13,7 +13,12 @@ class Update extends Component
     public $setting;
 
     public $xray;
+    public $xray_doctor_price;
+    public $xray_doctor_id;
+
     public $sonar;
+    public $doctor_sonar_price;
+    public $doctor_sonar_id;
     public $clinic_price;
     public $doctor_price;
     public $doctor_id;
@@ -28,7 +33,12 @@ class Update extends Component
         $this->sonar = $this->setting->sonar;
         $this->clinic_price = $this->setting->clinic_price;
         $this->doctor_price = $this->setting->doctor_price;
-        $this->doctor_id = $this->setting->doctor_id;        
+        $this->doctor_id = $this->setting->doctor_id; 
+
+        $this->xray_doctor_price = $this->setting->xray_doctor_price;        
+        $this->xray_doctor_id = $this->setting->xray_doctor_id;        
+        $this->doctor_sonar_price = $this->setting->doctor_sonar_price;        
+        $this->doctor_sonar_id = $this->setting->doctor_sonar_id;        
     }
 
     public function updated($input)
@@ -43,7 +53,11 @@ class Update extends Component
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('UpdatedMessage', ['name' => __('Setting') ]) ]);
         
         $this->setting->update([
-            'xray' => $this->xray,            'sonar' => $this->sonar,            'clinic_price' => $this->clinic_price,            'doctor_price' => $this->doctor_price,            'doctor_id' => $this->doctor_id,            
+            'xray' => $this->xray,            'sonar' => $this->sonar,            'clinic_price' => $this->clinic_price,            'doctor_price' => $this->doctor_price,            'doctor_id' => $this->doctor_id,  
+            'xray_doctor_price' => $this->xray_doctor_price,         
+            'xray_doctor_id' => $this->xray_doctor_id,         
+            'doctor_sonar_price' => $this->doctor_sonar_price,         
+            'doctor_sonar_id' => $this->doctor_sonar_id,         
         ]);
     }
 

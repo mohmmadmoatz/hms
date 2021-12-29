@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Patient;
 
 use App\Models\Patient;
+use App\Models\Room;
 use App\Models\MedicineProfile;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -60,7 +61,7 @@ class Create extends Component
             $this->image = $this->getPropertyValue('image')->store('images/patients','public');
         }
         
-        $this->patientid=      Patient::create([
+        $this->patientid=Patient::create([
             'name' => $this->name,
             'gender' => $this->gender,
             'phone' => $this->phone,
@@ -69,12 +70,12 @@ class Create extends Component
             'age' => $this->age,            
             'clinic_id' => $this->clinic_id,
             'room_id' =>$this->room_id,
-                'doctor_id'=>$this->doctor_id,
-                'opration_id'=>$this->opration_id,       
-                         'inter_at'=>$this->inter_at,
-                'identity_circule'=>$this->identity_circule,
-                'identity_page'=>$this->identity_page,
-                'identity_book'=>$this->identity_book,
+            'doctor_id'=>$this->doctor_id,
+            'opration_id'=>$this->opration_id,       
+            'inter_at'=>$this->inter_at,
+            'identity_circule'=>$this->identity_circule,
+            'identity_page'=>$this->identity_page,
+            'identity_book'=>$this->identity_book,
                 'relaitve_name'=>$this->relaitve_name,
                 'relaitve_phone'=>$this->relaitve_phone,
                 'job'=>$this->job,
@@ -89,7 +90,14 @@ class Create extends Component
                 'identity_number'=>$this->identity_number,
                        
         ]);
-        
+
+        if($this->room_id){
+        $room = Room::find($this->room_id);
+        $room->patient_id=$this->patientid->id;
+        $room->save();
+        }
+
+
         $this->reset();
     }
 

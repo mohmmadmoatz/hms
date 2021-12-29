@@ -1,9 +1,37 @@
 <tr x-data="{ modalIsOpen : false }">
-    <td> @convert($setting->xray) </td>
-    <td> @convert($setting->sonar) </td>
-    <td> @convert($setting->clinic_price) </td>
-    <td> @convert($setting->doctor_price) </td>
-    <td> {{$setting->doctor->name  ?? "لم يتم تعيين"}} </td>   
+    <td> 
+        اجور الأشعة :
+        @convert($setting->xray) 
+        <hr>
+        اجور الطبيب
+        @convert($setting->xray_doctor_price) 
+        <hr>
+        الطبيب :
+        {{$setting->xdoctor->name  ?? "لم يتم تعيين"}}
+
+
+    </td>
+    <td> 
+        
+    اجور السونار :
+        @convert($setting->sonar) 
+        <hr>
+        اجور الطبيب
+        @convert($setting->doctor_sonar_price) 
+        <hr>
+        الطبيب :
+        {{$setting->sdoctor->name  ?? "لم يتم تعيين"}}
+
+    </td>
+    <td>
+         اجور العيادة
+       :  @convert($setting->clinic_price) 
+        <hr>
+        اجور الطبيب 
+       : @convert($setting->doctor_price)
+    </td>
+    
+    
      
     @if(config('easy_panel.crud.setting.delete') or config('easy_panel.crud.setting.update'))
         <td>

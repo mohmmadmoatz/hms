@@ -15,7 +15,7 @@ class ConvertedPat extends Component
 
     protected $queryString = ['search'];
 
-    public function saveSands($id,$setting)
+    public function saveSands($id,$setting,$string)
     {
   
 
@@ -23,7 +23,7 @@ class ConvertedPat extends Component
             'payment_type' => 2,
             'amount_iqd' => $setting['clinic_price'] + $setting['doctor_price'],
             'account_type' => 2,
-            'description' => "اجور العيادة الأستشارية",
+            'description' => $string,
             'user_id' => auth()->id(),
             "patinet_id"=>$id
         ];
@@ -34,7 +34,7 @@ class ConvertedPat extends Component
             'payment_type' => 1,
             'amount_iqd' => $setting['doctor_price'],
             'account_type' => 1,
-            'description' => "اجور العيادة الأستشارية",
+            'description' => $string,
             'user_id' => auth()->id(),
             "doctor_id"=>$setting['doctor_id']
         ];

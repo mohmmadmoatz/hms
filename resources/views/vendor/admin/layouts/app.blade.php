@@ -12,11 +12,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
     {{--Scripts which must load before full loading--}}
-    @style('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css')
-    @script('https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-    @script('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-    @script('https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.2/dist/alpine.min.js')
-    @script("/assets/admin/js/ckeditor.min.js")
+    <link rel="stylesheet" href="{{asset('css/animate.min.css')}}">
+
+    <script src="{{asset('assets/admin/js/html5shiv.js')}}"></script>
+    <script src="{{asset('assets/admin/js/respond.min.js')}}"></script>
+   
+
+  
 
     {{--Styles--}}
     @livewireStyles
@@ -24,7 +26,9 @@
     
     @if(config('easy_panel.rtl_mode'))
     <link rel="stylesheet" href="{{asset('assets/admin/css/rtl.css')}}">
-        @style("https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v27.2.1/dist/font-face.css")
+    <link rel="stylesheet" href="{{asset('css/font-face.css')}}">
+
+       
     @endif
 </head>
 
@@ -171,18 +175,32 @@
 <script src="{{asset('assets/admin/js/sidebarmenu.min.js')}}"></script>
 <script src="{{asset('assets/admin/js/custom.min.js')}}"></script>
 
+
 @livewireScripts
 
 
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="{{asset('assets/admin/js/moment.min.js')}}"></script>
+<script src="{{asset('assets/admin/js/daterangepicker.min.js')}}"></script>
+<link rel="stylesheet" href="{{asset('css/daterangepicker.css')}}">
+
 
 
 
 <script type="text/javascript">
 $(function() {
+//     const canvas = document.getElementById("sig")
+
+//     const signaturePad = new SignaturePad(canvas);
+    
+//     document.getElementById('clearsig').addEventListener('click', function () {
+//         signaturePad.clear();
+// });
+
+
+   
+
+  
 
  	 var start = moment().startOf('month');
     var end = moment().endOf('month');
@@ -246,9 +264,11 @@ $(function() {
 });
 </script>
 
-@script('https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.2/dist/alpine.min.js')
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="{{asset('assets/admin/js/alpine.min.js')}}"></script>
+<script src="{{asset('assets/admin/js/bootstrap-select.min.js')}}"></script>
+
+
 
 <script>
 
@@ -270,6 +290,9 @@ $(function() {
         }, 3000);
     });
 </script>
+
+
+
 
 </body>
 

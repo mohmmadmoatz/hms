@@ -45,6 +45,7 @@
                                 <th>اسم المادة</th>
                                 <th>السعر</th>
                                 <th>العدد</th>
+                                <th>العدد الحالي</th>
                                 <th>الأجمالي</th>
                                 <th></th>
                             </tr>
@@ -62,6 +63,7 @@
                                 </td>
                                 <td><input type="number" class="form-control" wire:model="amount"></td>
                                 <td><input type="number" class="form-control" wire:model="qty"></td>
+                                <td>{{$qtynow}}</td>
                                 <td><input readonly type="number" class="form-control" wire:model="total"></td>
                                 <td>
                                     <a href="#addPlus" wire:click="addItem()" class="btn btn-info"><i class="fa fa-plus"></i></a>
@@ -74,6 +76,7 @@
                             <td>{{$item['productname']}}</td>
                             <td>@convert($item['amount'])</td>
                             <td>{{$item['qty']}}</td>
+                            <td></td>
                             <td>@convert($item['total'])</td>
                             <td>
                                 <a href="#delete" class="btn btn-danger" wire:click="deleteItem({{$loop->index}})"><i class="fa fa-trash"></i></a>

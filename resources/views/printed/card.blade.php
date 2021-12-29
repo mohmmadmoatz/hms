@@ -112,4 +112,11 @@ table, table tr td {
      JsBarcode(".barcode").init();
 
  </script>
+
+<script>
+    setTimeout(() => {
+        window.print();
+        window.close();
+    }, 2000);
+  </script>
 </html>

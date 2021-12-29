@@ -9,6 +9,7 @@ class Room extends Model
 {
     use HasFactory;
     protected $guarded = [];  
+    
     public function user()
     {
         return $this->belongsTo("App\Models\Patient", 'patient_id');

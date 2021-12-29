@@ -55,12 +55,12 @@
 
                 @if($item->status == 3)
                 <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($setting->xray) د.ع</td>
+                <td>@convert($setting->xray + $setting->xray_doctor_price) د.ع</td>
                 @endif
 
                 @if($item->status == 4)
                 <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($setting->sonar) د.ع</td>
+                <td>@convert($setting->sonar + $setting->doctor_sonar_price) د.ع</td>
                 @endif
 
                 @if($item->status == 5)
@@ -68,11 +68,10 @@
                 <td>{{$item->operation->price ?? ""}} د.ع</td>
                 @endif
                         <td>
-                        @if($item->status !=1)
-                        <a href="@route(getRouteName().'.payments.create')?patinet_id={{$item->id}}&payment_type=2">سند
-                        قبض</a>
-                        @else
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}})">
+
+                        @if($item->status ==1)
+
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}},'اجور العيادة الاستشارية')">
                             قبض : @convert($setting->clinic_price + $setting->doctor_price) د.ع 
                             من المريض 
                             <hr>
@@ -81,7 +80,38 @@
                             الى {{$setting->doctor->name ?? ""}}
 
                         </button>
+
+                        @elseif($item->status ==3)
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}},'اجور الأشعة')">
+                            قبض : @convert($setting->xray + $setting->xray_doctor_price) د.ع 
+                            من المريض 
+                            <hr>
+
+                            صرف : @convert($setting->xray_doctor_price) د.ع 
+                            الى {{$setting->xdoctor->name ?? ""}}
+
+                        </button>
+                        @elseif($item->status ==4)
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}},'اجور السونار')">
+                            قبض : @convert($setting->sonar + $setting->doctor_sonar_price) د.ع 
+                            من المريض 
+                            <hr>
+
+                            صرف : @convert($setting->doctor_sonar_price) د.ع 
+                            الى {{$setting->sdoctor->name ?? ""}}
+
+                        </button>
+                        @else
+                        <a href="@route(getRouteName().'.payments.create')?patinet_id={{$item->id}}&payment_type=2">سند
+                        قبض</a>
                         @endif
+
+                      
+                      
+                     
+                        
+
+                      
                         
                         </td>
 

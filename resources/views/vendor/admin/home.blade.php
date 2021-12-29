@@ -1,6 +1,6 @@
-@component('admin::layouts.app')
-@if(Auth::user()->user_type  == "superadmin")
 
+@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info")
+<div>
 <div class="card-group">
  <div class="card border-right">
                         <div class="card-body">
@@ -71,9 +71,45 @@
                     </div>
 
 </div>
-<div  align="center">
-<img  src="{{asset('formimages/hmslogo.png')}}" width="70%" style="opacity:0.6">
+
+
+<div class="row">
+<div class="col-md-12">
+                            <div class="input-group">
+                                <select class="form-control" wire:model.lazy="floorid">
+                                    <option value="">اختيار الطابق</option>
+                                    <option value="2">الطابق الثاني</option>
+                                    <option value="3">الطابق الثالث</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+</div>
+
+<div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
+                        <td> {{ __('المريض') }} </td>
+                        <td> {{ __('Floor') }} </td>
+                        <td style='cursor: pointer' wire:click="sort('notes')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'notes') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'notes') fa-sort-amount-up ml-2 @endif'></i> {{ __('Notes') }} </td>
+                        
+                        @if(config('easy_panel.crud.room.delete') or config('easy_panel.crud.room.update'))
+                        <td>{{ __('Action') }}</td>
+                        @endif
+                    </tr>
+
+                    @foreach($rooms as $room)
+                        @livewire('admin.room.single', ['room' => $room], key($room->id))
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="m-auto pt-3 pr-3">
+                {{ $rooms->appends(request()->query())->links() }}
+            </div>
+
+@endif
 
 </div>
-@endif
-@endcomponent

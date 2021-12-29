@@ -19,4 +19,13 @@ class Setting extends Model
     {
         return $this->belongsTo("App\Models\User",'doctor_id');
     }
+    public function xdoctor()
+    {
+        return $this->belongsTo("App\Models\User",'xray_doctor_id');
+    }
+
+    public function sdoctor()
+    {
+        return $this->belongsTo("App\Models\User",'doctor_sonar_id');
+    }
 }

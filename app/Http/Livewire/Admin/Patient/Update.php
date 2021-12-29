@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Patient;
 
 use App\Models\Patient;
+use App\Models\Room;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -56,6 +57,8 @@ class Update extends Component
         $this->status = $this->patient->status;
         $this->image = $this->patient->image;        
         $this->clinic_id = $this->patient->clinic_id;
+        $roomdata = Room::find($this->patient->room_id);
+        $this->floor = $roomdata->floor;
         $this->room_id = $this->patient->room_id;
         $this->doctor_id = $this->patient->doctor_id;
         $this->opration_id = $this->patient->opration_id;
@@ -92,6 +95,7 @@ class Update extends Component
         if($this->getPropertyValue('image') and is_object($this->image)) {
             $this->image = $this->getPropertyValue('image')->store('images/patients','public');
         }
+
         $updatedata =[
             'name' => $this->name,
             'gender' => $this->gender,
@@ -121,6 +125,16 @@ class Update extends Component
 
                           
         ];
+
+        $oldroom = $this->patient->room_id;
+
+        $oldroomupdate = Room::find($oldroom);
+        $oldroomupdate->patient_id =0;
+        $oldroomupdate->save();
+
+        $room = Room::find($this->room_id);
+        $room->patient_id=$this->patient->id;
+        $room->save();
       
 
         $this->patient->update($updatedata);

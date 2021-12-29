@@ -1,18 +1,27 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> {{ $room->name }} </td>
-    <td> {{ $room->user->name??"لايوجد مريض" }} </td>
+    <td> 
+      @if($room->user->name ??"")    
+      <a href="@route(getRouteName().'.patient.update', ['patient' => $room->user->id])" target="_blank" rel="noopener noreferrer">{{$room->user->name}}</a>
+      @else
+      لايوجد مريض 
+      @endif
+     
+
+    </td>
     <td> {{ $room->floor }} </td>
 
     <td> {{ $room->notes }} </td>    
     @if(config('easy_panel.crud.room.delete') or config('easy_panel.crud.room.update'))
         <td>
-
+        @if(Auth::user()->user_type  == "superadmin")
             @if(config('easy_panel.crud.room.update'))
                 <a href="@route(getRouteName().'.room.update', ['room' => $room->id])" class="btn text-primary mt-1">
                     <i class="icon-pencil"></i>
                 </a>
             @endif
-
+            @endif
+            @if(Auth::user()->user_type  == "superadmin")
             @if(config('easy_panel.crud.room.delete'))
                 <button @click.prevent="modalIsOpen = true" class="btn text-danger mt-1">
                     <i class="icon-trash"></i>
@@ -27,6 +36,7 @@
                         </div>
                     </div>
                 </div>
+            @endif
             @endif
         </td>
     @endif

@@ -20,6 +20,7 @@ class Create extends Component
     public $item;
     public $amount;
     public $qty;
+    public $qtynow;
     public $totalmenu;
 
     protected $rules = [
@@ -86,6 +87,7 @@ class Create extends Component
         $product=WarehouseItem::find($this->item);
         $this->amount = $product->amount;
         $this->qty = 1;
+        $this->qtynow = $product->qtynow;
         $this->total = $product->amount;
     }
 

@@ -258,7 +258,8 @@ border: 4px solid #dee2e6;
   <script>
     setTimeout(() => {
         window.print();
-    }, 1000);
+    //    window.close();
+    }, 2000);
   </script>
 
 </body>

@@ -92,5 +92,7 @@
     "Settings": "Settings",
     "Total": "Total",
     "Warehouseexport": "طلب",
-    "Warehouseexports": "طلبات المخزن"
+    "Warehouseexports": "طلبات المخزن",
+    "Warehouseitem": "مادة",
+    "Warehouseitems": "المواد"
 }
