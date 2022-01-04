@@ -37,6 +37,20 @@
                             </div>
                         </div>
                         
+                        <div class="col-md-12 py-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" @if(config('easy_panel.lazy_mode'))
+                                    wire:model.lazy="idnumber" @else wire:model="idnumber" @endif
+                                    placeholder="{{ __('بحث عن طريق رقم الوصل') }}" value="{{ request('idnumber') }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-default">
+                                        <a wire:target="idnumber" wire:loading.remove><i class="fa fa-search"></i></a>
+                                        <a wire:loading wire:target="idnumber"><i class="fas fa-spinner fa-spin"></i></a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-12">
                             <br>
                         </div>
@@ -126,6 +140,7 @@
                 <table class="table table-hover">
                     <tbody>
                         <tr>
+                            <td> {{ __('رقم الوصل') }} </td>
                             <td> {{ __('نوع السند') }} </td>
                             <td> دولار </td>
                             <td> دينار </td>

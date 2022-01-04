@@ -15,13 +15,111 @@ class ConvertedPat extends Component
 
     protected $queryString = ['search'];
 
-    public function saveSands($id,$setting,$string)
+    public function saveOpSand($income,$doctorexp,$helper,$m5dr,$helperm5dr,$id)
+    {
+        $patient = Patient::find($id);
+    
+        $data =[
+            'payment_type' => 2,
+            'amount_iqd' => $income,
+            'account_type' => 2,
+            'description' => $patient->operation->name,
+            'user_id' => auth()->id(),
+            "patinet_id"=>$id
+        ];
+
+
+        $idnumber = $data->id;
+
+
+        Payments::create($data);
+
+
+        $data =[
+            'payment_type' => 1,
+            'amount_iqd' => $doctorexp,
+            'account_type' => 1,
+            'description' => $patient->operation->name,
+            'user_id' => auth()->id(),
+            "doctor_id"=>$patient->doctor_id,
+            "operation_price"=>$patient->operation->price,
+            "patinet_id"=>$id,
+            "payment_number"=>$idnumber
+
+        ];
+
+        
+
+        Payments::create($data);
+        
+
+        $data =[
+            'payment_type' => 1,
+            'amount_iqd' => $helper,
+            'account_type' => 3,
+            'description' => $patient->operation->name,
+            'user_id' => auth()->id(),
+            "account_name"=>"مساعد جراح",
+            "patinet_id"=>$id,
+            "payment_number"=>$idnumber
+
+        ];
+
+        
+
+        Payments::create($data);
+
+
+
+        $data =[
+            'payment_type' => 1,
+            'amount_iqd' => $m5dr,
+            'account_type' => 3,
+            'description' => $patient->operation->name,
+            'user_id' => auth()->id(),
+            "account_name"=>"طبيب مخدر",
+            "patinet_id"=>$id,
+            "payment_number"=>$idnumber
+
+        ];
+
+        
+
+        Payments::create($data);
+
+
+        $data =[
+            'payment_type' => 1,
+            'amount_iqd' => $helperm5dr,
+            'account_type' => 3,
+            'description' => $patient->operation->name,
+            'user_id' => auth()->id(),
+            "account_name"=>"مساعد مخدر",
+            "patinet_id"=>$id,
+            "payment_number"=>$idnumber
+
+        ];
+
+        
+
+        Payments::create($data);
+
+        $patdata = Patient::find($id);
+
+        $patdata->paid =1;
+        $patdata->save();
+
+        $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم انشاء سند صرف وقبض" ]);
+        
+    }
+
+    public function saveSands($id,$income,$out,$string,$doctor)
     {
   
 
         $data =[
             'payment_type' => 2,
-            'amount_iqd' => $setting['clinic_price'] + $setting['doctor_price'],
+            'amount_iqd' => $income + $out,
             'account_type' => 2,
             'description' => $string,
             'user_id' => auth()->id(),
@@ -32,11 +130,11 @@ class ConvertedPat extends Component
 
         $data =[
             'payment_type' => 1,
-            'amount_iqd' => $setting['doctor_price'],
+            'amount_iqd' => $out,
             'account_type' => 1,
             'description' => $string,
             'user_id' => auth()->id(),
-            "doctor_id"=>$setting['doctor_id']
+            "doctor_id"=>$doctor
         ];
 
         Payments::create($data);

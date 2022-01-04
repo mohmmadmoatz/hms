@@ -117,6 +117,43 @@
                     
                 </div>
             </div>
+
+            <hr>
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='inputsonar' class=' control-label'>اجور الطبلة</label>
+                    <input type='number' wire:model.lazy='pat_profile' class="form-control @error('pat_profile') is-invalid @enderror" id='inputsonar'>
+                    @error('pat_profile') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='inputsonar' class=' control-label'>اجور مساعد الجراح</label>
+                    <input type='number' wire:model.lazy='helper_doctor' class="form-control @error('helper_doctor') is-invalid @enderror" id='inputsonar'>
+                    @error('helper_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='inputsonar' class=' control-label'>اجور المخدر</label>
+                    <input type='number' wire:model.lazy='m5dr_doctor' class="form-control @error('m5dr_doctor') is-invalid @enderror" id='m5dr_doctor'>
+                    @error('m5dr_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+         
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='inputsonar' class=' control-label'>اجور مساعد المخدر</label>
+                    <input type='number' wire:model.lazy='helper_m5dr_doctor' class="form-control @error('helper_m5dr_doctor') is-invalid @enderror" id='helper_m5dr_doctor'>
+                    @error('helper_m5dr_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
          
             
         </div>

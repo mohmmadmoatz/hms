@@ -57,7 +57,7 @@
 
                     <div class='form-group'>
                         <label for='inputphone' class='control-label'> {{ __('date of birth') }}</label>
-                        <input type='date' wire:model.lazy='age' max="2010-12-31"
+                        <input type='date' wire:model.lazy='age' 
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('age') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -103,9 +103,17 @@
 
 
             @if($status == "5")
-
+                
             <div class="row">
                 <div class="col-md-12">
+                    <label>المريض محول ام لا</label>
+                    <select type="text" class="form-control" wire:model.lazy="hms_nsba">
+                        <option value="60">نعم</option>
+                        <option value="40">لا</option>
+                </select>
+
+                </div>
+                <div class="col-md-12 py-2">
                     <h3 class="px-2">المعلومات الشخصية</h3>
                     <hr>
                 </div>
@@ -120,7 +128,7 @@
                 <div class="col-md-3">
                     <div class='form-group'>
                         <label class=' control-label'> {{('أسم الزوج/ة') }}</label>
-                        <input type='text' wire:model.lazy='husbandname'
+                        <input type='text' required wire:model.lazy='husbandname'
                             class="form-control @error('name') is-invalid @enderror">
 
                     </div>
@@ -128,7 +136,7 @@
                 <div class="col-md-3">
                     <div class='form-group'>
                         <label class=' control-label'> {{('اسم الام الثلاثي') }}</label>
-                        <input type='text' wire:model.lazy='mother'
+                        <input required type='text' wire:model.lazy='mother'
                             class="form-control @error('name') is-invalid @enderror">
 
                     </div>
@@ -138,7 +146,7 @@
                 <div class="col-md-3">
                     <div class='form-group'>
                         <label for='inputname' class='control-label'> {{ __('الجنسية') }}</label>
-                        <input type='text' wire:model.lazy='Nationality'
+                        <input required type='text' wire:model.lazy='Nationality'
                             class="form-control @error('Nationality') is-invalid @enderror">
 
                     </div>
@@ -204,7 +212,7 @@
                 <div class="col-md-4">
                     <div class='form-group'>
                         <label class=' control-label'> {{('تاريخ الأنتهاء') }}</label>
-                        <input type='date' wire:model.lazy='iddate' max="2010-12-31"
+                        <input required type='date' wire:model.lazy='iddate' 
                             class="form-control @error('iddate') is-invalid @enderror">
                         @error('iddate') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -228,7 +236,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>الطابق</label>
-                        <select wire:model="floor" class="form-control">
+                        <select required wire:model="floor" class="form-control">
                             <option value="">اختر الطابق</option>
                             <option value="2">الطابق الثاني</option>
                             <option value="3">الطابق الثالث</option>
@@ -241,7 +249,7 @@
                         <label>الغرفة <a wire:loading wire:target="floor"><i
                                     class="fas fa-spinner fa-spin"></i></a></label>
 
-                        <select wire:model="room_id" class="form-control">
+                        <select required wire:model="room_id" class="form-control">
                             <option value="">اختر الغرفة</option>
                             @foreach(App\Models\Room::where("floor",$floor)->get() as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
@@ -254,7 +262,7 @@
                     <div class="col-sm">
                         <div class='form-group'>
                             <label class=' control-label'> {{('الطبيب المعالج') }}</label>
-                            <select class="form-control">
+                            <select required wire:model.lazy="doctor_id" class="form-control">
                                 <option value="">اختيار الطبيب</option>
                                 @foreach(App\Models\User::where("user_type","doctor")->get() as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -281,7 +289,7 @@
                 <div class="col-md-6">
                     <div class='form-group'>
                         <label class=' control-label'> {{('تاريخ الدخول') }}</label>
-                        <input type='date' wire:model.lazy='inter_at' max="2010-12-31"
+                        <input type='date' wire:model.lazy='inter_at' 
                             class="form-control @error('inter_at') is-invalid @enderror">
                         @error('inter_at') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>

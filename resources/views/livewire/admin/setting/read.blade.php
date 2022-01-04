@@ -41,7 +41,7 @@
                         <td style='cursor: pointer' wire:click="sort('xray')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'xray') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'xray') fa-sort-amount-up ml-2 @endif'></i> الأشعة</td>
                         <td style='cursor: pointer' wire:click="sort('sonar')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'sonar') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'sonar') fa-sort-amount-up ml-2 @endif'></i> السونار </td>
                         <td style='cursor: pointer' wire:click="sort('clinic_price')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'clinic_price') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'clinic_price') fa-sort-amount-up ml-2 @endif'></i>  العيادة الأستشارية </td>
-                        
+                        <td>العملية</td>
                         
                         @if(config('easy_panel.crud.setting.delete') or config('easy_panel.crud.setting.update'))
                         <td>{{ __('Action') }}</td>

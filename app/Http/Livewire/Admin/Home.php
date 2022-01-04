@@ -61,7 +61,7 @@ class Home extends Component
         }
         
 
-        $data = $data->paginate(config('easy_panel.pagination_count', 15));
+        $data = $data->get();
 
 
         return view('vendor.admin.home', [

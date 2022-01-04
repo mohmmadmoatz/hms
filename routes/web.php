@@ -29,6 +29,22 @@ Route::get('/recept', function () {
     return view('printed.recept');
 })->name("printrecept");
 
+Route::get('/doctorstatement', function () {
+    return view('printed.doctorstatement');
+})->name("doctorstatement");
+
+Route::get('/doctorhelper', function () {
+    return view('printed.doctorhelper');
+})->name("doctorhelper");
+
+Route::get('/m5dr', function () {
+    return view('printed.m5dr');
+})->name("m5dr");
+
+Route::get('/m5drhelper', function () {
+    return view('printed.m5drhelper');
+})->name("m5drhelper");
+
 
 
 Auth::routes();

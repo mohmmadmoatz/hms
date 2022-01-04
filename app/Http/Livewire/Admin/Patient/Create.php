@@ -13,7 +13,7 @@ class Create extends Component
     use WithFileUploads;
 
     public $name;
-    public $gender;
+    public $gender = "انثى";
     public $phone;
     public $patientid;
     public $floor;
@@ -33,7 +33,7 @@ class Create extends Component
     public $relaitve_phone;
     public $job;
     public $mother;
-    public $Nationality;
+    public $Nationality = "عراقي";
     public $adress;
 
     public $husbandname;
@@ -41,7 +41,7 @@ class Create extends Component
     public $iddate;
     public $idcreatejeha;
     public $identity_number;
-
+    public $hms_nsba = 60;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -88,6 +88,7 @@ class Create extends Component
                 'iddate'=>$this->iddate,           
                 'idcreatejeha'=>$this->idcreatejeha   ,
                 'identity_number'=>$this->identity_number,
+                'hms_nsba'=>$this->hms_nsba,
                        
         ]);
 

@@ -101,7 +101,14 @@
             @if($status == "5")
 
         <div class="row">
-            <div class="col-md-12">
+        <div class="col-md-12">
+        <label>المريض محول ام لا</label>
+                    <select type="text" class="form-control" wire:model.lazy="hms_nsba">
+                        <option value="60">نعم</option>
+                        <option value="40">لا</option>
+                </select>
+</div>
+            <div class="col-md-12 py-2">
                 <h3 class="px-2">المعلومات الشخصية</h3>
                 <hr>
             </div>

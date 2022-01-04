@@ -86,29 +86,30 @@
                         
 </div>
 
-<div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
-                        <td> {{ __('المريض') }} </td>
-                        <td> {{ __('Floor') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('notes')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'notes') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'notes') fa-sort-amount-up ml-2 @endif'></i> {{ __('Notes') }} </td>
-                        
-                        @if(config('easy_panel.crud.room.delete') or config('easy_panel.crud.room.update'))
-                        <td>{{ __('Action') }}</td>
-                        @endif
-                    </tr>
+<div class="card-body ">
+              
 
+                    <div class="row">
                     @foreach($rooms as $room)
-                        @livewire('admin.room.single', ['room' => $room], key($room->id))
+                    <div class="col-md-2  py-2" x-data="{'open':false}">
+                        <button @click="open=!open" class="btn @if($room->user->name ?? '') btn-info @else btn-secondary @endif btn-block">
+                            {{$room->name}}
+                            <hr>
+                            الطابق : {{$room->floor}}
+                     
+                            @if($room->user->name ??"")  
+                            <hr x-show="open">  
+      <a x-show="open" class="btn btn-info" href="@route(getRouteName().'.patient.update', ['patient' => $room->user->id])" target="_blank" rel="noopener noreferrer">{{$room->user->name}}</a>
+      @endif
+
+                        </button>
+                    </div>
                     @endforeach
-                    </tbody>
-                </table>
+                    </div>
+                   
+                
             </div>
-            <div class="m-auto pt-3 pr-3">
-                {{ $rooms->appends(request()->query())->links() }}
-            </div>
+            
 
 @endif
 

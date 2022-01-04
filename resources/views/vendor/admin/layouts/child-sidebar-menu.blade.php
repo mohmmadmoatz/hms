@@ -92,13 +92,22 @@
 </li>
 
 <li
+    class='sidebar-item @isActive([getRouteName().".statement.home"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".statement.home"], "active") '
+        href="@route(getRouteName().'.statement.home')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">الكشوفات</span>
+    </a>
+</li>
+
+<!-- <li
     class='sidebar-item @isActive([getRouteName().".attendance.logs"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".attendance.logs"], "active") '
         href="@route(getRouteName().'.attendance.logs')" aria-expanded="false">
         <i data-feather="{{ get_icon("login") }}" class="feather-icon"></i>
         <span class="hide-menu">الحظور والأنصراف</span>
     </a>
-</li>
+</li> -->
 
 </li>
 @endif

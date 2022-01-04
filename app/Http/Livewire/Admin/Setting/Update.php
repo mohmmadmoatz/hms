@@ -22,6 +22,11 @@ class Update extends Component
     public $clinic_price;
     public $doctor_price;
     public $doctor_id;
+
+    public $pat_profile;
+    public $helper_doctor;
+    public $m5dr_doctor;
+    public $helper_m5dr_doctor;
     
     protected $rules = [
         'xray' => 'required',        
@@ -35,6 +40,10 @@ class Update extends Component
         $this->doctor_price = $this->setting->doctor_price;
         $this->doctor_id = $this->setting->doctor_id; 
 
+        $this->pat_profile = $this->setting->pat_profile; 
+        $this->helper_doctor = $this->setting->helper_doctor; 
+        $this->m5dr_doctor = $this->setting->m5dr_doctor; 
+        $this->helper_m5dr_doctor = $this->setting->helper_m5dr_doctor; 
         $this->xray_doctor_price = $this->setting->xray_doctor_price;        
         $this->xray_doctor_id = $this->setting->xray_doctor_id;        
         $this->doctor_sonar_price = $this->setting->doctor_sonar_price;        
@@ -57,7 +66,12 @@ class Update extends Component
             'xray_doctor_price' => $this->xray_doctor_price,         
             'xray_doctor_id' => $this->xray_doctor_id,         
             'doctor_sonar_price' => $this->doctor_sonar_price,         
-            'doctor_sonar_id' => $this->doctor_sonar_id,         
+            'doctor_sonar_id' => $this->doctor_sonar_id,  
+
+            'pat_profile' => $this->pat_profile,         
+            'helper_doctor' => $this->helper_doctor,         
+            'm5dr_doctor' => $this->m5dr_doctor,         
+            'helper_m5dr_doctor' => $this->helper_m5dr_doctor,         
         ]);
     }
 

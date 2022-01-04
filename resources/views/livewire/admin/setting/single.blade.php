@@ -31,7 +31,23 @@
        : @convert($setting->doctor_price)
     </td>
     
-    
+    <td>
+    اجور الطبلة
+       :  @convert($setting->pat_profile) 
+        <hr>
+
+        اجور مساعد الجراح
+        :   @convert($setting->helper_doctor) 
+        <hr>
+
+        اجور المخدر
+        :   @convert($setting->m5dr_doctor) 
+        <hr>
+
+        اجور مساعد المخدر
+        :   @convert($setting->helper_m5dr_doctor) 
+  
+    </td>
      
     @if(config('easy_panel.crud.setting.delete') or config('easy_panel.crud.setting.update'))
         <td>

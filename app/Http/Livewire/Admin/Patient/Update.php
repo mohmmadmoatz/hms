@@ -42,6 +42,7 @@ class Update extends Component
     public $iddate;
     public $idcreatejeha;
     public $identity_number;
+    public $hms_nsba;
 
 
     protected $rules = [
@@ -78,6 +79,7 @@ class Update extends Component
         $this->iddate = $this->patient->iddate;
         $this->idcreatejeha = $this->patient->idcreatejeha;
         $this->identity_number = $this->patient->identity_number;
+        $this->hms_nsba = $this->patient->hms_nsba;
 
     }
 
@@ -122,6 +124,7 @@ class Update extends Component
                 'iddate'=>$this->iddate,           
                 'idcreatejeha'=>$this->idcreatejeha ,
                 'identity_number'=>$this->identity_number,
+                'hms_nsba'=>$this->hms_nsba,
 
                           
         ];

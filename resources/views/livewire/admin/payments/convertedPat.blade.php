@@ -65,13 +65,13 @@
 
                 @if($item->status == 5)
                 <td>{{$item->operation->name ?? ""}}</td>
-                <td>{{$item->operation->price ?? ""}} د.ع</td>
+                <td>{{$item->operation->price + $setting->pat_profile}} د.ع</td>
                 @endif
                         <td>
 
                         @if($item->status ==1)
 
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}},'اجور العيادة الاستشارية')">
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->clinic_price}},{{$setting->doctor_price}},'اجور العيادة الاستشارية'),$setting->doctor->id">
                             قبض : @convert($setting->clinic_price + $setting->doctor_price) د.ع 
                             من المريض 
                             <hr>
@@ -82,7 +82,7 @@
                         </button>
 
                         @elseif($item->status ==3)
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}},'اجور الأشعة')">
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->xray}},{{$setting->xray_doctor_price}},'اجور الأشعة'),$setting->xdoctor->id">
                             قبض : @convert($setting->xray + $setting->xray_doctor_price) د.ع 
                             من المريض 
                             <hr>
@@ -92,7 +92,7 @@
 
                         </button>
                         @elseif($item->status ==4)
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting}},'اجور السونار')">
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->sonar}},{{$setting->doctor_sonar_price}},'اجور السونار'),$setting->sdoctor->id">
                             قبض : @convert($setting->sonar + $setting->doctor_sonar_price) د.ع 
                             من المريض 
                             <hr>
@@ -101,9 +101,37 @@
                             الى {{$setting->sdoctor->name ?? ""}}
 
                         </button>
-                        @else
-                        <a href="@route(getRouteName().'.payments.create')?patinet_id={{$item->id}}&payment_type=2">سند
-                        قبض</a>
+                        @elseif($item->status == 5)
+                        @php
+                            $doctor_amount = ($item->operation->price) * ($item->hms_nsba / 100);
+                            $hms_amount = ($item->operation->price) - $doctor_amount;
+                            $helperdoctor = ($setting->helper_doctor / 100) * $hms_amount;
+                            $m5dr_doctor = ($setting->m5dr_doctor / 100) * $hms_amount;
+                            $helper_m5dr_doctor = ($setting->helper_m5dr_doctor / 100) * $hms_amount;
+                            @endphp
+                        <button class="btn btn-danger" wire:click ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}})">
+                            قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
+                            من المريض 
+                           
+
+                           
+
+                            <!-- صرف : @convert($doctor_amount) د.ع 
+                            الى {{$item->doctor->name ?? ""}}
+                            <hr>
+                            صرف : @convert($helperdoctor) د.ع 
+                            الى مساعد الجراح
+
+                            <hr>
+                            صرف : @convert($m5dr_doctor) د.ع 
+                            الى المخدر
+
+                            <hr>
+                            صرف : @convert($helper_m5dr_doctor) د.ع 
+                            الى مساعد المخدر -->
+
+                        </button>
+
                         @endif
 
                       

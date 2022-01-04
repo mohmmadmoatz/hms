@@ -15,7 +15,7 @@ class Read extends Component
 
     public $search;
 
-    protected $queryString = ['search','patient_id','groupdata','account_type'];
+    protected $queryString = ['search','patient_id','groupdata','account_type',"idnumber"];
 
     protected $listeners = ['paymentsDeleted'];
 
@@ -35,6 +35,8 @@ class Read extends Component
     public $paytype;
     public $groupdata =true;
     public $account_type;
+
+    public $idnumber;
 
     public function searchBydate($date)
     {
@@ -108,6 +110,8 @@ class Read extends Component
             $data = $data->where("payment_type",$this->paytype);
         }
 
+      
+
         if($this->datefilterON){
             $date1 = explode(" - ", $this->daterange)[0];
             $date2 = explode(" - ", $this->daterange)[1];
@@ -118,6 +122,10 @@ class Read extends Component
         }
 
 
+
+        if($this->idnumber){
+            $data = $data->where("id",$this->idnumber);
+        }
       
 
         $this->total_income_iqd = $summations->where("payment_type",2)->sum("amount_iqd");
