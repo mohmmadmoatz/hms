@@ -46,6 +46,22 @@ Route::get('/m5drhelper', function () {
 })->name("m5drhelper");
 
 
+Route::get('/hmsstatement', function () {
+    return view('printed.hospitalstatement');
+})->name("hmsstatement");
+
+Route::get('/income', function () {
+    return view('printed.income');
+})->name("income");
+
+Route::get('/expense', function () {
+    return view('printed.expense');
+})->name("expense");
+
+Route::get('/doctorpays', function () {
+    return view('printed.doctorpays');
+})->name("doctorpays");
+
 
 Auth::routes();
 

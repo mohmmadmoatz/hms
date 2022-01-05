@@ -16,8 +16,8 @@
 
             <div class="row">
 
-          
-                <div class="col-md-4">
+            @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
+        <div class="col-md-4">
             <!-- Xray Input -->
         <div class='form-group'>
                 <label for='inputxray' class=' control-label'>الأشعة</label>
@@ -34,7 +34,8 @@
                         @error('doctor_sonar_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
                 </div>
-        
+        @endif
+
                 <div class="col-md-4" wire:ignore>
                     <div class='form-group'>
                         <label for='inputdoctor_id' class=' control-label'>طبيب الأشعة</label>
@@ -50,7 +51,7 @@
                     </div>
                 </div>
 
-
+                @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
             <div class="col-md-4">
             <!-- Sonar Input -->
             <div class='form-group'>
@@ -68,7 +69,7 @@
                 @error('doctor_sonar_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
         </div>
-
+@endif
         <div class="col-md-4" wire:ignore>
             <div class='form-group'>
                 <label for='inputdoctor_id' class=' control-label'>طبيب السونار</label>
@@ -83,6 +84,7 @@
                 
             </div>
         </div>
+        @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
             
             <!-- Clinic_price Input -->
             <div class="col-md-4">
@@ -93,6 +95,8 @@
             </div>
             </div>
 
+          
+
             <div class="col-md-4">
             <!-- Doctor_price Input -->
             <div class='form-group'>
@@ -101,6 +105,8 @@
                 @error('doctor_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
             </div>
+
+            @endif
             
             <!-- Doctor_id Input -->
             <div class="col-md-4" wire:ignore>
@@ -119,6 +125,7 @@
             </div>
 
             <hr>
+            @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
             <div class="col-md-4">
                 <!-- Sonar Input -->
                 <div class='form-group'>
@@ -154,6 +161,8 @@
                     @error('helper_m5dr_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                 </div>
             </div>
+
+            @endif
          
             
         </div>

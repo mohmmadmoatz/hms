@@ -29,10 +29,12 @@ class ConvertedPat extends Component
         ];
 
 
-        $idnumber = $data->id;
 
 
-        Payments::create($data);
+        $number = Payments::create($data);
+
+        $idnumber = $number->id;
+
 
 
         $data =[

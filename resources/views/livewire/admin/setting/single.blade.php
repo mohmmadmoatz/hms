@@ -1,37 +1,47 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> 
+
+    @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
         اجور الأشعة :
         @convert($setting->xray) 
         <hr>
         اجور الطبيب
         @convert($setting->xray_doctor_price) 
         <hr>
+        @endif                  
         الطبيب :
         {{$setting->xdoctor->name  ?? "لم يتم تعيين"}}
 
 
     </td>
     <td> 
-        
+    @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
     اجور السونار :
         @convert($setting->sonar) 
         <hr>
         اجور الطبيب
         @convert($setting->doctor_sonar_price) 
         <hr>
+        @endif
         الطبيب :
         {{$setting->sdoctor->name  ?? "لم يتم تعيين"}}
 
     </td>
     <td>
+    @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
          اجور العيادة
        :  @convert($setting->clinic_price) 
         <hr>
         اجور الطبيب 
        : @convert($setting->doctor_price)
+       <hr>
+       @endif
+    
+       {{$setting->doctor->name  ?? "لم يتم تعيين"}}
     </td>
     
     <td>
+    @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
     اجور الطبلة
        :  @convert($setting->pat_profile) 
         <hr>
@@ -46,7 +56,7 @@
 
         اجور مساعد المخدر
         :   @convert($setting->helper_m5dr_doctor) 
-  
+  @endif
     </td>
      
     @if(config('easy_panel.crud.setting.delete') or config('easy_panel.crud.setting.update'))

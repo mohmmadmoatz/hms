@@ -66,6 +66,17 @@
 
 
 <li class='sidebar-item'>
+@if(Auth::user()->user_type  == "accountant")
+<li
+    class='sidebar-item @isActive([getRouteName().".setting.read", getRouteName().".setting.update"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".setting.read", getRouteName().".setting.update"], "active") '
+    href="@route(getRouteName().'.setting.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">الأسعار</span>
+    </a>
+</li>
+@endif
+
 <li
     class='sidebar-item @isActive([getRouteName().".payments.converted", getRouteName().".payments.converted", getRouteName().".payments.converted"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".payments.converted", getRouteName().".payments.converted", getRouteName().".payments.converted"], "active") '
@@ -125,6 +136,20 @@
     </a>
 </li>
 @endif
+
+@if(Auth::user()->user_type  == "info")
+<li
+    class='sidebar-item @isActive([getRouteName().".setting.update"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".setting.update"], "active") '
+        href="@route(getRouteName().'.setting.update', ['setting' => 1])" aria-expanded="false">
+        <i data-feather="{{ get_icon("users") }}" class="feather-icon"></i>
+        <span class="hide-menu">الأطباء</span>
+    </a>
+</li>
+@endif
+
+
+
 
 
 @if(Auth::user()->user_type  == "doctor" ||  Auth::user()->user_type  == "superadmin" )

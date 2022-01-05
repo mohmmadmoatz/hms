@@ -1,6 +1,8 @@
 
-@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info")
+
 <div>
+
+@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info" || Auth::user()->user_type  == "accountant")
 <div class="card-group">
  <div class="card border-right">
                         <div class="card-body">
@@ -72,7 +74,14 @@
 
 </div>
 
+@if(Auth::user()->user_type  == "accountant")
+<div align="center">
+    <img src="{{asset('formimages/hmslogo.png')}}" width="50%">
 
+</div>
+@endif
+
+@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info")
 <div class="row">
 <div class="col-md-12">
                             <div class="input-group">
@@ -110,7 +119,9 @@
                 
             </div>
             
-
 @endif
+@endif
+
+
 
 </div>

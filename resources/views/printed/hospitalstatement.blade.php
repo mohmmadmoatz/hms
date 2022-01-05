@@ -31,6 +31,10 @@
       text-align: right;
   }
 
+  .table-striped tbody tr:nth-of-type(odd) th {
+    background-color: rgba(0, 0, 0, .05)!important;
+}
+
 </style>
 
 
@@ -38,10 +42,62 @@
 <body dir="rtl">
 
     @php
-    $id = $_GET['id'];
+   
     $dates = $_GET['daterange'];
-    $doctor = App\Models\User::find($id);
-    $data = App\Models\Payments::get();
+
+    $date1 = explode(" - ", $dates)[0];
+    $date2 = explode(" - ", $dates)[1];
+
+   // Old Amounts
+    $sum_old_income_iqd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",2)->sum("amount_iqd");
+    $sum_old_income_usd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",2)->sum("amount_usd");
+
+    $sum_old_outcome_iqd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",1)->sum("amount_iqd");
+    $sum_old_outcome_usd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",1)->sum("amount_usd");
+    // End Old Amounts
+
+    // new Amounts
+
+    $sum_income_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("payment_type",2)->sum("amount_iqd");
+
+    $sum_income_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("payment_type",2)->sum("amount_usd");
+
+    $sum_outcome_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("payment_type",1)
+    ->where("doctor_id","=",0)
+    ->sum("amount_iqd");
+
+    $sum_outcome_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("payment_type",1)
+    ->where("doctor_id","=",0)
+    
+    ->sum("amount_usd");
+
+    // End new Amounts
+
+
+    // new Amounts
+
+    $sum_paid_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("payment_type",1)
+    ->where("doctor_id","!=",0)
+    ->sum("amount_iqd");
+
+    $sum_paid_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("payment_type",1)
+    ->where("doctor_id","!=",0)
+    ->sum("amount_usd");
+
+    // End new Amounts
+
+    $net_iqd = $sum_income_iqd - $sum_paid_iqd - $sum_outcome_iqd;
+    $net_usd = $sum_income_usd - $sum_paid_usd - $sum_outcome_usd;
+
+    $full_net_iqd = ($sum_old_income_iqd - $sum_old_outcome_iqd) +$net_iqd;
+    $full_net_usd = ($sum_old_income_usd - $sum_old_outcome_usd) +$net_usd;
+
     @endphp
 
   <div class="py-2">
@@ -74,38 +130,59 @@
 
         <hr>
         <table class="table table-bordered table-striped">
+
+          <thead>
+                 <tr>
+                      <th>التفاصيل</th>
+                      <th>دينار</th>
+                      <th>دولار</th>
+                 </tr>
+          </thead>
+
+          <tbody>
                 <tr>
-                    <th>رقم الوصل</th>
-                    <th>التاريخ</th>
-                    <th>نوع الحساب</th>
-                    <th>الحساب</th>
-                    <th>نوع الوصل</th>
-                    <th>العملية</th>
-                </tr>
-                @foreach($data as $item)
-                <tr>
-                <td>{{$item->payment_number}}</td>
-                    <td>{{$item->created_at}}</td>
-                    <td>{{$item->patient->name}}</td>
-                  
-                    <td>
-                        @convert($item->amount_iqd) د.ع
-                       /
-                       @convert($item->amount_usd) $
-                    </td>
-                    <td>{{$item->description}}</td>
-                </tr>
-                @endforeach
-                <tr>
-                    <td colspan="3">المجموع</td>
-                    <td style="font-weight: bold;">
-                        @convert($data->sum("amount_iqd")) د.ع
-                        / 
-                        @convert($data->sum("amount_usd")) $
-                    </td>
-                    <td></td>
-                </tr>
-        </table>
+                      <th>المتراكم السابق</th>
+                      <th>@convert($sum_old_income_iqd - $sum_old_outcome_iqd)</th>
+                      <th>@convert($sum_old_income_usd- $sum_old_outcome_usd)</th>
+                    
+                 </tr>
+                 <tr>
+                      <th>المقبوض لهذه اليوم (الفترة)</th>
+                      <th>@convert($sum_income_iqd)</th>
+
+                      <th>@convert($sum_income_usd)</th>
+
+                 </tr>
+
+                 <tr>
+                      <th>المدفوع لهذه اليوم (الفترة)</th>
+                      <th>@convert($sum_paid_iqd)</th>
+
+                      <th>@convert($sum_paid_usd)</th>
+
+                 </tr>
+
+                 <tr>
+                      <th>المصاريف</th>
+                      <th>@convert($sum_outcome_iqd)</th>
+
+                      <th>@convert($sum_outcome_usd)</th>
+                 </tr>
+                 <tr>
+                      <th>الصافي لهذه اليوم (الفترة)</th>
+                      <th>@convert($net_iqd)</th>
+                      <th>@convert($net_usd)</th>
+
+                 </tr>
+
+                 <tr>
+                      <th>الصافي لغاية هذه الفترة</th>
+                      <th>@convert($full_net_iqd)</th>
+                      <th>@convert($full_net_usd)</th>
+                 </tr>
+          </tbody>
+
+    </table>
 
       </div>
      

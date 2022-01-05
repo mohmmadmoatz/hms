@@ -38,10 +38,15 @@
 <body dir="rtl">
 
     @php
-    $id = $_GET['id'];
+  
     $dates = $_GET['daterange'];
-    $doctor = App\Models\User::find($id);
-    $data = App\Models\Payments::where("doctor_id",$id)->get();
+
+    $date1 = explode(" - ", $dates)[0];
+    $date2 = explode(" - ", $dates)[1];
+   
+    $data = App\Models\Payments::where("payment_type",1)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("doctor_id",0)
+    ->get();
     @endphp
 
   <div class="py-2">
@@ -55,13 +60,13 @@
         
         <table class="table">
                 <tr>
-                    <th>الدكتور</th>
+                    <th>تقرير</th>
                     <th>الفترة</th>
                     <th>تاريخ التقرير</th>
                 </tr>
                 <tr>
                     <th>
-                        {{$doctor->name}}
+                     المصاريف
                     </th>
                     <th>
                         {{$dates}}
@@ -77,19 +82,20 @@
                 <tr>
                     <th>رقم الوصل</th>
                     <th>التاريخ</th>
-                    <th>اسم المريض</th>
-                    <th>سعر العملية</th>
-                    <th>نسبة الطبيب</th>
-                    <th>اجور الطبيب</th>
+                    <th>المستلم</th>
+                    <th>المبلغ</th>
                     <th>العملية</th>
                 </tr>
                 @foreach($data as $item)
                 <tr>
-                   <td>{{$item->payment_number}}</td>
+                    <td>{{$item->id}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td>{{$item->patient->name ?? ""}}</td>
-                    <td>@convert($item->operation_price == "" ? 0 :$item->operation_price)</td>
-                    <td>{{$item->patient->hms_nsba ?? "0"}}</td>
+                    <td>
+    
+                 @if($item->account_type==2) <span>  {{ $item->Patient->name ??""}} </span> @endif
+    @if($item->account_type==3) <span>  {{ $item->account_name ??""}} </span> @endif
+                    </td>
+                  
                     <td>
                         @convert($item->amount_iqd) د.ع
                        /
@@ -99,7 +105,7 @@
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="5">المجموع</td>
+                    <td colspan="3">المجموع</td>
                     <td style="font-weight: bold;">
                         @convert($data->sum("amount_iqd")) د.ع
                         / 

@@ -105,9 +105,9 @@
                         @php
                             $doctor_amount = ($item->operation->price) * ($item->hms_nsba / 100);
                             $hms_amount = ($item->operation->price) - $doctor_amount;
-                            $helperdoctor = ($setting->helper_doctor / 100) * $hms_amount;
-                            $m5dr_doctor = ($setting->m5dr_doctor / 100) * $hms_amount;
-                            $helper_m5dr_doctor = ($setting->helper_m5dr_doctor / 100) * $hms_amount;
+                            $helperdoctor = $setting->helper_doctor;
+                            $m5dr_doctor = $setting->m5dr_doctor;
+                            $helper_m5dr_doctor = $setting->helper_m5dr_doctor;
                             @endphp
                         <button class="btn btn-danger" wire:click ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}})">
                             قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 

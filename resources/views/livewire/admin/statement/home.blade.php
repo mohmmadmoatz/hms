@@ -21,11 +21,9 @@
                         
                             <label for="">الفترة</label>
                             <div class="input-group">
-                                <input wire:ignore autocomplete="off" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange">
+                                <input wire:ignore autocomplete="off" type="text" id="reportrange" onchange="daterangeGo()" class="form-control" wire:model.lazy="daterange">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" onclick="daterangeGo()">
-                                        تحديد
-                                    </button>
+                                  
                                     @if($datefilterON)
                                     <button class="btn btn-danger" wire:click="$set('datefilterON',false)">
                                         الغاء
@@ -82,12 +80,22 @@
                     </div>
                     <div class="col-md-6 py-2">
                         <a href = "@route('m5drhelper')?id={{$doctor_id}}&daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور مساعد المخدر</a>
-
-                       
                     </div>
 
                     <div class="col-md-12 py-2">
-                        <button class="btn btn-secondary btn-block">احتساب المصاريف واجور المستشفى</button>
+                    <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">احتساب المصاريف واجور المستشفى</a>
+                    </div>
+
+                    <div class="col-md-4 py-2">
+                        <a href = "@route('expense')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المصاريف</a>
+                    </div>
+
+                    <div class="col-md-4 py-2">
+                        <a href = "@route('doctorpays')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب مدفوعات الأطباء</a>
+                    </div>
+
+                    <div class="col-md-4 py-2">
+                        <a href = "@route('income')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المقبوضات</a>
                     </div>
 
                     @endif
