@@ -92,5 +92,16 @@
     "Warehouseexport": "Warehouseexport",
     "Warehouseexports": "Warehouseexports",
     "Warehouseitem": "Warehouseitem",
-    "Warehouseitems": "Warehouseitems"
+    "Warehouseitems": "Warehouseitems",
+    "Operation_price": "Operation_price",
+    "Operation_name": "Operation_name",
+    "Doctorexp": "Doctorexp",
+    "Helper": "Helper",
+    "M5dr": "M5dr",
+    "Helperm5dr": "Helperm5dr",
+    "Operation_type": "Operation_type",
+    "Title": "Title",
+    "Content": "Content",
+    "Operationhold": "Operationhold",
+    "Operationholds": "Operationholds"
 }

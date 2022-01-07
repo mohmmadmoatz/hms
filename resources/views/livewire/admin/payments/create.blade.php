@@ -49,7 +49,7 @@
                         <select class="form-control selectpicker" data-live-search="true" wire:model="account_id">
                             <option value="">المريض</option>
                             @foreach(App\Models\Patient::get() as $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            <option value="{{$item->id}}">{{$item->name}} - {{$item->id}}</option>
                             @endforeach
                         </select>
                         
@@ -73,8 +73,19 @@
                 <option value="1">صرف</option>
                 <option value="2">قبض</option>
                 </select>
+                @if($payment_type == 1 && $account_type == "2")
+                <input type="checkbox" wire:model="return_price">مبلغ مسترجع ؟
+                @endif
                 @error('payment_type') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
+
+            @if($return_price)
+                <div class="form-group">
+                    <label for="">رقم الوصل</label>
+                    <input type="number" class="form-control" wire:model.lazy="return_id">
+                </div>
+            @endif
+            
             
           <div class="row">
             <div class="col-md-6">

@@ -109,10 +109,16 @@
                             $m5dr_doctor = $setting->m5dr_doctor;
                             $helper_m5dr_doctor = $setting->helper_m5dr_doctor;
                             @endphp
+                            @if($item->operation->name =="ولادة طبيعية")
+                            <button class="btn btn-danger" wire:click ="saveOpSandWalada({{$item->operation->price + $setting->pat_profile}},{{$item->id}})">
+                            قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
+                            من المريض 
+                            @else
+
                         <button class="btn btn-danger" wire:click ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}})">
                             قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
-                           
+                           @endif
 
                            
 

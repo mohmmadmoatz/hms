@@ -212,7 +212,7 @@
                 <div class="col-md-4">
                     <div class='form-group'>
                         <label class=' control-label'> {{('تاريخ الأنتهاء') }}</label>
-                        <input required type='date' wire:model.lazy='iddate' 
+                        <input  type='date' wire:model.lazy='iddate' 
                             class="form-control @error('iddate') is-invalid @enderror">
                         @error('iddate') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>

@@ -7,6 +7,8 @@ use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Patient;
+use App\Models\OperationHold;
+
 class Create extends Component
 {
     use WithFileUploads;
@@ -21,6 +23,8 @@ class Create extends Component
     public $description;
     public $addnew = false;
     public $route;
+    public $return_price;
+    public $return_id;
     protected $queryString = ['patinet_id','addnew','payment_type'];
 
     
@@ -111,6 +115,18 @@ class Create extends Component
 
             $pat->save();
 
+        }
+
+        if($this->return_id){
+            $operation = OperationHold::where("payment_number",$this->return_id)->first();
+
+            if($operation){
+                $updateOpeartion = OperationHold::find($operation->id);
+                $nsba = $updateOpeartion->doctorexp / $updateOpeartion->operation_price;
+                $updateOpeartion->operation_price = $updateOpeartion->operation_price - $this->amount_iqd;
+                $updateOpeartion->doctorexp = $nsba * $updateOpeartion->operation_price;
+                $updateOpeartion->save();
+            }
         }
 
         return  redirect($this->route);

@@ -58,6 +58,10 @@ Route::get('/expense', function () {
     return view('printed.expense');
 })->name("expense");
 
+Route::get('/qablat', function () {
+    return view('printed.qablat');
+})->name("qablat");
+
 Route::get('/doctorpays', function () {
     return view('printed.doctorpays');
 })->name("doctorpays");

@@ -135,7 +135,19 @@
                     </div>
                 </div>
             </div>
-
+            <style>
+ .table.table-fit {
+    width: max-content !important;
+    table-layout: auto !important;
+}
+table.table-fit thead th, table.table-fit tfoot th {
+    width: auto !important;
+}
+table.table-fit tbody td, table.table-fit tfoot td {
+    width: auto !important;
+}
+                
+        </style>
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
                     <tbody>

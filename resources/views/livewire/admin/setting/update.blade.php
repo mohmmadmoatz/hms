@@ -147,12 +147,30 @@
             <div class="col-md-4">
                 <!-- Sonar Input -->
                 <div class='form-group'>
-                    <label for='inputsonar' class=' control-label'>اجور المخدر</label>
+                    <label for='inputsonar' class=' control-label'>اجور المخدر عملية فوق الكبرى</label>
                     <input type='number' wire:model.lazy='m5dr_doctor' class="form-control @error('m5dr_doctor') is-invalid @enderror" id='m5dr_doctor'>
                     @error('m5dr_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='inputsonar' class=' control-label'>اجور المخدر عملية الكبرى</label>
+                    <input type='number' wire:model.lazy='m5dr_large_doctor' class="form-control @error('m5dr_large_doctor') is-invalid @enderror" id='m5dr_doctor'>
+                    @error('m5dr_large_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
          
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='inputsonar' class=' control-label'>اجور المخدر عملية وسطى او صغرى</label>
+                    <input type='number' wire:model.lazy='m5dr_small_doctor' class="form-control @error('m5dr_small_doctor') is-invalid @enderror" id='m5dr_doctor'>
+                    @error('m5dr_doctor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
             <div class="col-md-4">
                 <!-- Sonar Input -->
                 <div class='form-group'>

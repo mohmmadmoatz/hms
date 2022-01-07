@@ -26,6 +26,10 @@ class Update extends Component
     public $pat_profile;
     public $helper_doctor;
     public $m5dr_doctor;
+    public $m5dr_large_doctor;
+    public $m5dr_small_doctor;
+    
+
     public $helper_m5dr_doctor;
     
     protected $rules = [
@@ -43,6 +47,10 @@ class Update extends Component
         $this->pat_profile = $this->setting->pat_profile; 
         $this->helper_doctor = $this->setting->helper_doctor; 
         $this->m5dr_doctor = $this->setting->m5dr_doctor; 
+
+        $this->m5dr_large_doctor = $this->setting->m5dr_large_doctor; 
+        $this->m5dr_small_doctor = $this->setting->m5dr_small_doctor; 
+
         $this->helper_m5dr_doctor = $this->setting->helper_m5dr_doctor; 
         $this->xray_doctor_price = $this->setting->xray_doctor_price;        
         $this->xray_doctor_id = $this->setting->xray_doctor_id;        
@@ -70,7 +78,10 @@ class Update extends Component
 
             'pat_profile' => $this->pat_profile,         
             'helper_doctor' => $this->helper_doctor,         
-            'm5dr_doctor' => $this->m5dr_doctor,         
+            'm5dr_doctor' => $this->m5dr_doctor,
+
+            'm5dr_large_doctor' => $this->m5dr_large_doctor,         
+            'm5dr_small_doctor' => $this->m5dr_small_doctor,         
             'helper_m5dr_doctor' => $this->helper_m5dr_doctor,         
         ]);
     }

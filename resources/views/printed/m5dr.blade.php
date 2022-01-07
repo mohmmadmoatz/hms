@@ -38,10 +38,16 @@
 <body dir="rtl">
 
     @php
-    $id = $_GET['id'];
+   
+
     $dates = $_GET['daterange'];
-    $doctor = App\Models\User::find($id);
-    $data = App\Models\Payments::where("account_name","طبيب مخدر")->get();
+
+$date1 = explode(" - ", $dates)[0];
+$date2 = explode(" - ", $dates)[1];
+  
+    $data = App\Models\Payments::where("account_name","طبيب مخدر")
+    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->get();
     @endphp
 
   <div class="py-2">

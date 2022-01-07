@@ -94,5 +94,16 @@
     "Warehouseexport": "طلب",
     "Warehouseexports": "طلبات المخزن",
     "Warehouseitem": "مادة",
-    "Warehouseitems": "المواد"
+    "Warehouseitems": "المواد",
+    "Operation_price": "Operation_price",
+    "Operation_name": "Operation_name",
+    "Doctorexp": "Doctorexp",
+    "Helper": "Helper",
+    "M5dr": "M5dr",
+    "Helperm5dr": "Helperm5dr",
+    "Operation_type": "Operation_type",
+    "Title": "Title",
+    "Content": "Content",
+    "Operationhold": "Operationhold",
+    "Operationholds": "Operationholds"
 }

@@ -83,7 +83,11 @@
                     </div>
 
                     <div class="col-md-12 py-2">
-                    <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">احتساب المصاريف واجور المستشفى</a>
+                    <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">الميزانية</a>
+                    </div>
+
+                    <div class="col-md-4 py-2">
+                        <a href = "@route('qablat')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب اجور القابلات</a>
                     </div>
 
                     <div class="col-md-4 py-2">

@@ -94,6 +94,14 @@
     </a>
 </li>
 <li
+    class='sidebar-item @isActive([getRouteName().".operationhold.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".operationhold.read"], "active") '
+        href="@route(getRouteName().'.operationhold.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("file") }}" class="feather-icon"></i>
+        <span class="hide-menu">العمليات</span>
+    </a>
+</li>
+<li
     class='sidebar-item @isActive([getRouteName().".payments.read", getRouteName().".payments.create", getRouteName().".payments.update"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".payments.read", getRouteName().".payments.create", getRouteName().".payments.update"], "active") '
         href="@route(getRouteName().'.payments.read')" aria-expanded="false">
@@ -101,6 +109,8 @@
         <span class="hide-menu">السندات المالية</span>
     </a>
 </li>
+
+
 
 <li
     class='sidebar-item @isActive([getRouteName().".statement.home"], "selected")'>

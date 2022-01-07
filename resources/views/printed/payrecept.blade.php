@@ -83,7 +83,7 @@ z-index: -1;
             <th style="
     /* border-bottom: 1px solid; */
 ">               
-                @if($data->patinet_id)
+                @if($data->patinet_id && $data->account_type ==2)
                 <h3 dir="ltr" style="color:3ba8b1;border-bottom: 1px dotted;width: 580px;text-align: right;">{{$data->Patient->name}}</h3>
                 @endif
 

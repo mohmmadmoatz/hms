@@ -38,11 +38,15 @@
 <body dir="rtl">
 
     @php
-  
+   
+   
+
     $dates = $_GET['daterange'];
-    $date1 = explode(" - ", $dates)[0];
+
+$date1 = explode(" - ", $dates)[0];
 $date2 = explode(" - ", $dates)[1];
-    $data = App\Models\Payments::where("account_name","مساعد جراح")
+  
+    $data = App\Models\Payments::where("account_name","القابلة")
     ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
@@ -64,7 +68,7 @@ $date2 = explode(" - ", $dates)[1];
                 </tr>
                 <tr>
                     <th>
-                        مساعد جراح
+                        القابلات
                     </th>
                     <th>
                         {{$dates}}
@@ -81,12 +85,12 @@ $date2 = explode(" - ", $dates)[1];
                     <th>رقم الوصل</th>
                     <th>التاريخ</th>
                     <th>اسم المريض</th>
-                    <th>اجور مساعد الجراح</th>
+                    <th>اجور القابلة</th>
                     <th>العملية</th>
                 </tr>
                 @foreach($data as $item)
                 <tr>
-                    <td>{{$item->payment_number}}</td>
+                <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->patient->name}}</td>
                   

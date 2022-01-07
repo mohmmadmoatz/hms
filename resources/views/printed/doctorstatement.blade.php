@@ -40,8 +40,13 @@
     @php
     $id = $_GET['id'];
     $dates = $_GET['daterange'];
+    $date1 = explode(" - ", $dates)[0];
+$date2 = explode(" - ", $dates)[1];
+    
     $doctor = App\Models\User::find($id);
-    $data = App\Models\Payments::where("doctor_id",$id)->get();
+    $data = App\Models\Payments::where("doctor_id",$id)
+    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->get();
     @endphp
 
   <div class="py-2">
