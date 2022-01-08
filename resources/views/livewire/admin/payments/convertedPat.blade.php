@@ -71,7 +71,7 @@
 
                         @if($item->status ==1)
 
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->clinic_price}},{{$setting->doctor_price}},'اجور العيادة الاستشارية'),$setting->doctor->id">
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->clinic_price}},{{$setting->doctor_price}},'اجور العيادة الاستشارية',{{$setting->doctor->id}})">
                             قبض : @convert($setting->clinic_price + $setting->doctor_price) د.ع 
                             من المريض 
                             <hr>
@@ -82,7 +82,7 @@
                         </button>
 
                         @elseif($item->status ==3)
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->xray}},{{$setting->xray_doctor_price}},'اجور الأشعة'),$setting->xdoctor->id">
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->xray}},{{$setting->xray_doctor_price}},'اجور الأشعة',{{$setting->xdoctor->id}})">
                             قبض : @convert($setting->xray + $setting->xray_doctor_price) د.ع 
                             من المريض 
                             <hr>
@@ -92,7 +92,7 @@
 
                         </button>
                         @elseif($item->status ==4)
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->sonar}},{{$setting->doctor_sonar_price}},'اجور السونار'),$setting->sdoctor->id">
+                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->sonar}},{{$setting->doctor_sonar_price}},'اجور السونار',{{$setting->sdoctor->id}})">
                             قبض : @convert($setting->sonar + $setting->doctor_sonar_price) د.ع 
                             من المريض 
                             <hr>

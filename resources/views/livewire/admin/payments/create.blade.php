@@ -91,7 +91,7 @@
             <div class="col-md-6">
                 <div class='form-group'>
                     <label for='inputamount' class='col-sm-2 control-label'>دينار</label>
-                    <input type='number' wire:model.lazy='amount_iqd' class="form-control @error('amount_iqd') is-invalid @enderror" id='inputamount'>
+                    <input type='text' wire:model.lazy='amount_iqd' class="currency-mask form-control @error('amount_iqd') is-invalid @enderror" id='inputamount'>
                     @error('amount_iqd') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                 </div>
               </div>
