@@ -90,7 +90,7 @@ $date2 = explode(" - ", $dates)[1];
                 </tr>
                 @foreach($data as $item)
                 <tr>
-                   <td>{{$item->payment_number}}</td>
+                   <td>{{$item->wasl_number}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
                     <td>@convert($item->operation_price == "" ? 0 :$item->operation_price)</td>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Operationhold;
 
 use App\Models\OperationHold;
+use App\Models\Payments;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,12 +16,58 @@ class Read extends Component
 
     public $search;
 
+    public $datefilterON;
+    public $daterange;
+    public $doctor_id;
+
+    public $total_doctor;
+
+
     protected $queryString = ['search'];
 
     protected $listeners = ['operationholdDeleted'];
 
     public $sortType;
     public $sortColumn;
+
+    public function saveallinone()
+    {
+        $data = OperationHold::query();
+        $date1 = explode(" - ", $this->daterange)[0];
+        $date2 = explode(" - ", $this->daterange)[1];
+        $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+        $data = $data->where("doctor_id",$this->doctor_id);
+      
+        $data->update([
+            "doctor_paid"=>1
+        ]);
+        
+
+        $data =[
+            'payment_type' => 1,
+            'amount_iqd' => $this->total_doctor,
+            'account_type' => 1,
+            'description' => "اجور عمليات الفترة :  " . $this->daterange,
+            'user_id' => auth()->id(),
+            "doctor_id"=>$this->doctor_id,
+
+        ];
+
+        Payments::create($data);
+
+        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
+
+
+
+
+    }
+
+    public function searchBydate($date)
+    {
+        # code...
+        $this->daterange = $date;
+        $this->datefilterON = true;
+    }
 
     public function operationholdDeleted(){
         // Nothing ..
@@ -37,6 +84,7 @@ class Read extends Component
     public function render()
     {
         $data = OperationHold::query();
+        $sum = OperationHold::query();
 
         if(config('easy_panel.crud.operationhold.search')){
             $array = (array) config('easy_panel.crud.operationhold.search');
@@ -53,6 +101,31 @@ class Read extends Component
             });
         }
 
+        if($this->datefilterON){
+            $date1 = explode(" - ", $this->daterange)[0];
+            $date2 = explode(" - ", $this->daterange)[1];
+            $sum=$sum->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+        
+
+        }
+
+        if($this->doctor_id){
+            $data->where("doctor_id",$this->doctor_id);
+            $sum=$sum->where("doctor_id",$this->doctor_id)
+            ->where(function ($query){
+                $query->where("doctor_paid",0)
+                      ->orWhereNull('doctor_paid');
+            })
+            
+            ->sum("doctorexp");
+
+         
+            $this->total_doctor = $sum;
+        }
+
+        
+
         if($this->sortColumn) {
             $data->orderBy($this->sortColumn, $this->sortType);
         } else {
@@ -62,7 +135,8 @@ class Read extends Component
         $data = $data->paginate(config('easy_panel.pagination_count', 15));
 
         return view('livewire.admin.operationhold.read', [
-            'operationholds' => $data
+            'operationholds' => $data,
+          
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('OperationHold')) ]);
     }
 }

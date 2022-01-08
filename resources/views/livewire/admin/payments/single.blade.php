@@ -1,6 +1,6 @@
 <tr x-data="{ modalIsOpen : false }">
 
-<td>{{$payments->id}}</td>
+<td>{{$payments->wasl_number}}</td>
 
 <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">{{$payments->payment_type ==1 ?'صرف' :'قبض'}}</span> </td>
     <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">@convert($payments->amount_usd)</span> </td>

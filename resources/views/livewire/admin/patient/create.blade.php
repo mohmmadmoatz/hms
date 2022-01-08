@@ -89,7 +89,7 @@
             <div class='form-group'>
                 <label for='inputmusicname' class='control-label'> {{ __('Direction') }}</label>
 
-                <select wire:model="status" class="form-control">
+                <select required wire:model="status" class="form-control">
                     <option value=""></option>
                     @foreach(App\Models\Stage::get() as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>

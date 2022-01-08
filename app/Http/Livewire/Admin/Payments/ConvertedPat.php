@@ -40,7 +40,7 @@ class ConvertedPat extends Component
             "m5dr"=>0,
             "helperm5dr"=>0,
             "user_id"=>auth()->id(),
-            "payment_number"=>$number->id,
+            "payment_number"=>$number->wasl_number,
         ];
 
         OperationHold::create($operation);
@@ -89,7 +89,7 @@ class ConvertedPat extends Component
             "m5dr"=>$m5dr,
             "helperm5dr"=>$helperm5dr,
             "user_id"=>auth()->id(),
-            "payment_number"=>$number->id,
+            "payment_number"=>$number->wasl_number,
         ];
 
         OperationHold::create($operation);
@@ -194,16 +194,16 @@ class ConvertedPat extends Component
 
         Payments::create($data);
 
-        $data =[
-            'payment_type' => 1,
-            'amount_iqd' => $out,
-            'account_type' => 1,
-            'description' => $string,
-            'user_id' => auth()->id(),
-            "doctor_id"=>$doctor
-        ];
+        // $data =[
+        //     'payment_type' => 1,
+        //     'amount_iqd' => $out,
+        //     'account_type' => 1,
+        //     'description' => $string,
+        //     'user_id' => auth()->id(),
+        //     "doctor_id"=>$doctor
+        // ];
 
-        Payments::create($data);
+        // Payments::create($data);
 
         $patdata = Patient::find($id);
 

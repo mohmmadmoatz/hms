@@ -88,7 +88,7 @@
                 </tr>
                 @foreach($data as $item)
                 <tr>
-                    <td>{{$item->id}}</td>
+                    <td>{{$item->wasl_number}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>
     

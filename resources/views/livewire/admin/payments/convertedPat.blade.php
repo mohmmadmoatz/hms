@@ -74,10 +74,10 @@
                         <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->clinic_price}},{{$setting->doctor_price}},'اجور العيادة الاستشارية',{{$setting->doctor->id}})">
                             قبض : @convert($setting->clinic_price + $setting->doctor_price) د.ع 
                             من المريض 
-                            <hr>
+                            <!-- <hr>
 
                             صرف : @convert($setting->doctor_price) د.ع 
-                            الى {{$setting->doctor->name ?? ""}}
+                            الى {{$setting->doctor->name ?? ""}} -->
 
                         </button>
 
@@ -85,20 +85,20 @@
                         <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->xray}},{{$setting->xray_doctor_price}},'اجور الأشعة',{{$setting->xdoctor->id}})">
                             قبض : @convert($setting->xray + $setting->xray_doctor_price) د.ع 
                             من المريض 
-                            <hr>
+                            <!-- <hr> -->
 
-                            صرف : @convert($setting->xray_doctor_price) د.ع 
-                            الى {{$setting->xdoctor->name ?? ""}}
+                            <!-- صرف : @convert($setting->xray_doctor_price) د.ع 
+                            الى {{$setting->xdoctor->name ?? ""}} -->
 
                         </button>
                         @elseif($item->status ==4)
                         <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->sonar}},{{$setting->doctor_sonar_price}},'اجور السونار',{{$setting->sdoctor->id}})">
                             قبض : @convert($setting->sonar + $setting->doctor_sonar_price) د.ع 
                             من المريض 
-                            <hr>
+                            <!-- <hr> -->
 
-                            صرف : @convert($setting->doctor_sonar_price) د.ع 
-                            الى {{$setting->sdoctor->name ?? ""}}
+                            <!-- صرف : @convert($setting->doctor_sonar_price) د.ع 
+                            الى {{$setting->sdoctor->name ?? ""}} -->
 
                         </button>
                         @elseif($item->status == 5)

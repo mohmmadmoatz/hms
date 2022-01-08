@@ -202,8 +202,8 @@ $(function() {
 
   
 
- 	 var start = moment().startOf('month');
-    var end = moment().endOf('month');
+ 	 var start = moment().startOf('day');
+    var end = moment().endOf('day');
 
     function cb(start, end) {
         $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
@@ -267,7 +267,6 @@ $(function() {
 
 <script src="{{asset('assets/admin/js/alpine.min.js')}}"></script>
 <script src="{{asset('assets/admin/js/bootstrap-select.min.js')}}"></script>
-<script src="https://unpkg.com/imask"></script>
 <script>
     // Jquery Dependency
 

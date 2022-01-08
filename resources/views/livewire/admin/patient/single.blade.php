@@ -3,7 +3,7 @@
     <td> {{ $patient->name }} </td>
     <td> {{ $patient->gender }} </td>
     <td> {{ $patient->phone }} </td>
-    <td> {{ $patient->stage->name }} </td>    
+    <td> {{ $patient->stage->name  ??""}} </td>    
     @if(config('easy_panel.crud.patient.delete') or config('easy_panel.crud.patient.update'))
         <td>
 

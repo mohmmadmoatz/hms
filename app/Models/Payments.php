@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payments extends Model
 {
-    use HasFactory;
-
+    use HasFactory,SoftDeletes;
     public $guarded = [];
 
     /**
@@ -37,4 +37,12 @@ class Payments extends Model
     {
         return $this->belongsTo("App\Models\Patient",'patinet_id');
     }
+
+
+    // public function setWaslNumberAttribute()
+    // {
+    //     // $lastNumber = Payments::where("payment_type",$this->payment_type)->count("wasl_number") + 1;
+
+    //     // $this->attributes['wasl_number'] = $lastNumber;
+    // }
 }

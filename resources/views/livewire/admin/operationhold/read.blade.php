@@ -29,6 +29,51 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-4">
+                        <label for="">الفترة</label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" id="reportrange" onchange="daterangeGo()"  class="form-control" wire:model.lazy="daterange"
+                                    wire:ignore>
+
+                                <div class="input-group-append">
+                                  
+                                    @if($datefilterON)
+                                    <button class="btn btn-danger" wire:click="$set('datefilterON',false)">
+                                        الغاء
+                                    </button>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4" wire:ignore>
+                        <div class='form-group'>
+                                <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
+                                
+                                <select class="form-control selectpicker" data-live-search="true" wire:model="doctor_id">
+                                    <option value="">يرجى اختيار طبيب</option>
+                                    @foreach(App\Models\User::where('user_type','doctor')->get() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+            
+                                    @endforeach
+                                </select>
+                                
+                            </div>
+                        </div>
+                        @if($doctor_id)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">اجمالي المبلغ</label>
+                                    <input type="text" readonly class="form-control" value="@convert($total_doctor)">
+                                    <button class="btn btn-info py-2" wire:click="saveallinone()">دفع و طباعة</button>
+                                </div>
+                            </div>
+                           
+                      @endif
                         @endif
                     </div>
                 </div>
@@ -83,3 +128,12 @@ table.table-fit tbody td, table.table-fit tfoot td {
         </div>
     </div>
 </div>
+
+<script>
+    function daterangeGo() {
+        var element = document.getElementById("reportrange")
+        console.log(element.value)
+        Livewire.emit('searchBydate');
+        @this.searchBydate(element.value)
+    }
+</script>
