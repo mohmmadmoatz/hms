@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>كشف مساعد جراح</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -42,7 +43,7 @@
     $dates = $_GET['daterange'];
     $date1 = explode(" - ", $dates)[0];
 $date2 = explode(" - ", $dates)[1];
-    $data = App\Models\Payments::where("account_name","مساعد جراح")
+    $data = App\Models\OperationHold::whereNull("helper_paid")
     ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
@@ -61,6 +62,7 @@ $date2 = explode(" - ", $dates)[1];
                     <th>تقرير</th>
                     <th>الفترة</th>
                     <th>تاريخ التقرير</th>
+                    <th class="no-print"></th>
                 </tr>
                 <tr>
                     <th>
@@ -71,6 +73,9 @@ $date2 = explode(" - ", $dates)[1];
                     </th>
                     <th>
                         {{date("Y-m-d")}}
+                    </th>
+                    <th class="no-print">
+                      <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=مساعد جراح&daterange={{$dates}}&amount_iqd={{$data->sum('helper')}}&payto=helper">دفع وطباعة</button>
                     </th>
                 </tr>
         </table>
@@ -91,19 +96,17 @@ $date2 = explode(" - ", $dates)[1];
                     <td>{{$item->patient->name}}</td>
                   
                     <td>
-                        @convert($item->amount_iqd) د.ع
-                       /
-                       @convert($item->amount_usd) $
+                        @convert($item->helper) د.ع
+                     
                     </td>
-                    <td>{{$item->description}}</td>
+                    <td>{{$item->operation_name}}</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="3">المجموع</td>
                     <td style="font-weight: bold;">
-                        @convert($data->sum("amount_iqd")) د.ع
-                        / 
-                        @convert($data->sum("amount_usd")) $
+                        @convert($data->sum("helper")) د.ع
+                        
                     </td>
                     <td></td>
                 </tr>

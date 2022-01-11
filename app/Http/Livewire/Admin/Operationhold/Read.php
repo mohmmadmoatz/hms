@@ -57,9 +57,6 @@ class Read extends Component
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
 
-
-
-
     }
 
     public function searchBydate($date)
@@ -100,14 +97,15 @@ class Read extends Component
                 }
             });
         }
-
+        $doctors =  OperationHold::query();
         if($this->datefilterON){
             $date1 = explode(" - ", $this->daterange)[0];
             $date2 = explode(" - ", $this->daterange)[1];
             $sum=$sum->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
             $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $doctors = $doctors->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $doctors = $doctors->groupBy("doctor_id")->get();
         
-
         }
 
         if($this->doctor_id){
@@ -136,6 +134,7 @@ class Read extends Component
 
         return view('livewire.admin.operationhold.read', [
             'operationholds' => $data,
+            'doctors' => $doctors,
           
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('OperationHold')) ]);
     }

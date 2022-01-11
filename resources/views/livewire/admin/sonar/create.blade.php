@@ -14,19 +14,11 @@
 
         <div class="card-body">
             
-            <!-- Patient_id Input -->
-            <div class='form-group'>
+        <div class='form-group'>
                 <label for='inputpatient_id' class='col-sm-2 control-label'>المريض</label>
-                 <select class="form-control" wire:model.lazy="patient_id">
-                     <option value="">يرجى اختيار المريض</option>
-                     @foreach(App\Models\Patient::where('status',4)->where("paid",1)->where("sonar",0)->get() as $item)
-                     <option value="{{$item->id}}">{{$item->name}}</option>
-
-                     @endforeach
-                 </select>
+                <input type="text" class="form-control" readonly value = "{{App\Models\Patient::find($patient_id)->name ??''}}">
                 @error('patient_id') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
-            
             <!-- Notes Input -->
             <div class='form-group'>
                 <label for='inputnotes' class='col-sm-2 control-label'> {{ __('Notes') }}</label>

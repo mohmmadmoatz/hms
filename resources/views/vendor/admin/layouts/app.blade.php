@@ -284,6 +284,11 @@ $(function() {
 
 <script>
 
+window.addEventListener('open-window', function (event) {
+        let url = event.detail.url;
+        window.open(url);
+    })
+
     window.addEventListener('show-message', function (event) {
         let type = event.detail.type;
         let message = event.detail.message;

@@ -31,6 +31,14 @@
       text-align: right;
   }
 
+  @media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
 </style>
 
 
@@ -45,7 +53,8 @@
 $date1 = explode(" - ", $dates)[0];
 $date2 = explode(" - ", $dates)[1];
   
-    $data = App\Models\Payments::where("account_name","مخدر")
+    $data = App\Models\OperationHold::whereNull("m5dr_paid")
+    ->whereNotNull("m5dr_selected")
     ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
@@ -64,6 +73,8 @@ $date2 = explode(" - ", $dates)[1];
                     <th>تقرير</th>
                     <th>الفترة</th>
                     <th>تاريخ التقرير</th>
+                    <th></th>
+
                 </tr>
                 <tr>
                     <th>
@@ -74,6 +85,10 @@ $date2 = explode(" - ", $dates)[1];
                     </th>
                     <th>
                         {{date("Y-m-d")}}
+                    </th>
+                    <th>
+                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=مخدر&daterange={{$dates}}&amount_iqd={{$data->sum('m5dr')}}&payto=m5dr">دفع وطباعة</button>
+
                     </th>
                 </tr>
         </table>
@@ -89,24 +104,22 @@ $date2 = explode(" - ", $dates)[1];
                 </tr>
                 @foreach($data as $item)
                 <tr>
-                <td>{{$item->payment_number}}</td>
+                  <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->patient->name}}</td>
                   
                     <td>
-                        @convert($item->amount_iqd) د.ع
-                       /
-                       @convert($item->amount_usd) $
+                        @convert($item->m5dr) د.ع
+                     
                     </td>
-                    <td>{{$item->description}}</td>
+                    <td>{{$item->operation_name}}</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="3">المجموع</td>
                     <td style="font-weight: bold;">
-                        @convert($data->sum("amount_iqd")) د.ع
-                        / 
-                        @convert($data->sum("amount_usd")) $
+                        @convert($data->sum("m5dr")) د.ع
+                        
                     </td>
                     <td></td>
                 </tr>

@@ -39,15 +39,23 @@
 
     @php
   
+    $st = $_GET['stage'];
+    $stage = App\Models\Stage::find($st);
     $dates = $_GET['daterange'];
-
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
    
-    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])->get();
+    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("redirect",$st)
+    ->get();
     
-    $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
-    $usd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
+    $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("redirect",$st)
+    ->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
+    
+    $usd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("redirect",$st)
+    ->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
 
     @endphp
 
@@ -68,7 +76,7 @@
                 </tr>
                 <tr>
                     <th>
-                     مقبوضات
+                     {{$stage->name}}
                     </th>
                     <th>
                         {{$dates}}
@@ -123,7 +131,7 @@
                         @convert($data->sum("amount_iqd")) د.ع
 
                         / 
-                        @convert($data->sum("amount_usd")) د.ع
+                        @convert($data->sum("amount_usd")) $
                       
                       
                     </td>

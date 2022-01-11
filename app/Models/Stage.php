@@ -9,4 +9,14 @@ class Stage extends Model
 {
     protected $guarded = [];  
     use HasFactory;
+
+    /**
+     * Get the doctor that owns the Stage
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'doctor_id');
+    }
 }

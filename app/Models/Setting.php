@@ -28,4 +28,9 @@ class Setting extends Model
     {
         return $this->belongsTo("App\Models\User",'doctor_sonar_id');
     }
+
+    public function mdoctor()
+    {
+        return $this->belongsTo("App\Models\User",'mqema_id');
+    }
 }

@@ -38,6 +38,9 @@ class Read extends Component
 
     public $idnumber;
 
+    public $total_return_iqd;
+    public $total_return_usd;
+
     public function searchBydate($date)
     {
         # code...
@@ -128,8 +131,9 @@ class Read extends Component
         }
       
 
-        $this->total_income_iqd = $summations->where("payment_type",2)->sum("amount_iqd");
-        $this->total_income_usd = $summations->where("payment_type",2)->sum("amount_usd");
+        $this->total_income_iqd = $summations->where("payment_type",2)->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
+        $this->total_income_usd = $summations->where("payment_type",2)->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
+
 
         $this->total_expense_iqd = $summations2->where("payment_type",1)->sum("amount_iqd");
         $this->total_expense_usd = $summations2->where("payment_type",1)->sum("amount_usd");

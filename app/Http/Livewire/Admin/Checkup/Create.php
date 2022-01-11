@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Admin\Checkup;
 use App\Models\Checkup;
 use App\Models\Setting;
 use App\Models\Patient;
+use App\Models\Payments;
+
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,7 +18,8 @@ class Create extends Component
     public $note;
     public $image;
     public $patient_id;
-    protected $queryString = ['patient_id'];
+    public $payment_id;
+    protected $queryString = ['patient_id','payment_id'];
     protected $rules = [
         'image' => 'required',        
     ];
@@ -35,7 +38,7 @@ class Create extends Component
         if($this->getPropertyValue('image') and is_object($this->image)) {
             $this->image = $this->getPropertyValue('image')->store('images/clc','public');
         }
-        $settings = Setting::first();
+        $settings = Stage::find(1);
       $checkup =   Checkup::create([
             "patient_id"=>$this->patient_id,
             "doctor_id"=>$settings->doctor_id,
@@ -44,8 +47,8 @@ class Create extends Component
         ]);
 
 
-        $pat = Patient::find($this->patient_id);
-        $pat->clcdoctor =$checkup->id;
+        $pat = Payments::find($this->payment_id);
+        $pat->redirect_done = $checkup->id;
         $pat->save();
 
         $this->reset();

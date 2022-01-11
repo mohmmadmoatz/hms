@@ -28,9 +28,14 @@ class Update extends Component
     public $m5dr_doctor;
     public $m5dr_large_doctor;
     public $m5dr_small_doctor;
-    
-
     public $helper_m5dr_doctor;
+
+
+    public $qabla;
+    public $mqema;
+    public $not_supervised;
+    public $supervised;
+    public $mqema_id;
     
     protected $rules = [
         'xray' => 'required',        
@@ -55,7 +60,14 @@ class Update extends Component
         $this->xray_doctor_price = $this->setting->xray_doctor_price;        
         $this->xray_doctor_id = $this->setting->xray_doctor_id;        
         $this->doctor_sonar_price = $this->setting->doctor_sonar_price;        
-        $this->doctor_sonar_id = $this->setting->doctor_sonar_id;        
+        $this->doctor_sonar_id = $this->setting->doctor_sonar_id;       
+        
+        
+        $this->qabla = $this->setting->qabla; 
+        $this->mqema = $this->setting->mqema;        
+        $this->not_supervised = $this->setting->not_supervised;        
+        $this->supervised = $this->setting->supervised;        
+        $this->mqema_id = $this->setting->mqema_id;        
     }
 
     public function updated($input)
@@ -79,10 +91,15 @@ class Update extends Component
             'pat_profile' => $this->pat_profile,         
             'helper_doctor' => $this->helper_doctor,         
             'm5dr_doctor' => $this->m5dr_doctor,
-
             'm5dr_large_doctor' => $this->m5dr_large_doctor,         
             'm5dr_small_doctor' => $this->m5dr_small_doctor,         
-            'helper_m5dr_doctor' => $this->helper_m5dr_doctor,         
+            'helper_m5dr_doctor' => $this->helper_m5dr_doctor,      
+            
+            'qabla' => $this->qabla,         
+            'mqema' => $this->mqema,
+            'not_supervised' => $this->not_supervised,         
+            'supervised' => $this->supervised,         
+            'mqema_id' => $this->mqema_id,  
         ]);
     }
 

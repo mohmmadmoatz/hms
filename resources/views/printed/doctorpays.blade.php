@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <title>المدفوعات</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
@@ -38,15 +39,71 @@
 <body dir="rtl">
 
     @php
-  
+    $report_name = "المدفوعات";
     $dates = $_GET['daterange'];
 
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
+    $data = App\Models\Payments::where("payment_type",1)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"]);
    
-    $data = App\Models\Payments::where("payment_type",1)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("doctor_id","!=",0)
+    if(isset($_GET['payas'])){
+      $payas = $_GET['payas'];
+
+      if($payas == "doctor"){
+      
+        $report_name = "مدفوعات  الطبيب";
+        
+      $data = $data->where("doctor_id",$_GET['doctor_id'])
+      ->get();
+       
+
+      }
+
+      if($payas == "helper"){
+        $report_name = "مدفوعات  مساعد جراح";
+       
+       $data = $data->where("account_name","مساعد جراح")
+       ->get();
+   
+         }
+
+         if($payas == "m5dr"){
+          $report_name = "مدفوعات  المخدر";
+       $data = $data->where("account_name","مخدر")
+       ->get();
+   
+         }
+
+         if($payas == "m5drhelper"){
+          $report_name = "مدفوعات  مساعد مخدر";
+       
+       $data = $data->where("account_name","مساعد مخدر")
+       ->get();
+   
+         }
+
+         if($payas == "qabla"){
+          $report_name = "مدفوعات القابلة";
+       
+       $data = $data->where("account_name","القابلة")
+       ->get();
+   
+         }
+
+    }else{
+      $data = $data->where(function ($query){
+           $query->where("doctor_id","!=",0)
+           ->orWhere("account_name","مخدر")
+           ->orWhere("account_name","مساعد مخدر")
+           ->orWhere("account_name","مساعد جراح")
+           
+          ->orWhere("account_name","القابلة");
+      })
     ->get();
+    }
+
+
+    
     @endphp
 
   <div class="py-2">
@@ -66,7 +123,7 @@
                 </tr>
                 <tr>
                     <th>
-                     المدفوعات
+                      {{$report_name}}
                     </th>
                     <th>
                         {{$dates}}
@@ -91,7 +148,14 @@
                     <td>{{$item->wasl_number}}</td>
                     <td>{{$item->created_at}}</td>
                  
-                    <td>{{$item->doctor->name ??""}}</td>
+                    <td>
+                      @if($item->doctor_id)
+                    {{$item->doctor->name ??""}}
+                  @else
+                  {{$item->account_name ??""}}
+
+                  @endif
+                    </td>
     
                     
                   

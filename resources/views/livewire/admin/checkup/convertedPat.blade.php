@@ -33,6 +33,7 @@
     <div class="col-12 card table-responsive" wire:poll.7000ms>
         <table class="table table-hover">
             <tr>
+                <th>رقم الوصل</th>
                 <th>رقم المريض</th>
                 <th>الأسم</th>
                 <th></th>
@@ -40,12 +41,13 @@
           
             @foreach($data as $item)
             <tr>
-                <td>{{$item->id}}</td>
-                <td>{{$item->name}}</td>
+                <td>{{$item->wasl_number}}</td>
+                <td>{{$item->Patient->id ??""}}</td>
+                <td>{{$item->Patient->name ??""}}</td>
 
               
                 <td>
-                    <a href="@route(getRouteName().'.checkup.create')?patient_id={{$item->id}}">
+                    <a href="@route(getRouteName().'.checkup.create')?patient_id={{$item->Patient->id}}&payment_id={{$item->id}}">
                         انشاء فحص</a></td>
 
 

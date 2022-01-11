@@ -71,7 +71,7 @@ z-index: -1;
                 <span style="color:3ba8b1">التاريخ : {{$data->created_at}}</span>
             </th>
             <th style="text-align: left;">
-                <span dir="ltr" style="color:3ba8b1;margin-left: 80px;font-size: 25px;">No: {{$data->id}}</span>
+                <span dir="ltr" style="color:3ba8b1;margin-left: 80px;font-size: 25px;">No: {{$data->wasl_number}}</span>
             </th>
         </tr>
     </tbody></table>
@@ -149,10 +149,20 @@ z-index: -1;
 </body>
  <script src="{{asset('js/tafqit.js')}}"></script>
  <script>
-     
+
+        var usd = "{{$data->amount_usd}}";
+        if(!usd){
+            usd =0;
+        }
+
+        var iqd = "{{$data->amount_iqd}}";
+        if(!iqd){
+            iqd =0;
+        }
+
         var amount = document.getElementById("amountWrite");
-        var amountWrite = tafqit({{$data->amount_iqd}},{TextToFollow:"on"}) + " دينار فقط لاغير ";
-        amountWrite += " و " + tafqit({{$data->amount_usd}},{TextToFollow:"on"}) + " دولار فقط لاغير ";
+        var amountWrite = tafqit(iqd,{TextToFollow:"on"}) + " دينار فقط لاغير ";
+        amountWrite += " و " + tafqit(usd,{TextToFollow:"on"}) + " دولار فقط لاغير ";
         amount.innerHTML = amountWrite
         
         setTimeout(() => {

@@ -50,14 +50,14 @@
                             </div>
 
                         </div>
-                        <div class="col-md-4" wire:ignore>
+                        <div class="col-md-4">
                         <div class='form-group'>
                                 <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
                                 
-                                <select class="form-control selectpicker" data-live-search="true" wire:model="doctor_id">
+                                <select class="form-control" data-live-search="true" wire:model="doctor_id">
                                     <option value="">يرجى اختيار طبيب</option>
-                                    @foreach(App\Models\User::where('user_type','doctor')->get() as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @foreach($doctors as $item)
+                                    <option value="{{$item->doctor->id}}">{{$item->doctor->name}}</option>
             
                                     @endforeach
                                 </select>
@@ -109,6 +109,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
                         <td style='cursor: pointer' wire:click="sort('m5dr')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'm5dr') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'm5dr') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور المخدر') }} </td>
                         <td style='cursor: pointer' wire:click="sort('helperm5dr')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'helperm5dr') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'helperm5dr') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور مساعد المخدر') }} </td>
                         <td style='cursor: pointer' wire:click="sort('operation_type')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'operation_type') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'operation_type') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور القابلة') }} </td>
+                        <td style='cursor: pointer' wire:click="sort('operation_type')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'operation_type') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'operation_type') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور المقيمة') }} </td>
                         
                         @if(config('easy_panel.crud.operationhold.delete') or config('easy_panel.crud.operationhold.update'))
                         <td>{{ __('Action') }}</td>

@@ -12,11 +12,7 @@
                     </ul>
 
                     <div class="row justify-content-between mt-4 mb-4">
-                        @if(config('easy_panel.crud.checkup.create'))
-                        <div class="col-md-4 right-0">
-                            <a href="@route(getRouteName().'.checkup.create')" class="btn btn-success">جديد</a>
-                        </div>
-                        @endif
+                    
                         @if(config('easy_panel.crud.checkup.search'))
                         <div class="col-md-4">
                             <div class="input-group">
@@ -40,7 +36,7 @@
                     <tr>
                         <td> {{ __('Patient Name') }} </td>
                         <td> {{ __('الملف') }} </td>
-                        <td> {{ __('Doctor Name') }} </td>
+                    
                         <td style='cursor: pointer' wire:click="sort('created_at')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'created_at') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'created_at') fa-sort-amount-up ml-2 @endif'></i> {{ __('Created_at') }} </td>
                         <td style='cursor: pointer' wire:click="sort('notes')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'notes') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'notes') fa-sort-amount-up ml-2 @endif'></i> {{ __('Notes') }} </td>
                         

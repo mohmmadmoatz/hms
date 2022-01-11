@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Payments;
 
 use App\Models\Payments;
+use App\Models\Stage;
 use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,7 +18,6 @@ class Create extends Component
     public $amount_usd = 0;
     public $amount_iqd =0;
     public $patinet_id;
-
     public $account_id;
     public $account_type;
     public $description;
@@ -25,44 +25,35 @@ class Create extends Component
     public $route;
     public $return_price;
     public $return_id;
-    protected $queryString = ['patinet_id','addnew','payment_type'];
+    public $wasl_number;
+    public $daterange;
+    public $payto;
+    public $total_amount;
+    public $redirect;
+    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect'];
 
     
     protected $rules = [
 
         'payment_type' => 'required',        'amount_usd' => 'required', 'amount_iqd' => 'required',       
-        'description' => 'required',        
+              
         'account_type' => 'required',        
 
 
     ];
 
+    public function initDirect()
+    {
+        $this->amount_iqd = Stage::find($this->redirect)->total_price;
+    }
+
     public function mount()
     {
-        if($this->addnew !=true){
-            if($this->patinet_id){
-                $pat=Patient::find($this->patinet_id);
-                $this->account_id = $this->patinet_id;
-                $this->account_type = 2;
-                if($pat->status == 5){
-                    $this->amount_iqd = $pat->operation->price;
-                    $this->description = $pat->operation->name;
-                }
-
-                if($pat->status == 3){
-                    $this->amount_iqd = Setting::first()->xray;
-                    $this->description = "اجور الأشعة";
-                    
-                }
-
-                if($pat->status == 4){
-                    $this->amount_iqd = Setting::first()->sonar;
-                    $this->description = "اجور السونار";
-                }
-              
-                
-            }
-
+        $this->wasl_number=Payments::withTrashed()->where("payment_type",$this->payment_type)->max("wasl_number") + 1;
+        if($this->daterange){
+            $this->total_amount = $this->amount_iqd;
+            
+            $this->description = "اجور العمليات للفترة  : " . $this->daterange;
         }
         $this->route = url()->previous();
     }
@@ -74,8 +65,26 @@ class Create extends Component
 
     
 
-    public function create()
+    public function create($print=null)
     {
+
+     
+
+        $return_iqd =0;
+        $return_usd =0;
+
+        if($this->payment_type ==2){
+        if($this->amount_iqd < 0){
+            $return_iqd = $this->amount_iqd * -1;
+            $this->amount_iqd=0;
+        }
+
+        if($this->amount_usd < 0){
+            $return_usd = $this->amount_usd * -1;
+            $this->amount_usd=0;
+        }
+    }
+
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('Payments') ])]);
@@ -87,46 +96,91 @@ class Create extends Component
         'amount_iqd' => $this->amount_iqd,
         'account_type' => $this->account_type,
         'description' => $this->description,
-        'user_id' => auth()->id()
+        'user_id' => auth()->id(),
+        "wasl_number"=>$this->wasl_number,
+        "redirect"=>$this->redirect,
+        "return_iqd"=>$return_iqd,
+        "return_usd"=>$return_usd,
     ];
-    
+
+  
+
+
         if($this->account_type == 1){
             $data['doctor_id'] = $this->account_id;
         }else if($this->account_type ==2){
-            $data['patinet_id'] = $this->account_id;
+            $data['patinet_id'] = $this->account_id;    
+            $patdata = Patient::find($this->account_id);
+            $patdata->paid =1;
+           $patdata->save();
         }else if($this->account_type ==3){
             $data['account_name'] = $this->account_id;
         }
 
-        Payments::create($data);
+      $printid =   Payments::create($data);
 
-        if($this->patinet_id){
-            $pat = Patient::find($this->patinet_id);
-            $pat->paid=1;
-            
-            if($pat->status == 3){
-                $pat->xray = 0;
+     
+      
+        if($this->daterange){
+            $data = OperationHold::query();
+            $date1 = explode(" - ", $this->daterange)[0];
+            $date2 = explode(" - ", $this->daterange)[1];
+            $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+           
+        if($this->payto =="doctor"){
 
-            }
-
-            if($pat->status == 4){
-                $pat->sonar = 0;
-            }
-
-            $pat->save();
-
+            $data = $data->where("doctor_id",$this->account_id);
+            $data->update([
+                "doctor_paid"=>1
+            ]);
+        }elseif ($this->payto =="helper") {
+            $data = $data->whereNull("helper_paid");
+            $data->update([
+                "helper_paid"=>1
+            ]);
+        }elseif ($this->payto =="helperm5dr") {
+            $data = $data->whereNull("helperm5dr_paid");
+            $data->update([
+                "helperm5dr_paid"=>1
+        ]);
+        }elseif ($this->payto =="qabla") {
+            $data = $data->whereNull("qabla_paid");
+            $data->update([
+                "qabla_paid"=>1
+            ]);
+        }elseif ($this->payto =="m5dr") {
+            $data = $data->whereNull("m5dr_paid")->whereNotNull("m5dr_selected");
+            $data->update([
+                "m5dr_paid"=>1
+            ]);
+        }elseif ($this->payto =="mqema") {
+            $data = $data->whereNull("mqema_paid");
+            $data->update([
+                "mqema_paid"=>1
+            ]);
         }
+
+    }
+
 
         if($this->return_id){
             $operation = OperationHold::where("payment_number",$this->return_id)->first();
 
             if($operation){
                 $updateOpeartion = OperationHold::find($operation->id);
-                $nsba = $updateOpeartion->doctorexp / $updateOpeartion->operation_price;
+              
                 $updateOpeartion->operation_price = $updateOpeartion->operation_price - $this->amount_iqd;
-                $updateOpeartion->doctorexp = $nsba * $updateOpeartion->operation_price;
+                $updateOpeartion->doctorexp = $updateOpeartion->nsba * $updateOpeartion->operation_price;
                 $updateOpeartion->save();
             }
+        }
+
+       
+        if($print){
+          
+        return  redirect(route("printrecept") . "?id=$printid->id");
+
+           
         }
 
         return  redirect($this->route);

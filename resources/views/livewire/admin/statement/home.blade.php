@@ -49,12 +49,12 @@
                         </button>
 
                         <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
-                            <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false" >
+                            <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
                                 <h5 class="pb-2 border-bottom">اختيار الطبيب</h5>
                               
-                                <select  wire:model.lazy="doctor_id" class="form-control">
+                                <select wire:model.lazy="doctor_id" class="form-control" >
                                     <option value="">اختيار الطبيب</option>
-                                    @foreach(App\Models\User::where("user_type","doctor")->get() as $item)
+                                    @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
@@ -82,26 +82,97 @@
                         <a href = "@route('m5drhelper')?id={{$doctor_id}}&daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور مساعد المخدر</a>
                     </div>
 
+                    <div class="col-md-6 py-2">
+                        <a href = "@route('qablat')?daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور القابلات</a>
+                    </div>
+
+                    
+
+                    
+
                     <div class="col-md-12 py-2">
                     <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">الميزانية</a>
                     </div>
 
-                    <div class="col-md-4 py-2">
-                        <a href = "@route('qablat')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب اجور القابلات</a>
-                    </div>
+                  
 
                     <div class="col-md-4 py-2">
                         <a href = "@route('expense')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المصاريف</a>
                     </div>
 
                     <div class="col-md-4 py-2">
-                        <a href = "@route('doctorpays')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب مدفوعات الأطباء</a>
+                        <a href = "@route('doctorpays')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المدفوعات</a>
                     </div>
 
                     <div class="col-md-4 py-2">
                         <a href = "@route('income')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المقبوضات</a>
                     </div>
 
+                    <div class="col-md-4" x-data="{'modalIsOpen':false}">
+                        <button @click.prevent="modalIsOpen = true" class="btn btn-warning btn-block">
+                            المقبوضات حسب التوجيه
+                          
+                           
+                        </button>
+
+                        <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
+                            <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
+                                <h5 class="pb-2 border-bottom">اختيار التوجيه</h5>
+                              
+                                <select wire:model.lazy="stage" class="form-control" >
+                                    <option value="">اختيار التوجيه</option>
+                                    @foreach(App\Models\Stage::where("id","!=",5)->get() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="mt-5 d-flex justify-content-between">
+                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}" class="text-white btn btn-success shadow">احتساب</a>
+                                </div>
+                            </div>
+
+                          
+                          
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <h4>كشف المدفوعات حسب : </h4>
+                        <select class="form-control" wire:model="payas">
+                            <option value="">اختيار</option>
+                            <option value="doctor">طبيب</option>
+                            <option value="helper">مساعد جراح</option>
+                            <option value="m5dr">مخدر</option>
+                            <option value="m5drhelper">مساعد مخدر </option>
+                            <option value="qabla">القابلة </option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+
+                    @if($payas == "doctor")
+                   
+                    <div class="col-md-12">
+                        <select wire:model.lazy="by_doctor" class="form-control"  >
+                            <option value="">اختيار الطبيب</option>
+                            @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+               
+                    @endif
+                    <div class="col-md-12">
+                        <a href = "@route('doctorpays')?daterange={{$daterange}}&doctor_id={{$by_doctor}}&payas={{$payas}}" target="_blank" class="btn btn-primary btn-block"> كشف المدفوعات </a>
+                        
+                    </div>
                     @endif
                 </div>
             </div>

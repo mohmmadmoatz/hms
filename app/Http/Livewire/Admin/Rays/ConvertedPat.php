@@ -17,10 +17,10 @@ class ConvertedPat extends Component
     
     public function render()
     {
-        $data = Patient::query();
+        $data = Payments::query();
 
-        if(config('easy_panel.crud.patient.search')){
-            $array = (array) config('easy_panel.crud.patient.search');
+        if(config('easy_panel.crud.payments.search')){
+            $array = (array) config('easy_panel.crud.payments.search');
             $data->where(function (Builder $query) use ($array){
                 foreach ($array as $item) {
                     if(!is_array($item)) {
@@ -33,7 +33,8 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data=  $data->where('status',3)->where("paid",1)->where("xray",0)->get();
+        $data=  $data->where('redirect',3)->whereNull("redirect_done")->get();
+
         return view('livewire.admin.rays.convertedPat', [
             'data' => $data
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('Payments')) ]);

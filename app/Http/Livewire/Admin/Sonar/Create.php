@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Sonar;
 
 use App\Models\Sonar;
+use App\Models\Payments;
 use App\Models\Patient;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,8 +16,9 @@ class Create extends Component
     public $patient_id;
     public $notes;
     public $image;
+    public $payment_id;
 
-    protected $queryString = ['patient_id'];
+    protected $queryString = ['patient_id','payment_id'];
     
     protected $rules = [
         'patient_id' => 'required'
@@ -45,6 +47,10 @@ class Create extends Component
 
         $pat = Patient::find($this->patient_id);
         $pat->sonar =$sonarData->id;
+        $pat->save();
+
+        $pat = Payments::find($this->payment_id);
+        $pat->redirect_done = $sonarData->id;
         $pat->save();
 
         $this->reset();

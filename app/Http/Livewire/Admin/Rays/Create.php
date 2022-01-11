@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Admin\Rays;
 
 use App\Models\Rays;
 use App\Models\Patient;
+use App\Models\Payments;
+
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,7 +18,8 @@ class Create extends Component
     public $notes;
     public $image;
 
-    protected $queryString = ['patient_id'];
+    public $payment_id;
+    protected $queryString = ['patient_id','payment_id'];
 
     
     protected $rules = [
@@ -46,6 +49,10 @@ class Create extends Component
 
         $pat = Patient::find($this->patient_id);
         $pat->xray =$rayData->id;
+        $pat->save();
+
+        $pat = Payments::find($this->payment_id);
+        $pat->redirect_done = $rayData->id;
         $pat->save();
 
 

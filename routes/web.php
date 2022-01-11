@@ -54,6 +54,10 @@ Route::get('/income', function () {
     return view('printed.income');
 })->name("income");
 
+Route::get('/incomebystage', function () {
+    return view('printed.incomebystage');
+})->name("incomebystage");
+
 Route::get('/expense', function () {
     return view('printed.expense');
 })->name("expense");

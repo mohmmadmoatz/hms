@@ -180,6 +180,58 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='qabla' class=' control-label'>اجور القابلة</label>
+                    <input type='number' wire:model.lazy='qabla' class="form-control @error('qabla') is-invalid @enderror" id='qabla'>
+                    @error('qabla') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='mqema' class=' control-label'>اجور المقيمة</label>
+                    <input type='number' wire:model.lazy='mqema' class="form-control @error('mqema') is-invalid @enderror" id='mqema'>
+                    @error('qabla') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='not_supervised' class=' control-label'>اجور الجراح في حالة عدم الأشراف</label>
+                    <input type='number' wire:model.lazy='not_supervised' class="form-control @error('not_supervised') is-invalid @enderror" id='not_supervised'>
+                    @error('not_supervised') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Sonar Input -->
+                <div class='form-group'>
+                    <label for='supervised' class=' control-label'>اجور الجراح في حالة  الأشراف</label>
+                    <input type='number' wire:model.lazy='supervised' class="form-control @error('supervised') is-invalid @enderror" id='supervised'>
+                    @error('not_supervised') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+                    <!-- Doctor_id Input -->
+            <div class="col-md-4" wire:ignore>
+                <div class='form-group'>
+                    <label for='inputdoctor_id' class=' control-label'>طبيبة مقيمة</label>
+                    
+                    <select class="form-control selectpicker" data-live-search="true" wire:model="mqema_id">
+                        <option value="">يرجى اختيار طبيب</option>
+                        @foreach(App\Models\User::where('user_type','resident')->get() as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+
+                        @endforeach
+                    </select>
+                    
+                </div>
+            </div>
+
             @endif
          
             

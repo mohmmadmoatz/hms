@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-12 card table-responsive" wire:poll.7000ms>
-        <table class="table table-hover">
+        <table class="table table-hover" >
             <tr>
                 <th>رقم المريض</th>
                 <th>الأسم</th>
@@ -42,25 +42,26 @@
             </tr>
             @php
             $setting = App\Models\Setting::first();
+           
             @endphp
             @foreach($data as $item)
-            <tr>
+            <tr wire:key="{{$item->id}}" x-data="{ receptModal : false ,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
                 <td>{{$item->id}}</td>
                 <td>{{$item->name}}</td>
 
                  @if($item->status == 1)
                 <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($setting->clinic_price + $setting->doctor_price) د.ع</td>
+                <td>@convert($item->stage->total_price) د.ع</td>
                 @endif
 
                 @if($item->status == 3)
                 <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($setting->xray + $setting->xray_doctor_price) د.ع</td>
+                <td>@convert($item->stage->total_price) د.ع</td>
                 @endif
 
                 @if($item->status == 4)
                 <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($setting->sonar + $setting->doctor_sonar_price) د.ع</td>
+                <td>@convert($item->stage->total_price) د.ع</td>
                 @endif
 
                 @if($item->status == 5)
@@ -69,56 +70,42 @@
                 @endif
                         <td>
 
-                        @if($item->status ==1)
+                        @if($item->status !=5)
 
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->clinic_price}},{{$setting->doctor_price}},'اجور العيادة الاستشارية',{{$setting->doctor->id}})">
-                            قبض : @convert($setting->clinic_price + $setting->doctor_price) د.ع 
-                            من المريض 
-                            <!-- <hr>
+                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}">قبض 
+                        @convert($item->stage->total_price) د.ع
+                        من المريض
+                        </a>
 
-                            صرف : @convert($setting->doctor_price) د.ع 
-                            الى {{$setting->doctor->name ?? ""}} -->
-
-                        </button>
-
-                        @elseif($item->status ==3)
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->xray}},{{$setting->xray_doctor_price}},'اجور الأشعة',{{$setting->xdoctor->id}})">
-                            قبض : @convert($setting->xray + $setting->xray_doctor_price) د.ع 
-                            من المريض 
-                            <!-- <hr> -->
-
-                            <!-- صرف : @convert($setting->xray_doctor_price) د.ع 
-                            الى {{$setting->xdoctor->name ?? ""}} -->
-
-                        </button>
-                        @elseif($item->status ==4)
-                        <button class="btn btn-danger" wire:click="saveSands({{$item->id}},{{$setting->sonar}},{{$setting->doctor_sonar_price}},'اجور السونار',{{$setting->sdoctor->id}})">
-                            قبض : @convert($setting->sonar + $setting->doctor_sonar_price) د.ع 
-                            من المريض 
-                            <!-- <hr> -->
-
-                            <!-- صرف : @convert($setting->doctor_sonar_price) د.ع 
-                            الى {{$setting->sdoctor->name ?? ""}} -->
-
-                        </button>
                         @elseif($item->status == 5)
-                        @php
+                            @php
+                            
+                        
+
                             $doctor_amount = ($item->operation->price) * ($item->hms_nsba / 100);
                             $hms_amount = ($item->operation->price) - $doctor_amount;
                             $helperdoctor = $setting->helper_doctor;
                             $m5dr_doctor = $setting->m5dr_doctor;
                             $helper_m5dr_doctor = $setting->helper_m5dr_doctor;
-                            @endphp
-                            @if($item->operation->name =="ولادة طبيعية")
-                            <button class="btn btn-danger" wire:click ="saveOpSandWalada({{$item->operation->price + $setting->pat_profile}},{{$item->id}})">
-                            قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
-                            من المريض 
-                            @else
 
-                        <button class="btn btn-danger" wire:click ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}})">
+
+
+                            @endphp
+
+                            @if($item->operation->name =="ولادة طبيعية")
+                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;income={{$item->operation->price + $setting->pat_profile}};description="{{$item->operation->name}}";amount_iqd=income;amount_usd=0;'>
+                                
                             قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
+                            </button>
+                            @else
+                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;income={{$item->operation->price + $setting->pat_profile}};description="{{$item->operation->name}}";amount_iqd=income;amount_usd=0;'>
+                            قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
+                            من المريض 
+                            </button>
                            @endif
+
+                   
 
                            
 
@@ -136,7 +123,54 @@
                             صرف : @convert($helper_m5dr_doctor) د.ع 
                             الى مساعد المخدر -->
 
-                        </button>
+  
+
+                <div x-show="receptModal" class="cs-modal animate__animated animate__fadeIn">
+                    <div class="bg-white shadow rounded p-5" @click.away="receptModal = false" >
+                        <h5 class="pb-2 border-bottom">سند قبض</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>رقم الوصل</label>
+                                <input type="text" class="form-control" x-model="wasl_number">
+                            </div>
+                            <div class="col-md-6">
+                                <label>اسم الجراح</label>
+                                <input type="text" class="form-control" readonly value="{{$item->doctor->name ?? ''}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label>المبلغ الأجمالي</label>
+                               <input  type="text" class="form-control" x-model="income">
+                           </div>
+
+                           <div class="col-md-4">
+                            <label>دينار</label>
+                           <input  type="text" class="form-control"  x-model="amount_iqd">
+                       </div>
+
+                       <div class="col-md-4">
+                        <label>دولار</label>
+                       <input  type="text" class="form-control"  x-model="amount_usd">
+                   </div>
+
+                   <div class="col-md-12">
+                       <label for="">وذلك عن</label>
+                       <textarea class="form-control" x-model="description"></textarea>
+                   </div>
+
+                        </div>
+                        <div class="mt-5 d-flex justify-content-between">
+                           @if($item->operation->name !="ولادة طبيعية")
+                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
+                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
+                            @else
+                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},0,0,0,{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
+                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},0,0,0,{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
+                            @endif
+                            <a  @click.prevent="receptModal = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
+
+                        </div>
+                    </div>
+                </div>
 
                         @endif
 

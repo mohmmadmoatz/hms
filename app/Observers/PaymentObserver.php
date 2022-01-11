@@ -14,13 +14,19 @@ class PaymentObserver
      */
     public function created(Payments $payments)
     {
+      
+        if(!$payments->wasl_number)
+        {
+         
+            $lastNumber = Payments::withTrashed()
+            ->where("payment_type",$payments->payment_type)
+            ->max("wasl_number") + 1;
+           
+            $payments->wasl_number=$lastNumber;
+            $payments->save();
+        }
         //
-        $lastNumber = Payments::withTrashed()
-        ->where("payment_type",$payments->payment_type)
-        ->count("wasl_number");
        
-        $payments->wasl_number=$lastNumber;
-        $payments->save();
     }
 
     /**

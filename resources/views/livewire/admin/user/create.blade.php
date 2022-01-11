@@ -45,6 +45,7 @@
                                     <option value="superadmin">superadmin</option>
                                     <option value="accountant">accountant</option>
                                     <option value="doctor">Doctor</option>
+                                    <option value="resident">مقيمة</option>
                                     <option value="info">Information</option>
                                     <option value="lab">lab</option>
                                     <option value="rays">rays</option>
@@ -52,6 +53,7 @@
 
                                 </select>
             </div>
+
             <div class='form-group'>
                 <label for='inputimage' class='col-sm-2 control-label'> {{ __('Image') }}</label>
                 <input type='file' wire:model='image' class="form-control-file @error('image') is-invalid @enderror" id='inputimage'>

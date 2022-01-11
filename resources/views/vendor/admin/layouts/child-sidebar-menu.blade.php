@@ -44,6 +44,15 @@
             </a>
         </li>
 
+        <li class="sidebar-item @isActive(getRouteName().'.'.'stage'.'.read')">
+            <a href="@route(getRouteName().'.stage.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'stage'.'.read')">
+                <span class="hide-menu"> التوجيهات </span>
+            </a>
+        </li>
+
+      
+
         <li class="sidebar-item @isActive(getRouteName().'.'.'user'.'.read')">
             <a href="@route(getRouteName().'.user.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'user'.'.read')">
@@ -73,6 +82,14 @@
     href="@route(getRouteName().'.setting.read')" aria-expanded="false">
         <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
         <span class="hide-menu">الأسعار</span>
+    </a>
+</li>
+<li
+    class='sidebar-item @isActive([getRouteName().".stage.read", getRouteName().".stage.update"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".stage.read", getRouteName().".stage.update"], "active") '
+    href="@route(getRouteName().'.stage.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">التوجيهات</span>
     </a>
 </li>
 @endif

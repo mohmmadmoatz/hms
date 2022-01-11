@@ -103,5 +103,8 @@
     "Title": "Title",
     "Content": "Content",
     "Operationhold": "Operationhold",
-    "Operationholds": "Operationholds"
+    "Operationholds": "Operationholds",
+    "Total_price": "Total_price",
+    "Stage": "Stage",
+    "Stages": "Stages"
 }

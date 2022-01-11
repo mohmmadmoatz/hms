@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Payments;
 
 use App\Models\Payments;
+use App\Models\Setting;
 use App\Models\Patient;
 use App\Models\OperationHold;
 
@@ -10,66 +11,57 @@ use App\Models\OperationHold;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+
 use DB;
 class ConvertedPat extends Component
 {
     public $search;
+    public $wasl_number;
+    public $income;
 
+    public $amount_iqd;
+    public $amount_usd;
+    public $description;
     protected $queryString = ['search'];
 
-    public function saveOpSandWalada($income,$id)
+    public function loadNumberRecept()
     {
-        $patient = Patient::find($id);
-        $data =[
-            'payment_type' => 2,
-            'amount_iqd' => $income,
-            'account_type' => 2,
-            'description' => $patient->operation->name,
-            'user_id' => auth()->id(),
-            "patinet_id"=>$id
-        ];
-        $number = Payments::create($data);
-
-        $operation = [
-            "patinet_id"=>$id,
-            "doctor_id"=>$patient->doctor_id,
-            "operation_price"=>$patient->operation->price,
-            "operation_name"=>$patient->operation->name,
-            "doctorexp"=>"200000",
-            "helper"=>0,
-            "m5dr"=>0,
-            "helperm5dr"=>0,
-            "user_id"=>auth()->id(),
-            "payment_number"=>$number->wasl_number,
-        ];
-
-        OperationHold::create($operation);
-
-
-        $patdata = Patient::find($id);
-
-        $patdata->paid =1;
-        $patdata->save();
-
-        $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم انشاء سند صرف وقبض" ]);
-
+      
+        $this->wasl_number=Payments::withTrashed()->where("payment_type","2")->max("wasl_number") + 1;
     }
 
-    public function saveOpSand($income,$doctorexp,$helper,$m5dr,$helperm5dr,$id)
+   
+
+    public function saveOpSand($income,$doctorexp,$helper,$m5dr,$helperm5dr,$id,$print)
     {
 
         
+        $return_iqd =0;
+        $return_usd =0;
 
+        if($this->amount_iqd < 0){
+            $return_iqd = $this->amount_iqd * -1;
+            $this->amount_iqd=0;
+        }
+
+        if($this->amount_usd < 0){
+            $return_usd = $this->amount_usd * -1;
+            $this->amount_usd=0;
+        }
         
         $patient = Patient::find($id);
-    
+        
         $data =[
             'payment_type' => 2,
-            'amount_iqd' => $income,
+            'amount_iqd' => $this->amount_iqd,
+            'amount_usd' => $this->amount_usd,
+            'return_iqd' => $return_iqd,
+            'return_usd' => $return_usd,
             'account_type' => 2,
-            'description' => $patient->operation->name,
+            'description' => $this->description,
             'user_id' => auth()->id(),
-            "patinet_id"=>$id
+            "patinet_id"=>$id,
+            "wasl_number"=>$this->wasl_number
         ];
 
 
@@ -78,11 +70,26 @@ class ConvertedPat extends Component
 
         $number = Payments::create($data);
 
+        $setting = Setting::find(1);
        
+        if($patient->operation->name == "ولادة طبيعية"){
+        if($patient->hms_nsba ==60){
+            if($this->income - $setting->pat_profile >= 600000){
+                $doctorexp = ($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
+            }else{
+                $doctorexp = 0;
+            }
+        }else{
+            $doctorexp = 0;
+        }
+    }else{
+        $doctorexp =($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
+    }
+
         $operation = [
             "patinet_id"=>$id,
             "doctor_id"=>$patient->doctor_id,
-            "operation_price"=>$patient->operation->price,
+            "operation_price"=>$this->income - $setting->pat_profile,
             "operation_name"=>$patient->operation->name,
             "doctorexp"=>$doctorexp,
             "helper"=>$helper,
@@ -90,93 +97,25 @@ class ConvertedPat extends Component
             "helperm5dr"=>$helperm5dr,
             "user_id"=>auth()->id(),
             "payment_number"=>$number->wasl_number,
+            "nsba"=>$patient->hms_nsba,
+            "mqema_id"=>$setting->mqema_id,
+            "mqema_price"=>$setting->mqema,
+            "qabla"=>$setting->qabla,
         ];
 
         OperationHold::create($operation);
 
 
-        
-
-        // $idnumber = $number->id;
-
-
-
-        // $data =[
-        //     'payment_type' => 1,
-        //     'amount_iqd' => $doctorexp,
-        //     'account_type' => 1,
-        //     'description' => $patient->operation->name,
-        //     'user_id' => auth()->id(),
-        //     "doctor_id"=>$patient->doctor_id,
-        //     "operation_price"=>$patient->operation->price,
-        //     "patinet_id"=>$id,
-        //     "payment_number"=>$idnumber
-
-        // ];
-
-        
-
-        // Payments::create($data);
-        
-
-        // $data =[
-        //     'payment_type' => 1,
-        //     'amount_iqd' => $helper,
-        //     'account_type' => 3,
-        //     'description' => $patient->operation->name,
-        //     'user_id' => auth()->id(),
-        //     "account_name"=>"مساعد جراح",
-        //     "patinet_id"=>$id,
-        //     "payment_number"=>$idnumber
-
-        // ];
-
-        
-
-        // Payments::create($data);
-
-
-
-        // $data =[
-        //     'payment_type' => 1,
-        //     'amount_iqd' => $m5dr,
-        //     'account_type' => 3,
-        //     'description' => $patient->operation->name,
-        //     'user_id' => auth()->id(),
-        //     "account_name"=>"طبيب مخدر",
-        //     "patinet_id"=>$id,
-        //     "payment_number"=>$idnumber
-
-        // ];
-
-        
-
-        // Payments::create($data);
-
-
-        // $data =[
-        //     'payment_type' => 1,
-        //     'amount_iqd' => $helperm5dr,
-        //     'account_type' => 3,
-        //     'description' => $patient->operation->name,
-        //     'user_id' => auth()->id(),
-        //     "account_name"=>"مساعد مخدر",
-        //     "patinet_id"=>$id,
-        //     "payment_number"=>$idnumber
-
-        // ];
-
-        
-
-        // Payments::create($data);
-
+       
         $patdata = Patient::find($id);
 
         $patdata->paid =1;
         $patdata->save();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم انشاء سند صرف وقبض" ]);
-        
+        if($print){
+            $this->dispatchBrowserEvent('open-window', ['url' => route("printrecept") . "?id=$number->id"]);
+        }
     }
 
     public function saveSands($id,$income,$out,$string,$doctor)

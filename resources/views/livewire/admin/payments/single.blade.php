@@ -3,8 +3,21 @@
 <td>{{$payments->wasl_number}}</td>
 
 <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">{{$payments->payment_type ==1 ?'صرف' :'قبض'}}</span> </td>
-    <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">@convert($payments->amount_usd)</span> </td>
-    <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">@convert($payments->amount_iqd)</span> </td>
+    <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">
+        @convert($payments->amount_usd)
+        @if($payments->return_usd)
+        <hr>
+        <span class="text-danger"> مرجع : @convert($payments->return_usd) </span>
+        @endif
+    </span> </td>
+    <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">
+        @convert($payments->amount_iqd)
+        @if($payments->return_iqd)
+        <hr>
+       <span class="text-danger">مرجع : @convert($payments->return_iqd)</span>  
+        @endif
+    </span> 
+    </td>
     <td> {{ $payments->user->name ?? "" }} </td>
     <td> 
     

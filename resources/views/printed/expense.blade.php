@@ -46,6 +46,10 @@
    
     $data = App\Models\Payments::where("payment_type",1)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("doctor_id",0)
+    ->where("account_name","!=","مخدر")
+    ->where("account_name","!=","مساعد مخدر")
+    ->where("account_name","!=","مساعد جراح")
+    ->where("account_name","!=","القابلة")
     ->get();
     @endphp
 

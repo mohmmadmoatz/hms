@@ -13,14 +13,14 @@ class Home extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search;
-
+    public $stage;
     protected $queryString = ['search','daterange'];
 
     public $doctor_id;
-   
+    public $payas;
     public $datefilterON;
     public $daterange;
-
+    public $by_doctor;
     public function searchBydate($date)
     {
         # code...
