@@ -56,8 +56,8 @@
                 <div class="col-md-6">
 
                     <div class='form-group'>
-                        <label for='inputphone' class='control-label'> {{ __('date of birth') }}</label>
-                        <input type='date' wire:model.lazy='age' 
+                        <label for='inputphone' class='control-label'> {{ __('العمر') }}</label>
+                        <input type='number' wire:model.lazy='age' 
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('age') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>

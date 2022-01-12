@@ -58,8 +58,12 @@ class Update extends Component
         $this->status = $this->patient->status;
         $this->image = $this->patient->image;        
         $this->clinic_id = $this->patient->clinic_id;
-        $roomdata = Room::find($this->patient->room_id);
-        $this->floor = $roomdata->floor;
+        if($this->status==5){
+            $roomdata = Room::find($this->patient->room_id);
+            $this->floor = $roomdata->floor;
+        }
+ 
+
         $this->room_id = $this->patient->room_id;
         $this->doctor_id = $this->patient->doctor_id;
         $this->opration_id = $this->patient->opration_id;
@@ -132,8 +136,14 @@ class Update extends Component
         $oldroom = $this->patient->room_id;
 
         $oldroomupdate = Room::find($oldroom);
-        $oldroomupdate->patient_id =0;
-        $oldroomupdate->save();
+        if($oldroomupdate){
+            $oldroomupdate->patient_id =0;
+            $oldroomupdate->save();
+        }
+      
+        if($this->patient->status !=5){
+            $updatedata['paid']=0;
+        }
 
         $room = Room::find($this->room_id);
         $room->patient_id=$this->patient->id;

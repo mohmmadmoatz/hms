@@ -51,6 +51,11 @@ class Create extends Component
         $this->validateOnly($input);
     }
 
+    public function mount()
+    {
+        $this->inter_at = date("Y-m-d");
+    }
+
     public function create()
     {
         $this->validate();

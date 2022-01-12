@@ -80,7 +80,7 @@
                 <ul class="navbar-nav float-left ml-auto ml-3 pl-1">
                     <!-- Notification -->
 
-                    @if(Auth::user()->user_type  == "info" ||  Auth::user()->user_type  == "superadmin" )
+                    @if(Auth::user()->user_type  == "info" ||  Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "accountant")
                     <a href="@route(getRouteName().'.patient.create')"  class="btn btn-info"> مريض جديد <i class="fa fa-plus"></i> </a>
                     @endif
 
