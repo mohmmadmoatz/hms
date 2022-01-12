@@ -49,20 +49,12 @@
                 <td>{{$item->id}}</td>
                 <td>{{$item->name}}</td>
 
-                 @if($item->status == 1)
+                 @if($item->status != 5)
                 <td>{{$item->stage->name ?? ""}}</td>
                 <td>@convert($item->stage->total_price) د.ع</td>
                 @endif
 
-                @if($item->status == 3)
-                <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($item->stage->total_price) د.ع</td>
-                @endif
-
-                @if($item->status == 4)
-                <td>{{$item->stage->name ?? ""}}</td>
-                <td>@convert($item->stage->total_price) د.ع</td>
-                @endif
+              
 
                 @if($item->status == 5)
                 <td>{{$item->operation->name ?? ""}}</td>
