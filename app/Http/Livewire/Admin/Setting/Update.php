@@ -36,6 +36,8 @@ class Update extends Component
     public $not_supervised;
     public $supervised;
     public $mqema_id;
+    public $nurse_price;
+    public $ambulance;
     
     protected $rules = [
         'xray' => 'required',        
@@ -68,6 +70,8 @@ class Update extends Component
         $this->not_supervised = $this->setting->not_supervised;        
         $this->supervised = $this->setting->supervised;        
         $this->mqema_id = $this->setting->mqema_id;        
+        $this->nurse_price = $this->setting->nurse_price;        
+        $this->ambulance = $this->setting->ambulance;        
     }
 
     public function updated($input)
@@ -100,6 +104,8 @@ class Update extends Component
             'not_supervised' => $this->not_supervised,         
             'supervised' => $this->supervised,         
             'mqema_id' => $this->mqema_id,  
+            'nurse_price' => $this->nurse_price,  
+            'ambulance' => $this->ambulance,  
         ]);
     }
 

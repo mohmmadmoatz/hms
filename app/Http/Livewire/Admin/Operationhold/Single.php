@@ -11,9 +11,15 @@ class Single extends Component
 {
 
     public $operationhold;
-
     public $optype;
     public $supervisedPrice;
+    public $doctorexp;
+    public $helperprice;
+    public $helperm5dr;
+    public $qabla;
+    public $mqema_price;
+    public $nurse_price;
+    public $ambulance;
     public function mount(OperationHold $operationhold){
         $this->operationhold = $operationhold;
     }
@@ -34,104 +40,71 @@ class Single extends Component
             $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تحديد اجور الطبيب" ]);
          
         }else{
-            $this->operationhold->doctor_paid =1;
+            $this->operationhold->doctorexp =$this->doctorexp;
             $this->operationhold->save();
         }
         
-
-         $data =[
-            'payment_type' => 1,
-            'amount_iqd' => $doctorexp,
-            'account_type' => 1,
-            'description' => $this->operationhold->operation_name,
-            'user_id' => auth()->id(),
-            "doctor_id"=>$this->operationhold->doctor_id,
-            "operation_price"=>$this->operationhold->operation_price,
-            "patinet_id"=>$this->operationhold->patinet_id,
-            "payment_number"=>$this->operationhold->payment_number,
-            
-
-        ];
         if(!$price){
-            Payments::create($data);
-            $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
+        
+            $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تعديل السعر" ]);
         }else{
             $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تحديد اجور الطبيب" ]);
         }
   
+        $this->emit('operationholdDeleted');
 
-    }
+   
+
+ 
+   }
+
+   public function saveAmb()
+   {
+       $this->operationhold->ambulance =$this->ambulance;
+       $this->operationhold->save();
+       $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تعديل السعر" ]);
+
+   }
+
+   public function savenurse()
+   {
+       $this->operationhold->nurse_price =$this->nurse_price;
+       $this->operationhold->save();
+       $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تعديل السعر" ]);
+
+   }
 
     public function savehelper()
     {
-        $this->operationhold->helper_paid =1;
+        $this->operationhold->helper =$this->helperprice;
         $this->operationhold->save();
 
-         $data =[
-            'payment_type' => 1,
-            'amount_iqd' => $this->operationhold->helper,
-            'description' => $this->operationhold->operation_name,
-            'user_id' => auth()->id(),
-            'account_type' => 3,
-            "account_name"=>"مساعد جراح",
-            "operation_price"=>$this->operationhold->operation_price,
-            "patinet_id"=>$this->operationhold->patinet_id,
-            "payment_number"=>$this->operationhold->payment_number
-
-        ];
-
-        Payments::create($data);
+         
 
 
-        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
+        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تعديل السعر" ]);
 
     }
 
 
     public function savehelperm5dr()
     {
-        $this->operationhold->helperm5dr_paid =1;
+        $this->operationhold->helperm5dr =$this->helperm5dr;
         $this->operationhold->save();
 
-         $data =[
-            'payment_type' => 1,
-            'amount_iqd' => $this->operationhold->helperm5dr,
-            'description' => $this->operationhold->operation_name,
-            'user_id' => auth()->id(),
-            'account_type' => 3,
-            "account_name"=>"مساعد مخدر",
-            "operation_price"=>$this->operationhold->operation_price,
-            "patinet_id"=>$this->operationhold->patinet_id,
-            "payment_number"=>$this->operationhold->payment_number
-
-        ];
-
-        Payments::create($data);
+        
 
 
-        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
+        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تعديل السعر" ]);
 
     }
 
     public function saveqabla()
     {
-        $this->operationhold->qabla_paid =1;
+        $this->operationhold->qabla =$this->qabla;
         $this->operationhold->save();
 
-         $data =[
-            'payment_type' => 1,
-            'amount_iqd' => Setting::find(1)->qabla,
-            'description' => $this->operationhold->operation_name,
-            'user_id' => auth()->id(),
-            'account_type' => 3,
-            "account_name"=>"القابلة",
-            "operation_price"=>$this->operationhold->operation_price,
-            "patinet_id"=>$this->operationhold->patinet_id,
-            "payment_number"=>$this->operationhold->payment_number
-
-        ];
-
-        Payments::create($data);
+       
 
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
@@ -167,24 +140,11 @@ class Single extends Component
 
     public function savemqema()
     {
-        $this->operationhold->mqema_paid =1;
-        $this->operationhold->mqema_price =1;
+      
+        $this->operationhold->mqema_price =$this->mqema_price;
         $this->operationhold->save();
 
-         $data =[
-            'payment_type' => 1,
-            'amount_iqd' => Setting::find(1)->mqema,
-            'description' => $this->operationhold->operation_name,
-            'user_id' => auth()->id(),
-            'account_type' => 1,
-            "doctor_id"=>Setting::find(1)->mqema_id,
-            "operation_price"=>$this->operationhold->operation_price,
-            "patinet_id"=>$this->operationhold->patinet_id,
-            "payment_number"=>$this->operationhold->payment_number
-
-        ];
-
-        Payments::create($data);
+        
 
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);

@@ -30,7 +30,11 @@ class Create extends Component
     public $payto;
     public $total_amount;
     public $redirect;
-    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect'];
+    public $redirect_doctor_price;
+    public $redirect_nurse_price;
+    public $stname;
+    public $stid;
+    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid'];
 
     
     protected $rules = [
@@ -45,6 +49,9 @@ class Create extends Component
     public function initDirect()
     {
         $this->amount_iqd = Stage::find($this->redirect)->total_price;
+
+        $this->redirect_doctor_price = Stage::find($this->redirect)->doctor_price;
+        $this->redirect_nurse_price = Stage::find($this->redirect)->other_price;
     }
 
     public function mount()
@@ -52,8 +59,11 @@ class Create extends Component
         $this->wasl_number=Payments::withTrashed()->where("payment_type",$this->payment_type)->max("wasl_number") + 1;
         if($this->daterange){
             $this->total_amount = $this->amount_iqd;
-            
+          
             $this->description = "اجور العمليات للفترة  : " . $this->daterange;
+            if($this->stname){
+            $this->description = "اجور $this->stname للفترة  : " . $this->daterange;
+            }
         }
         $this->route = url()->previous();
     }
@@ -94,6 +104,10 @@ class Create extends Component
         'payment_type' => $this->payment_type,
         'amount_usd' => $this->amount_usd,
         'amount_iqd' => $this->amount_iqd,
+
+        'redirect_doctor_price' => $this->redirect_doctor_price,
+        'redirect_nurse_price' => $this->redirect_nurse_price,
+
         'account_type' => $this->account_type,
         'description' => $this->description,
         'user_id' => auth()->id(),
@@ -117,7 +131,11 @@ class Create extends Component
             $data['account_name'] = $this->account_id;
         }
 
-      $printid =   Payments::create($data);
+        if($this->stname){
+            $data['is_stage']=$this->stid;
+        }
+
+          $printid =   Payments::create($data);
 
      
       
@@ -126,6 +144,10 @@ class Create extends Component
             $date1 = explode(" - ", $this->daterange)[0];
             $date2 = explode(" - ", $this->daterange)[1];
             $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+
+            $dataPay = Payments::query();
+            
+            $dataPay = $dataPay->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
            
         if($this->payto =="doctor"){
 
@@ -159,6 +181,34 @@ class Create extends Component
                 "mqema_paid"=>1
             ]);
         }
+        elseif ($this->payto =="nurse") {
+            $data = $data->whereNull("nurse_paid");
+            $data->update([
+                "nurse_paid"=>1
+            ]);
+        }
+        elseif ($this->payto =="ambulance") {
+            $data = $data->whereNull("ambulance_paid");
+            $data->update([
+                "ambulance_paid"=>1
+            ]);
+        }
+
+        elseif ($this->payto =="doctorfromstage") {
+            $dataPay = $dataPay->whereNull("redirect_doctor_paid");
+            $dataPay->update([
+                "redirect_doctor_paid"=>1
+            ]);
+        }  elseif ($this->payto =="nursefromstage") {
+            $dataPay = $dataPay->whereNull("redirect_nurse_paid");
+            $dataPay->update([
+                "redirect_nurse_paid"=>1
+            ]);
+        }
+
+
+
+        
 
     }
 

@@ -132,6 +132,41 @@
                      
 
                         @endif
+                        <div class="col-md-12">
+                            <table class="table table-bordred">
+                                <tr>
+                                    <th>اجمالي القبض</th>
+                                    <th>اجمالي الصرف</th>
+                                    <th>الرصيد</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                
+                                        {{$total_income_iqd}} دينار
+                                        <hr>
+                                        {{$total_income_usd}} دولار
+                
+                                    </td>
+                
+                                    <td>
+                
+                                        {{$total_expense_iqd}} دينار
+                                        <hr>
+                                        {{$total_expense_usd}} دولار
+                
+                                    </td>
+                
+                                    <td>
+                
+                                        {{$total_income_iqd - $total_expense_iqd}} دينار
+                                        <hr>
+                                        {{$total_income_usd - $total_expense_usd}} دولار
+                
+                
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,6 +184,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
                 
         </style>
             <div class="card-body table-responsive p-0">
+                
                 <table class="table table-hover">
                     <tbody>
                         <tr>
@@ -180,39 +216,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
                 {{ $paymentss->appends(request()->query())->links() }}
             </div>
 
-            <table class="table table-bordred">
-                <tr>
-                    <th>اجمالي القبض</th>
-                    <th>اجمالي الصرف</th>
-                    <th>الرصيد</th>
-                </tr>
-                <tr>
-                    <td>
-
-                        {{$total_income_iqd}} دينار
-                        <hr>
-                        {{$total_income_usd}} دولار
-
-                    </td>
-
-                    <td>
-
-                        {{$total_expense_iqd}} دينار
-                        <hr>
-                        {{$total_expense_usd}} دولار
-
-                    </td>
-
-                    <td>
-
-                        {{$total_income_iqd - $total_expense_iqd}} دينار
-                        <hr>
-                        {{$total_income_usd - $total_expense_usd}} دولار
-
-
-                    </td>
-                </tr>
-            </table>
+           
 
         </div>
     </div>

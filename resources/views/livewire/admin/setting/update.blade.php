@@ -232,6 +232,21 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>اجور الممرضة</label>
+                    <input type="number" class="form-control" wire:model.lazy="nurse_price">
+                </div>
+            </div>
+
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>اجور الأسعاف</label>
+                    <input type="number" class="form-control" wire:model.lazy="ambulance">
+                </div>
+            </div>
+
             @endif
          
             

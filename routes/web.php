@@ -58,6 +58,14 @@ Route::get('/incomebystage', function () {
     return view('printed.incomebystage');
 })->name("incomebystage");
 
+Route::get('/paybystage', function () {
+    return view('printed.paybystage');
+})->name("paybystage");
+
+Route::get('/expbystage', function () {
+    return view('printed.expfromstage');
+})->name("expfromstage");
+
 Route::get('/expense', function () {
     return view('printed.expense');
 })->name("expense");
@@ -69,6 +77,14 @@ Route::get('/qablat', function () {
 Route::get('/doctorpays', function () {
     return view('printed.doctorpays');
 })->name("doctorpays");
+
+Route::get('/nurse', function () {
+    return view('printed.nurse');
+})->name("nurse");
+
+Route::get('/ambulance', function () {
+    return view('printed.ambulance');
+})->name("ambulance");
 
 
 Auth::routes();

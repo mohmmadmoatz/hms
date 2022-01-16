@@ -86,6 +86,14 @@
                         <a href = "@route('qablat')?daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور القابلات</a>
                     </div>
 
+                    <div class="col-md-6 py-2">
+                        <a href = "@route('nurse')?daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور ممرضات العمليات</a>
+                    </div>
+
+                    <div class="col-md-6 py-2">
+                        <a href = "@route('ambulance')?daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور اسعاف طفل</a>
+                    </div>
+
                     
 
                     
@@ -126,7 +134,37 @@
                                     @endforeach
                                 </select>
                                 <div class="mt-5 d-flex justify-content-between">
-                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}" class="text-white btn btn-success shadow">احتساب</a>
+                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}&type=doctor" class="text-white btn btn-success shadow">احتساب</a>
+                                </div>
+                            </div>
+
+                          
+                          
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="col-md-4" x-data="{'modalIsOpen':false}">
+                        <button @click.prevent="modalIsOpen = true" class="btn btn-warning btn-block">
+                            المدفوعات حسب التوجيه
+                          
+                           
+                        </button>
+
+                        <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
+                            <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
+                                <h5 class="pb-2 border-bottom">اختيار التوجيه</h5>
+                              
+                                <select wire:model.lazy="stage" class="form-control" >
+                                    <option value="">اختيار التوجيه</option>
+                                    @foreach(App\Models\Stage::where("id","!=",5)->get() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="mt-5 d-flex justify-content-between">
+                                    <a target="_blank" href = "@route('paybystage')?stage={{$stage}}&daterange={{$daterange}}" class="text-white btn btn-success shadow">احتساب</a>
                                 </div>
                             </div>
 
@@ -150,6 +188,8 @@
                             <option value="m5dr">مخدر</option>
                             <option value="m5drhelper">مساعد مخدر </option>
                             <option value="qabla">القابلة </option>
+                            <option value="nurse">الممرضة</option>
+                            <option value="ambulance">اسعاف طفل</option>
                         </select>
                     </div>
                     <div class="col-md-12">

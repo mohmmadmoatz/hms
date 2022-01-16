@@ -53,17 +53,11 @@
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
    
-    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
+    $data = App\Models\Payments::where("payment_type",1)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("is_stage",$st)
     ->get();
     
-    $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
     
-    $usd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
 
     @endphp
 
@@ -81,11 +75,11 @@
                     <th>تقرير</th>
                     <th>الفترة</th>
                     <th>تاريخ التقرير</th>
-                    <th class="no-print"></th>
+                   
                 </tr>
                 <tr>
                     <th>
-                     {{$stage->name}}
+                      مدفوعات {{$stage->name}}
                     </th>
                     <th>
                         {{$dates}}
@@ -93,14 +87,7 @@
                     <th>
                         {{date("Y-m-d")}}
                     </th>
-                    <th class="no-print">
-                      @if($stage->doctor_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=doctor" target="_blank">كشف اجور الطبيب</a> / 
-                      @endif
-                      @if($stage->other_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=nurse" target="_blank">كشف اجور الممرضة</a>
-                      @endif
-                    </th>
+                   
                 </tr>
         </table>
 
@@ -111,14 +98,14 @@
                     <th>التاريخ</th>
                     <th>اسم المريض</th>
                     <th>المبلغ</th>
-                    <th>مرجع</th>
+                   
                     <th>العملية</th>
                 </tr>
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td>{{$item->patient->name ?? ""}}</td>
+                    <td>{{$item->account_name ?? ""}}</td>
                   
                     <td>
                         @convert($item->amount_iqd) د.ع
@@ -128,14 +115,7 @@
 
                 
                     </td>
-                    <td>
-                        @convert($item->return_iqd) د.ع
-                      
-                       /
-                       @convert($item->return_usd) $
-
-                
-                    </td>
+                 
                     <td>{{$item->description}}</td>
                 </tr>
                 @endforeach
@@ -152,23 +132,10 @@
                       
                       
                     </td>
-                    <td style="font-weight: bold;">
-                    @convert($data->sum("return_iqd")) د.ع
-
-/ 
-@convert($data->sum("return_usd")) د.ع
-                    </td>
+                   
                     <td></td>
                 </tr>
-                <tr>
-                  <td colspan="3">الصافي</td>
               
-                  <td colspan="4" style="font-weight: bold;">     
-                     @convert($iqd) د.ع
-
-                    / 
-                    @convert($usd) $</td>
-                </tr>
         </table>
 
       </div>

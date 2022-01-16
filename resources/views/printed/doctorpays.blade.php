@@ -90,14 +90,32 @@
    
          }
 
+         if($payas == "nurse"){
+          $report_name = "مدفوعات الممرضة";
+       
+           $data = $data->where("account_name","ممرضة")
+       ->get();
+   
+         }
+
+         if($payas == "ambulance"){
+          $report_name = "مدفوعات اسعاف طفل";
+       
+           $data = $data->where("account_name","اسعاف طفل")
+       ->get();
+   
+         }
+
     }else{
       $data = $data->where(function ($query){
            $query->where("doctor_id","!=",0)
            ->orWhere("account_name","مخدر")
            ->orWhere("account_name","مساعد مخدر")
            ->orWhere("account_name","مساعد جراح")
-           
-          ->orWhere("account_name","القابلة");
+           ->orWhere("account_name","القابلة")
+           ->orWhere("account_name","ممرضة")
+           ->orWhere("account_name","اسعاف طفل")
+           ->orWhereNotNull("is_stage");
       })
     ->get();
     }

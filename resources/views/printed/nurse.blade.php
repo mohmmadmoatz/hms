@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>كشف ممرضات</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -40,19 +41,10 @@
     @php
   
     $dates = $_GET['daterange'];
-
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
-   
-    $data = App\Models\Payments::where("payment_type",1)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("doctor_id",0)
-    ->where("account_name","!=","مخدر")
-    ->where("account_name","!=","مساعد مخدر")
-    ->where("account_name","!=","مساعد جراح")
-    ->where("account_name","!=","القابلة")
-    ->where("account_name","!=","ممرضة")
-    ->where("account_name","!=","اسعاف طفل")
-    ->whereNull("is_stage")
+    $data = App\Models\OperationHold::whereNull("nurse_paid")
+    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
 
@@ -70,16 +62,20 @@
                     <th>تقرير</th>
                     <th>الفترة</th>
                     <th>تاريخ التقرير</th>
+                    <th class="no-print"></th>
                 </tr>
                 <tr>
                     <th>
-                     المصاريف
+                        اجور الممرضات
                     </th>
                     <th>
                         {{$dates}}
                     </th>
                     <th>
                         {{date("Y-m-d")}}
+                    </th>
+                    <th class="no-print">
+                      <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=ممرضة&daterange={{$dates}}&amount_iqd={{$data->sum('nurse_price')}}&payto=nurse">دفع وطباعة</button>
                     </th>
                 </tr>
         </table>
@@ -89,34 +85,28 @@
                 <tr>
                     <th>رقم الوصل</th>
                     <th>التاريخ</th>
-                    <th>المستلم</th>
-                    <th>المبلغ</th>
+                    <th>اسم المريض</th>
+                    <th>اجور الممرضة</th>
                     <th>العملية</th>
                 </tr>
                 @foreach($data as $item)
                 <tr>
-                    <td>{{$item->wasl_number}}</td>
+                    <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td>
-    
-                 @if($item->account_type==2) <span>  {{ $item->Patient->name ??""}} </span> @endif
-    @if($item->account_type==3) <span>  {{ $item->account_name ??""}} </span> @endif
-                    </td>
+                    <td>{{$item->patient->name}}</td>
                   
                     <td>
-                        @convert($item->amount_iqd) د.ع
-                       /
-                       @convert($item->amount_usd) $
+                        @convert($item->nurse_price) د.ع
+                     
                     </td>
-                    <td>{{$item->description}}</td>
+                    <td>{{$item->operation_name}}</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="3">المجموع</td>
                     <td style="font-weight: bold;">
-                        @convert($data->sum("amount_iqd")) د.ع
-                        / 
-                        @convert($data->sum("amount_usd")) $
+                        @convert($data->sum("nurse_price")) د.ع
+                        
                     </td>
                     <td></td>
                 </tr>

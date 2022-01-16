@@ -48,22 +48,22 @@
     @php
   
     $st = $_GET['stage'];
+    $type = $_GET['type'];
     $stage = App\Models\Stage::find($st);
     $dates = $_GET['daterange'];
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
    
     $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->get();
+    ->where("redirect",$st);
+
+    if($type=="doctor"){
+        $data = $data->whereNull("redirect_doctor_paid")->get();
+    }else{
+        $data = $data->whereNull("redirect_nurse_paid")->get();
+    }
     
-    $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
     
-    $usd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
 
     @endphp
 
@@ -85,7 +85,14 @@
                 </tr>
                 <tr>
                     <th>
-                     {{$stage->name}}
+                        @if($type=="doctor")
+                        اجور الطبيب  من 
+                        @endif
+
+                        @if($type=="nurse")
+                        اجور الممرضة من 
+                        @endif
+                    {{$stage->name}}
                     </th>
                     <th>
                         {{$dates}}
@@ -93,14 +100,17 @@
                     <th>
                         {{date("Y-m-d")}}
                     </th>
+
                     <th class="no-print">
-                      @if($stage->doctor_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=doctor" target="_blank">كشف اجور الطبيب</a> / 
-                      @endif
-                      @if($stage->other_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=nurse" target="_blank">كشف اجور الممرضة</a>
-                      @endif
+                    
+                    @if($type=="doctor")
+                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_doctor_price')}}&payto=doctorfromstage&stname={{$stage->name}}&stid={{$stage->id}}">دفع وطباعة</button>
+                    @else
+                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_nurse_price')}}&payto=nursefromstage&stname={{$stage->name}}&stid={{$stage->id}}">دفع وطباعة</button>
+
+                    @endif
                     </th>
+                  
                 </tr>
         </table>
 
@@ -110,65 +120,51 @@
                     <th>رقم الوصل</th>
                     <th>التاريخ</th>
                     <th>اسم المريض</th>
-                    <th>المبلغ</th>
-                    <th>مرجع</th>
-                    <th>العملية</th>
+                    @if($type=="doctor")
+                    <th>اجور الطبيب</th>
+                    @endif
+
+                    @if($type=="nurse")
+                    <th>اجور الممرضة</th>
+                    @endif
+            
                 </tr>
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
+                    
+                    @if($type=="doctor")
+                    <td>@convert($item->redirect_doctor_price)</td>
+                    @endif
+
+                    @if($type=="nurse")
+                    <td>@convert($item->redirect_nurse_price)</td>
+                    @endif
                   
-                    <td>
-                        @convert($item->amount_iqd) د.ع
-                      
-                       /
-                       @convert($item->amount_usd) $
-
-                
-                    </td>
-                    <td>
-                        @convert($item->return_iqd) د.ع
-                      
-                       /
-                       @convert($item->return_usd) $
-
-                
-                    </td>
-                    <td>{{$item->description}}</td>
+                    
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="3">المجموع</td>
+                    <td colspan="2">المجموع</td>
                     <td style="font-weight: bold;">
 
-                      
+                    @if($type=="doctor")
+                        @convert($data->sum("redirect_doctor_price")) د.ع
+                    @endif
 
-                        @convert($data->sum("amount_iqd")) د.ع
-
-                        / 
-                        @convert($data->sum("amount_usd")) $
+                    @if($type=="nurse")
+                        @convert($data->sum("redirect_nurse_price")) د.ع
+                    @endif
+                        
                       
                       
-                    </td>
-                    <td style="font-weight: bold;">
-                    @convert($data->sum("return_iqd")) د.ع
-
-/ 
-@convert($data->sum("return_usd")) د.ع
                     </td>
                     <td></td>
+                   
                 </tr>
-                <tr>
-                  <td colspan="3">الصافي</td>
-              
-                  <td colspan="4" style="font-weight: bold;">     
-                     @convert($iqd) د.ع
-
-                    / 
-                    @convert($usd) $</td>
-                </tr>
+               
         </table>
 
       </div>

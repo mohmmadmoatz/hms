@@ -64,7 +64,7 @@
                 <div class="col-md-6" wire:ignore x-show="account_type ==3">
                     <div class='form-group'>
                         <label for='inputdoctor_id' class=' control-label'>الأسم</label>
-                        <input @if($daterange) readonly @endif  type="text" class="form-control" wire:model.lazy = "account_id">
+                        <input @if($daterange && !$stname) readonly @endif  type="text" class="form-control" wire:model.lazy = "account_id">
                     </div>
                 </div>
        
@@ -99,7 +99,7 @@
                   <input type="text" readonly class="form-control" value="@convert($total_amount)">
               </div>
               @endif
-              @if($account_type ==2)
+              @if($account_type ==2 && $payment_type=2)
 
               <div class="col-md-12">
                 <label for="">توجيه المريض الى : </label>
@@ -125,9 +125,9 @@
                 <input type='number' wire:model.lazy='amount_usd' class="form-control @error('amount_usd') is-invalid @enderror" id='inputamount'>
                 @error('amount_usd') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
-
-          
               </div>
+
+            
 
              
 

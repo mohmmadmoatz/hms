@@ -67,12 +67,25 @@
     $sum_outcome_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where("doctor_id","=",0)
+    ->where("account_name","!=","مخدر")
+    ->where("account_name","!=","مساعد مخدر")
+    ->where("account_name","!=","مساعد جراح")
+    ->where("account_name","!=","القابلة")
+    ->where("account_name","!=","ممرضة")
+    ->where("account_name","!=","اسعاف طفل")
+    ->whereNull("is_stage")
     ->sum("amount_iqd");
 
     $sum_outcome_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where("doctor_id","=",0)
-    
+    ->where("account_name","!=","مخدر")
+    ->where("account_name","!=","مساعد مخدر")
+    ->where("account_name","!=","مساعد جراح")
+    ->where("account_name","!=","القابلة")
+    ->where("account_name","!=","ممرضة")
+    ->where("account_name","!=","اسعاف طفل")
+    ->whereNull("is_stage")
     ->sum("amount_usd");
 
     // End new Amounts
@@ -82,12 +95,30 @@
 
     $sum_paid_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
-    ->where("doctor_id","!=",0)
+    ->where(function ($query){
+           $query->where("doctor_id","!=",0)
+           ->orWhere("account_name","مخدر")
+           ->orWhere("account_name","مساعد مخدر")
+           ->orWhere("account_name","مساعد جراح")
+           ->orWhere("account_name","القابلة")
+           ->orWhere("account_name","ممرضة")
+           ->orWhere("account_name","اسعاف طفل")
+           ->orWhereNotNull("is_stage");
+      })
     ->sum("amount_iqd");
 
     $sum_paid_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
-    ->where("doctor_id","!=",0)
+    ->where(function ($query){
+           $query->where("doctor_id","!=",0)
+           ->orWhere("account_name","مخدر")
+           ->orWhere("account_name","مساعد مخدر")
+           ->orWhere("account_name","مساعد جراح")
+           ->orWhere("account_name","القابلة")
+           ->orWhere("account_name","ممرضة")
+           ->orWhere("account_name","اسعاف طفل")
+           ->orWhereNotNull("is_stage");
+      })
     ->sum("amount_usd");
 
     // End new Amounts

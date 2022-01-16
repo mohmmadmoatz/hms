@@ -72,6 +72,9 @@ class ConvertedPat extends Component
 
         $setting = Setting::find(1);
        
+        $nurse_price =0;
+        $ambulance =0;
+
         if($patient->operation->name == "ولادة طبيعية"){
         if($patient->hms_nsba ==60){
             if($this->income - $setting->pat_profile >= 600000){
@@ -84,6 +87,8 @@ class ConvertedPat extends Component
         }
     }else{
         $doctorexp =($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
+        $nurse_price=$setting->nurse_price;
+        $ambulance=$setting->ambulance;
     }
 
         $operation = [
@@ -101,6 +106,9 @@ class ConvertedPat extends Component
             "mqema_id"=>$setting->mqema_id,
             "mqema_price"=>$setting->mqema,
             "qabla"=>$setting->qabla,
+            "ambulance"=>$ambulance,
+            "nurse_price"=>$nurse_price,
+           
         ];
 
         OperationHold::create($operation);

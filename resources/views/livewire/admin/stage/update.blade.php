@@ -49,6 +49,13 @@
                 <input type='number' wire:model.lazy='doctor_price' class="form-control @error('doctor_price') is-invalid @enderror" id='inputdoctor_price'>
                 @error('doctor_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
+
+            <!-- other Input -->
+            <div class='form-group'>
+                <label for='inputdoctor_price' class='col-sm-2 control-label'> {{ __('اجور الممرضة') }}</label>
+                <input type='number' wire:model.lazy='other_price' class="form-control @error('other_price') is-invalid @enderror" id='inputdoctor_price'>
+                @error('other_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
             
 
         </div>

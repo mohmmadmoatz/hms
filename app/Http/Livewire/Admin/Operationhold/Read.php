@@ -67,7 +67,6 @@ class Read extends Component
     }
 
     public function operationholdDeleted(){
-        // Nothing ..
     }
 
     public function sort($column)

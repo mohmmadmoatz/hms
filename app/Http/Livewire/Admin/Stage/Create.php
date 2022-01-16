@@ -14,6 +14,7 @@ class Create extends Component
     public $doctor_id;
     public $total_price;
     public $doctor_price;
+    public $other_price;
     
     protected $rules = [
         'name' => 'required',        
@@ -32,7 +33,9 @@ class Create extends Component
         
         Stage::create([
             'name' => $this->name,
-            'doctor_id' => $this->doctor_id,            'total_price' => $this->total_price,            'doctor_price' => $this->doctor_price,            
+            'doctor_id' => $this->doctor_id,            'total_price' => $this->total_price,            
+            'doctor_price' => $this->doctor_price,            
+            'other_price' => $this->other_price,            
         ]);
 
         $this->reset();
