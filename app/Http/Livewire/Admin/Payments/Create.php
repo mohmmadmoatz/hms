@@ -49,7 +49,6 @@ class Create extends Component
     public function initDirect()
     {
         $this->amount_iqd = Stage::find($this->redirect)->total_price;
-
         $this->redirect_doctor_price = Stage::find($this->redirect)->doctor_price;
         $this->redirect_nurse_price = Stage::find($this->redirect)->other_price;
     }
@@ -57,6 +56,9 @@ class Create extends Component
     public function mount()
     {
         $this->wasl_number=Payments::withTrashed()->where("payment_type",$this->payment_type)->max("wasl_number") + 1;
+        if($this->redirect){
+            $this->initDirect();
+        }
         if($this->daterange){
             $this->total_amount = $this->amount_iqd;
           
