@@ -17,6 +17,7 @@ class Update extends Component
     public $total_price;
     public $doctor_price;
     public $other_price;
+    public $res_price;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -28,6 +29,7 @@ class Update extends Component
         $this->total_price = $this->stage->total_price;
         $this->doctor_price = $this->stage->doctor_price;        
         $this->other_price = $this->stage->other_price;        
+        $this->res_price = $this->stage->res_price;        
     }
 
     public function updated($input)
@@ -45,6 +47,7 @@ class Update extends Component
             'name' => $this->name,
             'doctor_id' => $this->doctor_id,            'total_price' => $this->total_price,            'doctor_price' => $this->doctor_price, 
             'other_price' => $this->other_price,            
+            'res_price' => $this->res_price,            
         ]);
     }
 

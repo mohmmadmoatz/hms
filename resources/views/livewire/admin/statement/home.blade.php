@@ -133,8 +133,15 @@
                                     <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
+
+                                <select wire:model.lazy="by_doctor" class="form-control"  >
+                            <option value="">اختيار الطبيب</option>
+                            @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                            </select>
                                 <div class="mt-5 d-flex justify-content-between">
-                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}&type=doctor" class="text-white btn btn-success shadow">احتساب</a>
+                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}&type=doctor&doctor={{$by_doctor}}" class="text-white btn btn-success shadow">احتساب</a>
                                 </div>
                             </div>
 

@@ -8,6 +8,7 @@ use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Patient;
+use App\Models\User;
 use App\Models\OperationHold;
 
 class Create extends Component
@@ -32,9 +33,11 @@ class Create extends Component
     public $redirect;
     public $redirect_doctor_price;
     public $redirect_nurse_price;
+    public $redirect_doctor_id;
+    public $paydoctor;
     public $stname;
     public $stid;
-    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid'];
+    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid','redirect_doctor_id','paydoctor'];
 
     
     protected $rules = [
@@ -46,11 +49,48 @@ class Create extends Component
 
     ];
 
+
+    public function changeDoctor()
+    {
+        $doctor = User::find($this->redirect_doctor_id);
+        
+        
+        if($doctor){    
+            if($doctor->user_type == "doctor"){
+                $this->redirect_doctor_price = Stage::find($this->redirect)->doctor_price;
+    
+            }else{
+                $this->redirect_doctor_price = Stage::find($this->redirect)->res_price;
+            }
+        }
+        
+    }
+
     public function initDirect()
     {
         $this->amount_iqd = Stage::find($this->redirect)->total_price;
+        if($this->redirect_doctor_id){
+            $doctor_id=$this->redirect_doctor_id;
+        }else{
+        $doctor_id = Stage::find($this->redirect)->doctor_id;
+
+        }
+        $doctor = User::find($doctor_id);
+
+        $this->redirect_doctor_id = $doctor_id;
         $this->redirect_doctor_price = Stage::find($this->redirect)->doctor_price;
+
+        if($doctor){    
+        if($doctor->user_type == "doctor"){
+            $this->redirect_doctor_price = Stage::find($this->redirect)->doctor_price;
+
+        }else{
+            $this->redirect_doctor_price = Stage::find($this->redirect)->res_price;
+        }
+    }
+
         $this->redirect_nurse_price = Stage::find($this->redirect)->other_price;
+
     }
 
     public function mount()
@@ -59,9 +99,17 @@ class Create extends Component
         if($this->redirect){
             $this->initDirect();
         }
+        if($this->redirect_doctor_id){
+            $this->changeDoctor();
+        }
         if($this->daterange){
             $this->total_amount = $this->amount_iqd;
           
+            if($this->paydoctor){
+                $this->account_type =1;
+                $this->account_id = $this->paydoctor;
+            }
+
             $this->description = "اجور العمليات للفترة  : " . $this->daterange;
             if($this->stname){
             $this->description = "اجور $this->stname للفترة  : " . $this->daterange;
@@ -108,6 +156,7 @@ class Create extends Component
         'amount_iqd' => $this->amount_iqd,
 
         'redirect_doctor_price' => $this->redirect_doctor_price,
+        'redirect_doctor_id' => $this->redirect_doctor_id,
         'redirect_nurse_price' => $this->redirect_nurse_price,
 
         'account_type' => $this->account_type,
@@ -197,7 +246,11 @@ class Create extends Component
         }
 
         elseif ($this->payto =="doctorfromstage") {
+
             $dataPay = $dataPay->whereNull("redirect_doctor_paid");
+            if($this->paydoctor){
+                $dataPay = $dataPay->where("redirect_doctor_id",$this->paydoctor);
+            }
             $dataPay->update([
                 "redirect_doctor_paid"=>1
             ]);
@@ -220,9 +273,14 @@ class Create extends Component
 
             if($operation){
                 $updateOpeartion = OperationHold::find($operation->id);
-              
-                $updateOpeartion->operation_price = $updateOpeartion->operation_price - $this->amount_iqd;
-                $updateOpeartion->doctorexp = $updateOpeartion->nsba * $updateOpeartion->operation_price;
+                if($this->payment_type == 2){
+                $updateOpeartion->operation_price = $updateOpeartion->operation_price + $this->amount_iqd;
+
+                }else{
+                    $updateOpeartion->operation_price = $updateOpeartion->operation_price - $this->amount_iqd;
+
+                }
+                $updateOpeartion->doctorexp = ($updateOpeartion->nsba / 100) * $updateOpeartion->operation_price;
                 $updateOpeartion->save();
             }
         }

@@ -73,7 +73,7 @@ class ConvertedPat extends Component
         $setting = Setting::find(1);
        
         $nurse_price =0;
-        $ambulance =0;
+        $ambulance=$setting->ambulance;
 
         if($patient->operation->name == "ولادة طبيعية"){
         if($patient->hms_nsba ==60){
@@ -88,7 +88,7 @@ class ConvertedPat extends Component
     }else{
         $doctorexp =($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
         $nurse_price=$setting->nurse_price;
-        $ambulance=$setting->ambulance;
+        
     }
 
         $operation = [

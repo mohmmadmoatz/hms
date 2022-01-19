@@ -96,7 +96,10 @@ border: 4px solid #dee2e6;
             <tr>
               <th class="thead">اسم المريض الرباعي</th>
               <th class="input" colspan="7">{{$data->name}}</th>
-
+            </tr>
+            <tr>
+              <th class="thead">عنوان السكن</th>
+              <th class="input" colspan="7">{{$data->adress ??""}}</th>
             </tr>
             <tr>
               <th class="thead">أسم الزوج/ة</th>
@@ -145,8 +148,11 @@ border: 4px solid #dee2e6;
 
             <tr>
               <th class="thead">الطبيب المعالج</th>
-              <th class="input" colspan="7">{{$data->doctor->name ??""}}</th>
+              <th class="input" >{{$data->doctor->name ??""}}</th>
+              <th class="thead">نوع العملية</th>
+              <th class="input" colspan="5">{{$data->operation->name ?? ""}}</th>
             </tr>
+           
             <tr>
               <th class="thead">تاريخ الدخول</th>
               <th class="input">{{$data->inter_at}}</th>

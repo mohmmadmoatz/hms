@@ -99,7 +99,25 @@
 
             </div>
 
+            @if($status !="5" && $status)
+            <div class="col-md-6">
+                 
+            
+              <div class='form-group'>
+                  <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
+                  
+                  <select class="form-control" data-live-search="true" wire:model="redirect_doctor_id">
+                      <option value="">يرجى اختيار طبيب</option>
+                      @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->get() as $item)
+                      <option value="{{$item->id}}">{{$item->name}}</option>
 
+                      @endforeach
+                  </select>
+                  
+              </div>
+          </div>
+          
+            @endif
 
 
             @if($status == "5")

@@ -53,9 +53,21 @@
     $dates = $_GET['daterange'];
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
-   
+    $doctor="";
+    $doctorname="";
+    if(isset($_GET['doctor_id'])){
+      $doctor = $_GET['doctor_id'];
+      $doctorname = App\Models\User::find($doctor);
+
+    }
+
     $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("redirect",$st);
+
+    if($doctor && $type=="doctor"){
+      $data=$data->where("redirect_doctor_id",$doctor);
+    }
+
 
     if($type=="doctor"){
         $data = $data->whereNull("redirect_doctor_paid")->get();
@@ -63,6 +75,19 @@
         $data = $data->whereNull("redirect_nurse_paid")->get();
     }
     
+    $canpay = true;
+
+    if($type=="doctor"){
+    if(count($data)){
+      $firstRef = $data[0];
+      foreach($data as $item){
+        if($item->redirect_doctor_id != $firstRef->redirect_doctor_id){
+          $canpay = false;
+        }
+      }
+    }
+  }
+
     
 
     @endphp
@@ -102,12 +127,13 @@
                     </th>
 
                     <th class="no-print">
-                    
+                    @if($canpay)
                     @if($type=="doctor")
-                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_doctor_price')}}&payto=doctorfromstage&stname={{$stage->name}}&stid={{$stage->id}}">دفع وطباعة</button>
+                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_doctor_price')}}&payto=doctorfromstage&stname={{$stage->name}}&stid={{$stage->id}}&paydoctor={{$doctor}}">دفع وطباعة</button>
                     @else
                     <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_nurse_price')}}&payto=nursefromstage&stname={{$stage->name}}&stid={{$stage->id}}">دفع وطباعة</button>
 
+                    @endif
                     @endif
                     </th>
                   

@@ -64,7 +64,7 @@
 
                         @if($item->status !=5)
 
-                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}">قبض 
+                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
                         @convert($item->stage->total_price) د.ع
                         من المريض
                         </a>

@@ -42,6 +42,7 @@ class Create extends Component
     public $idcreatejeha;
     public $identity_number;
     public $hms_nsba = 60;
+    public $redirect_doctor_id;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -94,6 +95,7 @@ class Create extends Component
                 'idcreatejeha'=>$this->idcreatejeha   ,
                 'identity_number'=>$this->identity_number,
                 'hms_nsba'=>$this->hms_nsba,
+                'redirect_doctor_id'=>$this->redirect_doctor_id,
                        
         ]);
 

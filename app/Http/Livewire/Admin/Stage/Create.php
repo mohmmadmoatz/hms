@@ -15,7 +15,7 @@ class Create extends Component
     public $total_price;
     public $doctor_price;
     public $other_price;
-    
+    public $res_price;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -36,6 +36,7 @@ class Create extends Component
             'doctor_id' => $this->doctor_id,            'total_price' => $this->total_price,            
             'doctor_price' => $this->doctor_price,            
             'other_price' => $this->other_price,            
+            'res_price' => $this->res_price,            
         ]);
 
         $this->reset();

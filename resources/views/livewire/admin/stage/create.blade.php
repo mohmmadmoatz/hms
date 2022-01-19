@@ -25,9 +25,9 @@
                 <div class='form-group'>
                     <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
                     
-                    <select class="form-control selectpicker" data-live-search="true" wire:model="mqema_id">
+                    <select class="form-control selectpicker" data-live-search="true" wire:model="doctor_id">
                         <option value="">يرجى اختيار طبيب</option>
-                        @foreach(App\Models\User::where('user_type','resident')->get() as $item)
+                        @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->get() as $item)
                         <option value="{{$item->id}}">{{$item->name}}</option>
 
                         @endforeach
@@ -55,6 +55,13 @@
                 <label for='inputdoctor_price' class='col-sm-2 control-label'> {{ __('اجور الممرضة') }}</label>
                 <input type='number' wire:model.lazy='other_price' class="form-control @error('other_price') is-invalid @enderror" id='inputdoctor_price'>
                 @error('other_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+
+            <!-- other Input -->
+            <div class='form-group'>
+                <label for='inputdoctor_price' class='col-sm-2 control-label'> {{ __('اجور المقيم') }}</label>
+                <input type='number' wire:model.lazy='res_price' class="form-control @error('res_price') is-invalid @enderror" id='inputdoctor_price'>
+                @error('res_price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
             
         </div>

@@ -52,18 +52,43 @@
     $dates = $_GET['daterange'];
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
-   
-    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->get();
+    $doctorname = "";
+    if(isset($_GET['doctor'])){
+      $doctor = $_GET['doctor'];
+      $doctorname = App\Models\User::find($doctor);
+    }
+
     
+
+    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->where("redirect",$st);
+
+    if($doctor){
+      $data=$data->where("redirect_doctor_id",$doctor);
+    }
+
+    $data = $data->get();
+
+
     $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
+    ->where("redirect",$st);
+
+    if($doctor){
+      $iqd=$iqd->where("redirect_doctor_id",$doctor);
+    }
+
+    $iqd = $iqd->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;;
+   
+    
     
     $usd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("redirect",$st)
-    ->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
+    ->where("redirect",$st);
+
+    if($doctor){
+      $usd=$usd->where("redirect_doctor_id",$doctor);
+    }
+
+    $usd = $usd->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
 
     @endphp
 
@@ -85,7 +110,7 @@
                 </tr>
                 <tr>
                     <th>
-                     {{$stage->name}}
+                     {{$stage->name}} - ({{$doctorname->name??""}})
                     </th>
                     <th>
                         {{$dates}}
@@ -95,7 +120,7 @@
                     </th>
                     <th class="no-print">
                       @if($stage->doctor_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=doctor" target="_blank">كشف اجور الطبيب</a> / 
+                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=doctor&doctor_id={{$doctor}}" target="_blank">كشف اجور الطبيب</a> / 
                       @endif
                       @if($stage->other_price)
                       <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=nurse" target="_blank">كشف اجور الممرضة</a>
