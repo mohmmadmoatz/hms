@@ -75,7 +75,7 @@ $date2 = explode(" - ", $dates)[1];
                         {{date("Y-m-d")}}
                     </th>
                     <th class="no-print">
-                      <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=مساعد جراح&daterange={{$dates}}&amount_iqd={{$data->sum('helper')}}&payto=helper">دفع وطباعة</button>
+                      <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=مساعد جراح&daterange={{$dates}}&amount_iqd={{$data->sum('helper')}}&payto=helper">دفع وطباعة</button>
                     </th>
                 </tr>
         </table>

@@ -247,6 +247,20 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>الحد الأدنى للعملية</label>
+                    <input type="number" class="form-control" wire:model.lazy="min_op_price">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>نسبة المستشفى</label>
+                    <input type="number" class="form-control" wire:model.lazy="hnsba">
+                </div>
+            </div>
+
             @endif
          
             

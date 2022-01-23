@@ -129,9 +129,9 @@
                     <th class="no-print">
                     @if($canpay)
                     @if($type=="doctor")
-                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_doctor_price')}}&payto=doctorfromstage&stname={{$stage->name}}&stid={{$stage->id}}&paydoctor={{$doctor}}">دفع وطباعة</button>
+                    <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_doctor_price')}}&payto=doctorfromstage&stname={{$stage->name}}&stid={{$stage->id}}&paydoctor={{$doctor}}">دفع وطباعة</button>
                     @else
-                    <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_nurse_price')}}&payto=nursefromstage&stname={{$stage->name}}&stid={{$stage->id}}">دفع وطباعة</button>
+                    <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&daterange={{$dates}}&amount_iqd={{$data->sum('redirect_nurse_price')}}&payto=nursefromstage&stname={{$stage->name}}&stid={{$stage->id}}">دفع وطباعة</button>
 
                     @endif
                     @endif

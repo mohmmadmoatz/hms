@@ -75,7 +75,7 @@
                         {{date("Y-m-d")}}
                     </th>
                     <th class="no-print">
-                      <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=ممرضة&daterange={{$dates}}&amount_iqd={{$data->sum('nurse_price')}}&payto=nurse">دفع وطباعة</button>
+                      <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=ممرضة&daterange={{$dates}}&amount_iqd={{$data->sum('nurse_price')}}&payto=nurse">دفع وطباعة</button>
                     </th>
                 </tr>
         </table>

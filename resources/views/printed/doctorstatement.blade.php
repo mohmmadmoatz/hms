@@ -97,9 +97,9 @@
 
                     <th class="no-print">
    @if($doctor->user_type == "resident")
-                      <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('mqema_price')}}&payto=mqema">دفع وطباعة</button>
+                      <a  href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('mqema_price')}}&payto=mqema">دفع وطباعة</button>
      @else
-     <a  target="_blank" href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('doctorexp')}}&payto=doctor">دفع وطباعة</button>
+     <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('doctorexp')}}&payto=doctor">دفع وطباعة</button>
      
      @endif
                     </th>

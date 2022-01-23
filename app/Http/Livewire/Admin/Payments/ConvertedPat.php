@@ -86,9 +86,21 @@ class ConvertedPat extends Component
             $doctorexp = 0;
         }
     }else{
+
+        $opPrice = ($this->income - $setting->pat_profile);
+
         $doctorexp =($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
+
+
+        if($patient->hms_nsba  == 60){
+        if($opPrice < $setting->min_op_price){
+            $fixedNsba = $setting->min_op_price * ($setting->hnsba  / 100);
+            $doctorexp = abs($opPrice - $fixedNsba);
+        }
+    }
+
         $nurse_price=$setting->nurse_price;
-        
+
     }
 
         $operation = [

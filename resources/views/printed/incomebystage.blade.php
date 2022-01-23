@@ -120,10 +120,10 @@
                     </th>
                     <th class="no-print">
                       @if($stage->doctor_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=doctor&doctor_id={{$doctor}}" target="_blank">كشف اجور الطبيب</a> / 
+                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=doctor&doctor_id={{$doctor}}">كشف اجور الطبيب</a> / 
                       @endif
                       @if($stage->other_price)
-                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=nurse" target="_blank">كشف اجور الممرضة</a>
+                      <a href="@route('expfromstage')?stage={{$stage->id}}&daterange={{$dates}}&type=nurse">كشف اجور الممرضة</a>
                       @endif
                     </th>
                 </tr>

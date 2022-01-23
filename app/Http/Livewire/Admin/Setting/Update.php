@@ -38,6 +38,8 @@ class Update extends Component
     public $mqema_id;
     public $nurse_price;
     public $ambulance;
+    public $min_op_price;
+    public $hnsba;
     
     protected $rules = [
         'xray' => 'required',        
@@ -71,7 +73,10 @@ class Update extends Component
         $this->supervised = $this->setting->supervised;        
         $this->mqema_id = $this->setting->mqema_id;        
         $this->nurse_price = $this->setting->nurse_price;        
-        $this->ambulance = $this->setting->ambulance;        
+        $this->ambulance = $this->setting->ambulance;   
+
+        $this->min_op_price = $this->setting->min_op_price;        
+        $this->hnsba = $this->setting->hnsba;        
     }
 
     public function updated($input)
@@ -105,7 +110,10 @@ class Update extends Component
             'supervised' => $this->supervised,         
             'mqema_id' => $this->mqema_id,  
             'nurse_price' => $this->nurse_price,  
-            'ambulance' => $this->ambulance,  
+            'ambulance' => $this->ambulance, 
+
+            'min_op_price' => $this->min_op_price,  
+            'hnsba' => $this->hnsba,  
         ]);
     }
 

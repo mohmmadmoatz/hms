@@ -41,7 +41,7 @@ class Create extends Component
     public $iddate;
     public $idcreatejeha;
     public $identity_number;
-    public $hms_nsba = 60;
+    public $hms_nsba;
     public $redirect_doctor_id;
     protected $rules = [
         'name' => 'required',        
@@ -55,6 +55,8 @@ class Create extends Component
     public function mount()
     {
         $this->inter_at = date("Y-m-d");
+        $this->hms_nsba=60;
+                
     }
 
     public function create()

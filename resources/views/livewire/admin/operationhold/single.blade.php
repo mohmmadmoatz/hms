@@ -7,7 +7,7 @@
     <td> {{$operationhold->operation_name}} </td>
     <td> 
         @if(!$operationhold->doctor_paid)
-        @if($operationhold->operation_name != "ولادة طبيعية" || $operationhold->doctorexp !=0)
+        @if($operationhold->operation_name != "ولادة طبيعية" || $operationhold->supervised)
        <button  wire:click="$set('doctorexp',{{$operationhold->doctorexp}})" x-on:click="modalIsOpendoctor = true;" class="btn btn-danger">@convert($operationhold->doctorexp)</button> 
 
        <div x-show="modalIsOpendoctor" class="cs-modal animate__animated animate__fadeIn">
