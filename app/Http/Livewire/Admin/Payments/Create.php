@@ -56,7 +56,7 @@ class Create extends Component
         
         
         if($doctor){    
-            if($doctor->user_type == "doctor"){
+            if($doctor->user_type == "doctor" || $doctor->user_type =="rays"){
                 $this->redirect_doctor_price = Stage::find($this->redirect)->doctor_price;
     
             }else{

@@ -139,7 +139,7 @@
                     
                     <select class="form-control" data-live-search="true" wire:model="redirect_doctor_id" wire:change="changeDoctor">
                         <option value="">يرجى اختيار طبيب</option>
-                        @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->get() as $item)
+                        @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->orWhere("user_type","rays")->get() as $item)
                         <option value="{{$item->id}}">{{$item->name}}</option>
 
                         @endforeach
