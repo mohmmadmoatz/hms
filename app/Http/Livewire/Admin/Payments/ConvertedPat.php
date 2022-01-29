@@ -92,7 +92,7 @@ class ConvertedPat extends Component
         $doctorexp =($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
 
 
-        if($patient->hms_nsba  == 60){
+        if($patient->hms_nsba  == 60 && $patient->operation->name =="ولادة قيصرية"){
         if($opPrice < $setting->min_op_price){
             $fixedNsba = $setting->min_op_price * ($setting->hnsba  / 100);
             $doctorexp = abs($opPrice - $fixedNsba);

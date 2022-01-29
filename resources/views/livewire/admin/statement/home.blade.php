@@ -41,6 +41,11 @@
                     </div>
 
                     @if($datefilterON)
+                    <script>
+                        $(function () {
+    $('.selectpicker').selectpicker();
+});
+                    </script>
                     <div class="col-md-6" x-data="{'modalIsOpen':false}">
                         <button @click.prevent="modalIsOpen = true" class="btn btn-info btn-block">
                             احتساب اجور الطبيب
@@ -48,16 +53,18 @@
                            
                         </button>
 
-                        <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
-                            <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
+                        <div wire:key = "doctor" x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
+                            <div  class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
                                 <h5 class="pb-2 border-bottom">اختيار الطبيب</h5>
-                              
-                                <select wire:model.lazy="doctor_id" class="form-control" >
-                                    <option value="">اختيار الطبيب</option>
-                                    @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
+                                <div wire:ignore>
+                                    <select  wire:model.lazy="doctor_id" class="form-control selectpicker" data-live-search = "true">
+                                        <option value="">اختيار الطبيب</option>
+                                        @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
                                 <div class="mt-5 d-flex justify-content-between">
                                     <a target="_blank" href = "@route('doctorstatement')?id={{$doctor_id}}&daterange={{$daterange}}" class="text-white btn btn-success shadow">احتساب</a>
                                 </div>
@@ -133,13 +140,16 @@
                                     <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
+                            <div wire:ignore>
+                                <select  wire:model.lazy="by_doctor" class="form-control selectpicker" data-live-search="true" >
+                                    <option value="">اختيار الطبيب</option>
+                                    @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                    </select>
+                            </div>
+                          
 
-                                <select wire:model.lazy="by_doctor" class="form-control"  >
-                            <option value="">اختيار الطبيب</option>
-                            @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
-                            </select>
                                 <div class="mt-5 d-flex justify-content-between">
                                     <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}&type=doctor&doctor={{$by_doctor}}" class="text-white btn btn-success shadow">احتساب</a>
                                 </div>
@@ -203,15 +213,24 @@
                         <hr>
                     </div>
 
+
+         
+
                     @if($payas == "doctor")
-                   
-                    <div class="col-md-12">
-                        <select wire:model.lazy="by_doctor" class="form-control"  >
+                    
+               
+
+                    <div class="col-md-12" wire:ignore>
+                        <select wire:model.lazy="by_doctor" class="form-control selectpicker" data-live-search="true" >
                             <option value="">اختيار الطبيب</option>
                             @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <br>
                     </div>
                     
                

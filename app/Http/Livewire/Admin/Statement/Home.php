@@ -21,6 +21,7 @@ class Home extends Component
     public $datefilterON;
     public $daterange;
     public $by_doctor;
+    public $query;
     public function searchBydate($date)
     {
         # code...

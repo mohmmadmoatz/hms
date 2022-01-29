@@ -173,6 +173,16 @@
         <span class="hide-menu">الأطباء</span>
     </a>
 </li>
+<li
+    class='sidebar-item @isActive([getRouteName().".user.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".user.read"], "active") '
+    href="@route(getRouteName().'.user.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("users") }}" class="feather-icon"></i>
+        <span class="hide-menu">المستخدمين</span>
+    </a>
+</li>
+
+
 @endif
 
 
