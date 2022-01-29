@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Haruncpi\LaravelUserActivity\Traits\Loggable;
 
 
 class Patient extends Model
 {
-    use HasFactory,Loggable;
+    use HasFactory;
 	 protected $guarded = [];  
      public function stage()
      {
