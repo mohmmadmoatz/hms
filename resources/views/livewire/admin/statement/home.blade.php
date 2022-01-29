@@ -217,11 +217,15 @@
          
 
                     @if($payas == "doctor")
-                    
+                    <script>
+                        $(function () {
+    $('.selectpicker2').selectpicker();
+});
+                    </script>
                
 
                     <div class="col-md-12" wire:ignore>
-                        <select wire:model.lazy="by_doctor" class="form-control selectpicker" data-live-search="true" >
+                        <select wire:model.lazy="by_doctor" class="form-control selectpicker2" data-live-search="true" >
                             <option value="">اختيار الطبيب</option>
                             @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
