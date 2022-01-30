@@ -10,6 +10,8 @@ class OperationHold extends Model
     use HasFactory;
     protected $guarded =[];
 
+    protected $withs = ["ambdoctor"];
+
     public function Patient()
     {
         return $this->belongsTo("App\Models\Patient",'patinet_id');
@@ -19,6 +21,16 @@ class OperationHold extends Model
     public function doctor()
     {
         return $this->belongsTo("App\Models\User",'doctor_id');
+    }
+
+    public function ambdoctor()
+    {
+        return $this->belongsTo("App\Models\User",'ambulance_doctor');
+    }
+
+    public function mqema()
+    {
+        return $this->belongsTo("App\Models\User",'mqema_id');
     }
 
 }

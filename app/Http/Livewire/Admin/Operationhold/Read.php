@@ -25,7 +25,7 @@ class Read extends Component
 
     protected $queryString = ['search'];
 
-    protected $listeners = ['operationholdDeleted'];
+    protected $listeners = ['operationholdDeleted','row:update' => '$refresh'];
 
     public $sortType;
     public $sortColumn;

@@ -20,6 +20,14 @@ class Single extends Component
     public $mqema_price;
     public $nurse_price;
     public $ambulance;
+    public $ambulance_doctor;
+    public $mqema_id;
+    protected $listeners = ['postAdded'];
+
+    public function postAdded(){
+      
+    }
+
     public function mount(OperationHold $operationhold){
         $this->operationhold = $operationhold;
     }
@@ -58,10 +66,18 @@ class Single extends Component
  
    }
 
+   public function fillamb()
+   {
+       $this->ambulance = $this->operationhold->ambulance;
+       $this->ambulance_doctor  =   $this->operationhold->ambulance_doctor;
+   }
    public function saveAmb()
    {
        $this->operationhold->ambulance =$this->ambulance;
+       $this->operationhold->ambulance_doctor = $this->ambulance_doctor;
        $this->operationhold->save();
+       $this->emitSelf('postAdded');
+
        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تعديل السعر" ]);
 
    }
@@ -138,16 +154,24 @@ class Single extends Component
 
     }
 
+    public function fillmqema()
+    {
+        $this->mqema_price = $this->operationhold->mqema_price;
+        $this->mqema_id=  $this->operationhold->mqema_id;
+    }
+
     public function savemqema()
     {
       
         $this->operationhold->mqema_price =$this->mqema_price;
+        $this->operationhold->mqema_id =$this->mqema_id;
         $this->operationhold->save();
 
+        $this->emitSelf('postAdded');
         
 
 
-        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم انشاء سند صرف" ]);
+        $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم الحفظ" ]);
 
     }
 

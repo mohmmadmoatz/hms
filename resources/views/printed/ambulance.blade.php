@@ -41,9 +41,12 @@
     @php
   
     $dates = $_GET['daterange'];
+    $doctor = $_GET['doctor'];
+    $doctorname = App\Models\User::find($doctor)->name ??"";
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
     $data = App\Models\OperationHold::whereNull("ambulance_paid")
+    ->where("ambulance_doctor",$doctor)
     ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
@@ -66,7 +69,7 @@
                 </tr>
                 <tr>
                     <th>
-                        اجور اسعاف طفل
+                        اجور اسعاف طفل ({{$doctorname}})
                     </th>
                     <th>
                         {{$dates}}
@@ -75,7 +78,7 @@
                         {{date("Y-m-d")}}
                     </th>
                     <th class="no-print">
-                      <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=3&account_id=اسعاف طفل&daterange={{$dates}}&amount_iqd={{$data->sum('ambulance')}}&payto=ambulance">دفع وطباعة</button>
+                      <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor}}&daterange={{$dates}}&amount_iqd={{$data->sum('ambulance')}}&payto=ambulance">دفع وطباعة</button>
                     </th>
                 </tr>
         </table>

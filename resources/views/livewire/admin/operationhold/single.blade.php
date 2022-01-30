@@ -166,7 +166,11 @@
 
     <td> 
         @if(!$operationhold->mqema_paid && $operationhold->operation_name =="ولادة طبيعية" && $operationhold->supervised == 2)
-       <button wire:click="$set('mqema_price',{{$operationhold->mqema_price}})" @click.prevent="mqema = true" class="btn btn-danger">@convert($operationhold->mqema_price)</button> 
+       <button wire:click="fillmqema" @click.prevent="mqema = true" class="btn btn-danger">@convert($operationhold->mqema_price)
+        /
+        {{$operationhold->mqema->name ??""}}
+        <a wire:loading wire:target="savemqema"><i class="fas fa-spinner fa-spin" ></i></a>
+       </button> 
        <div x-show="mqema" class="cs-modal animate__animated animate__fadeIn">
         <div class="bg-white shadow rounded p-5" @click.away="mqema = false" >
             <h5 class="pb-2 border-bottom">تعديل السعر</h5>
@@ -174,6 +178,23 @@
              السعر الحالي
             </p>
             <input type="text" class="form-control" wire:model.lazy="mqema_price">
+
+            <p>
+                الطبيب
+               </p>
+               
+               <div wire:ignore>
+  
+               <select class="form-control selectpicker2" data-live-search="true" wire:model="mqema_id">
+                                      <option value="">يرجى اختيار طبيب</option>
+                                      @foreach(App\Models\User::Where("user_type","resident")->get() as $item)
+                              <option value="{{$item->id}}">{{$item->name}}</option>
+                              @endforeach
+                                  </select>
+  
+               </div>
+
+
             <div class="mt-5 d-flex justify-content-between">
                 <a wire:click.prevent="savemqema" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>
                 <a @click.prevent="mqema = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
@@ -217,14 +238,42 @@
     <td>
         @if(!$operationhold->ambulance_paid)
 
-        <button wire:click="$set('ambulance',{{$operationhold->ambulance}})"   @click.prevent="modalIsOpenAmb = true" class="btn btn-danger">@convert($operationhold->ambulance)</button> 
+        <button wire:click="fillamb"   @click.prevent="modalIsOpenAmb = true;$('.selectpicker2').selectpicker();" class="btn btn-danger">
+            
+        @convert($operationhold->ambulance)
+    /
+        {{$operationhold->ambdoctor->name ??""}}
+
+        <a wire:loading wire:target="saveAmb"><i class="fas fa-spinner fa-spin" ></i></a>
+
+        </button> 
         <div x-show="modalIsOpenAmb" class="cs-modal animate__animated animate__fadeIn">
          <div class="bg-white shadow rounded p-5" @click.away="modalIsOpenAmb = false" >
+
+
+
              <h5 class="pb-2 border-bottom">تعديل السعر</h5>
+
              <p>
               السعر الحالي
              </p>
              <input type="text" class="form-control" wire:model.lazy="ambulance">
+
+             <p>
+              الطبيب
+             </p>
+             
+             <div wire:ignore>
+
+             <select class="form-control selectpicker2" data-live-search="true" wire:model="ambulance_doctor">
+                                    <option value="">يرجى اختيار طبيب</option>
+                                    @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                                </select>
+
+             </div>
+            
         
              <div class="mt-5 d-flex justify-content-between">
                  <a @click.prevent="modalIsOpenAmb = false" wire:click.prevent="saveAmb" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>

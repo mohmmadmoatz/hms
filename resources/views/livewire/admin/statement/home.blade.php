@@ -97,9 +97,40 @@
                         <a href = "@route('nurse')?daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور ممرضات العمليات</a>
                     </div>
 
-                    <div class="col-md-6 py-2">
-                        <a href = "@route('ambulance')?daterange={{$daterange}}" target="_blank" class="btn btn-info btn-block">احتساب اجور اسعاف طفل</a>
+
+                    <div class="col-md-6 py-2" x-data="{'modalIsOpen':false}">
+                        <button @click.prevent="modalIsOpen = true" class="btn btn-info btn-block">
+                            احتساب اجور اسعاف طفل
+                          
+                           
+                        </button>
+
+                        <div wire:key = "doctor" x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
+                            <div  class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
+                                <h5 class="pb-2 border-bottom">اختيار الطبيب</h5>
+                                <div wire:ignore>
+                                    <select  wire:model.lazy="doctor_id" class="form-control selectpicker" data-live-search = "true">
+                                        <option value="">اختيار الطبيب</option>
+                                        @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="mt-5 d-flex justify-content-between">
+                                    <a href = "@route('ambulance')?daterange={{$daterange}}&doctor={{$doctor_id}}" target="_blank" class="text-white btn btn-success shadow">احتساب</a>
+                                </div>
+                            </div>
+
+                          
+                          
+                        </div>
+
+                        
+
                     </div>
+
+                   
 
                     
 

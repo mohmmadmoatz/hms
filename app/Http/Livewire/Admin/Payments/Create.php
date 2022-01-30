@@ -239,7 +239,7 @@ class Create extends Component
             ]);
         }
         elseif ($this->payto =="ambulance") {
-            $data = $data->whereNull("ambulance_paid");
+            $data = $data->whereNull("ambulance_paid")->where("ambulance_doctor",$this->account_id);
             $data->update([
                 "ambulance_paid"=>1
             ]);
