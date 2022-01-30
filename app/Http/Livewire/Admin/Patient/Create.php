@@ -109,6 +109,11 @@ class Create extends Component
 
 
         $this->reset();
+
+        $this->hms_nsba=60;
+        $this->inter_at = date("Y-m-d");
+
+
     }
 
     public function render()

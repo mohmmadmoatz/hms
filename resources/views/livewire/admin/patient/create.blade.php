@@ -293,7 +293,7 @@
                 <div class="col-md-6">
                     <div class='form-group'>
                         <label class='control-label'> {{ __('نوع العملية') }}</label>
-                        <select class="form-control" wire:model.lazy='opration_id'>
+                        <select required class="form-control" wire:model.lazy='opration_id'>
                             <option value="">اختيار العملية</option>
                             @foreach(App\Models\Operation::get() as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
@@ -307,7 +307,7 @@
                 <div class="col-md-6">
                     <div class='form-group'>
                         <label class=' control-label'> {{('تاريخ الدخول') }}</label>
-                        <input type='date' wire:model.lazy='inter_at' 
+                        <input required type='date' wire:model.lazy='inter_at' 
                             class="form-control @error('inter_at') is-invalid @enderror">
                         @error('inter_at') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
