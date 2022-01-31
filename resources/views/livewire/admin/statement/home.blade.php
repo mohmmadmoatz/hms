@@ -151,6 +151,10 @@
                     </div>
 
                     <div class="col-md-4 py-2">
+                        <a href = "@route('expandpay')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المصاريف والمدفوعات</a>
+                    </div>
+
+                    <div class="col-md-4 py-2">
                         <a href = "@route('income')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المقبوضات</a>
                     </div>
 

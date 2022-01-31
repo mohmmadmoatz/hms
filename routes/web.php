@@ -70,6 +70,11 @@ Route::get('/expense', function () {
     return view('printed.expense');
 })->name("expense");
 
+
+Route::get('/expandpay', function () {
+    return view('printed.expandpay');
+})->name("expandpay");
+
 Route::get('/qablat', function () {
     return view('printed.qablat');
 })->name("qablat");
