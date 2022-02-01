@@ -93,13 +93,13 @@ $date2 = explode(" - ", $dates)[1];
                 <tr>
                     <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td>{{$item->patient->name}}</td>
+                    <td>{{$item->patient->name ?? ""}}</td>
                   
                     <td>
                         @convert($item->helper) د.ع
                      
                     </td>
-                    <td>{{$item->operation_name}}</td>
+                    <td>{{$item->operation_name ?? ""}}</td>
                 </tr>
                 @endforeach
                 <tr>

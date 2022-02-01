@@ -99,7 +99,7 @@ $date2 = explode(" - ", $dates)[1];
                 <tr>
                 <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td>{{$item->patient->name}}</td>
+                    <td>{{$item->patient->name ?? ""}}</td>
                   
                     <td>
                         @convert($item->qabla) د.ع

@@ -93,7 +93,7 @@
                 <tr>
                     <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td>{{$item->patient->name}}</td>
+                    <td>{{$item->patient->name ?? ""}}</td>
                   
                     <td>
                         @convert($item->nurse_price) د.ع
