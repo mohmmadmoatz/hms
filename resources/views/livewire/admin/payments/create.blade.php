@@ -15,9 +15,14 @@
         <div class="card-body" x-data="{'account_type':@entangle('account_type')}">
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <label for="">رقم الوصل</label>
                     <input type="text" class="form-control" wire:model.lazy="wasl_number">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">التاريخ</label>
+                    <input  type="date" class="form-control" wire.model.lazy="created_at">
                 </div>
 
                 <div class="col-md-6">

@@ -37,6 +37,7 @@ class Create extends Component
     public $paydoctor;
     public $stname;
     public $stid;
+    public $created_at;
     protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid','redirect_doctor_id','paydoctor'];
 
     
@@ -95,6 +96,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->created_at = date("Y-m-d");
         $this->wasl_number=Payments::withTrashed()->where("payment_type",$this->payment_type)->max("wasl_number") + 1;
         if($this->redirect){
             $this->initDirect();
@@ -166,6 +168,7 @@ class Create extends Component
         "redirect"=>$this->redirect,
         "return_iqd"=>$return_iqd,
         "return_usd"=>$return_usd,
+        'created_at'=>$this->created_at
     ];
 
   

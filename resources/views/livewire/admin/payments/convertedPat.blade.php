@@ -130,7 +130,9 @@
                                 <input type="text" class="form-control" readonly value="{{$item->doctor->name ?? ''}}">
                             </div>
                             <div class="col-md-12">
-                                <label>المبلغ الأجمالي</label>
+                                <label>المبلغ الأجمالي
+                                    (مبلغ العملية + فتح طبلة)
+                                </label>
                                <input  type="text" class="form-control" x-model="income">
                            </div>
 
@@ -152,11 +154,11 @@
                         </div>
                         <div class="mt-5 d-flex justify-content-between">
                            @if($item->operation->name !="ولادة طبيعية")
-                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
-                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
+                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
+                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
                             @else
-                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},0,0,0,{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
-                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$item->operation->price + $setting->pat_profile}},{{$doctor_amount}},0,0,0,{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
+                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},0,0,0,{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
+                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},0,0,0,{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
                             @endif
                             <a  @click.prevent="receptModal = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
 

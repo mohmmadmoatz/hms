@@ -61,7 +61,7 @@
     </td>
     
     <td> 
-        @if(!$operationhold->helper_paid && $operationhold->helper!=0)
+        @if(!$operationhold->helper_paid && $operationhold->helper!=0 )
        <button wire:click="$set('helperprice',{{$operationhold->helper}})"   @click.prevent="modalIsOpendoctor2 = true" class="btn btn-danger">@convert($operationhold->helper)</button> 
        <div x-show="modalIsOpendoctor2" class="cs-modal animate__animated animate__fadeIn">
         <div class="bg-white shadow rounded p-5" @click.away="modalIsOpendoctor2 = false" >
@@ -108,7 +108,7 @@
     </div>
        @else
         
-        <span @if(!$operationhold->m5dr_paid) class = "badge badge-danger" @endif >
+        <span @if(!$operationhold->m5dr_paid) class = "badge badge-danger" @endif>
         @convert($operationhold->m5dr)
         </span>
         @endif

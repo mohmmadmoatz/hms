@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" x-data="{status:@entangle('status').defer}">
     <div class="card-header p-0">
         <h3 class="card-title">{{ __('CreateTitle', ['name' => __('Patient') ]) }}</h3>
         <div class="px-2 mt-4">
@@ -99,14 +99,14 @@
 
             </div>
 
-            @if($status !="5" && $status)
-            <div class="col-md-6">
-                 
             
-              <div class='form-group'>
+          
+          
+            
+              <div x-show="status!=5" class='form-group' wire:ignore>
                   <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
                   
-                  <select class="form-control" data-live-search="true" wire:model="redirect_doctor_id">
+                  <select  class="form-control selectpicker" data-live-search="true" wire:model="redirect_doctor_id">
                       <option value="">يرجى اختيار طبيب</option>
                       @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->get() as $item)
                       <option value="{{$item->id}}">{{$item->name}}</option>
@@ -115,12 +115,19 @@
                   </select>
                   
               </div>
-          </div>
+         
           
-            @endif
+            
 
 
             @if($status == "5")
+
+            <script>
+                $(function () {
+$('.selectpicker2').selectpicker();
+});
+            </script>
+            
                 
             <div class="row">
                 <div class="col-md-12">
@@ -276,11 +283,12 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                
+                <div class="col-md-4" x-show="status==5">
                     <div class="col-sm">
-                        <div class='form-group'>
+                        <div class='form-group' wire:ignore>
                             <label class=' control-label'> {{('الطبيب المعالج') }}</label>
-                            <select required wire:model.lazy="doctor_id" class="form-control">
+                            <select required wire:model.lazy="doctor_id" class="form-control selectpicker2" data-live-search="true">
                                 <option value="">اختيار الطبيب</option>
                                 @foreach(App\Models\User::where("user_type","doctor")->get() as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -365,8 +373,7 @@
 
             @endif
             
-            <canvas style="@if($status != '5')display: none;@endif" id="sig" ></canvas>
-            <a style="@if($status != '5')display: none;@endif" class="btn btn-info" href="#clearsig"  id="clearsig">حذف التوقيع</a>
+            
             
             
 

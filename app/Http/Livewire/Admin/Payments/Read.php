@@ -127,7 +127,7 @@ class Read extends Component
 
 
         if($this->idnumber){
-            $data = $data->where("id",$this->idnumber);
+            $data = $data->where("wasl_number",$this->idnumber);
         }
       
 
