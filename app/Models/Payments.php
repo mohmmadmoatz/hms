@@ -22,6 +22,17 @@ class Payments extends Model
     }
 
 
+    /**
+     * Get the stagename that owns the Payments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function stagename()
+    {
+        return $this->belongsTo(Stage::class, 'redirect');
+    }
+
+
     public function doctor()
     {
         return $this->belongsTo("App\Models\User",'doctor_id');

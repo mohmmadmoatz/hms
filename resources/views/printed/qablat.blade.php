@@ -48,7 +48,7 @@ $date2 = explode(" - ", $dates)[1];
   
     $data = App\Models\OperationHold::whereNull("qabla_paid")
     ->where("operation_name","ولادة طبيعية")
-    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
 
@@ -98,7 +98,7 @@ $date2 = explode(" - ", $dates)[1];
                 @foreach($data as $item)
                 <tr>
                 <td>{{$item->payment_number}}</td>
-                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->date}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
                   
                     <td>

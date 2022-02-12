@@ -49,22 +49,22 @@
     $date2 = explode(" - ", $dates)[1];
 
    // Old Amounts
-    $sum_old_income_iqd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",2)->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
-    $sum_old_income_usd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",2)->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
+    $sum_old_income_iqd = App\Models\Payments::where("date","<",$date1)->where("payment_type",2)->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
+    $sum_old_income_usd = App\Models\Payments::where("date","<",$date1)->where("payment_type",2)->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
 
-    $sum_old_outcome_iqd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",1)->sum("amount_iqd");
-    $sum_old_outcome_usd = App\Models\Payments::where("created_at","<",$date1)->where("payment_type",1)->sum("amount_usd");
+    $sum_old_outcome_iqd = App\Models\Payments::where("date","<",$date1)->where("payment_type",1)->sum("amount_iqd");
+    $sum_old_outcome_usd = App\Models\Payments::where("date","<",$date1)->where("payment_type",1)->sum("amount_usd");
     // End Old Amounts
 
     // new Amounts
 
-    $sum_income_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $sum_income_iqd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",2)->select(DB::raw('SUM(amount_iqd - return_iqd) as amount_iqd'))->first()->amount_iqd;
 
-    $sum_income_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $sum_income_usd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",2)->select(DB::raw('SUM(amount_usd - return_usd) as amount_usd'))->first()->amount_usd;
 
-    $sum_outcome_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $sum_outcome_iqd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where("doctor_id","=",0)
     ->where("account_name","!=","مخدر")
@@ -76,7 +76,7 @@
     ->whereNull("is_stage")
     ->sum("amount_iqd");
 
-    $sum_outcome_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $sum_outcome_usd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where("doctor_id","=",0)
     ->where("account_name","!=","مخدر")
@@ -93,7 +93,7 @@
 
     // new Amounts
 
-    $sum_paid_iqd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $sum_paid_iqd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where(function ($query){
            $query->where("doctor_id","!=",0)
@@ -107,7 +107,7 @@
       })
     ->sum("amount_iqd");
 
-    $sum_paid_usd = App\Models\Payments::whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $sum_paid_usd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where(function ($query){
            $query->where("doctor_id","!=",0)

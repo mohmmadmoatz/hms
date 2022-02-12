@@ -22,7 +22,7 @@
 
                 <div class="col-md-6">
                     <label for="">التاريخ</label>
-                    <input  type="date" class="form-control" wire.model.lazy="created_at">
+                    <input  type="date" class="form-control" wire:model.lazy="date">
                 </div>
 
                 <div class="col-md-6">
@@ -136,13 +136,20 @@
 
               @if($redirect)
 
+              
+
               <div class="col-md-6">
                  
                   <div>
-                <div class='form-group'>
+                    <script>
+                        $(function () {
+        $('.selectpicker2').selectpicker();
+        });
+                    </script>
+                <div class='form-group' wire:ignore>
                     <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
                     
-                    <select class="form-control" data-live-search="true" wire:model="redirect_doctor_id" wire:change="changeDoctor">
+                    <select class="form-control selectpicker2" data-live-search="true" wire:model="redirect_doctor_id" wire:change="changeDoctor">
                         <option value="">يرجى اختيار طبيب</option>
                         @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->orWhere("user_type","rays")->get() as $item)
                         <option value="{{$item->id}}">{{$item->name}}</option>

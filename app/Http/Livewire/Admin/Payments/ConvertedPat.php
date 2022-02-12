@@ -22,6 +22,8 @@ class ConvertedPat extends Component
     public $amount_iqd;
     public $amount_usd;
     public $description;
+    public $patprofile;
+    public $tabla;
     protected $queryString = ['search'];
 
     public function loadNumberRecept()
@@ -30,11 +32,19 @@ class ConvertedPat extends Component
         $this->wasl_number=Payments::withTrashed()->where("payment_type","2")->max("wasl_number") + 1;
     }
 
+    public function changeCheck()
+    {
+        $setting = Setting::find(1);
+
+        
+    }
+
    
 
     public function saveOpSand($income,$doctorexp,$helper,$m5dr,$helperm5dr,$id,$print)
     {
 
+        
         
         $return_iqd =0;
         $return_usd =0;
@@ -61,7 +71,8 @@ class ConvertedPat extends Component
             'description' => $this->description,
             'user_id' => auth()->id(),
             "patinet_id"=>$id,
-            "wasl_number"=>$this->wasl_number
+            "wasl_number"=>$this->wasl_number,
+            "date"=>date("Y-m-d")
         ];
 
 
@@ -77,8 +88,8 @@ class ConvertedPat extends Component
 
         if($patient->operation->name == "ولادة طبيعية"){
         if($patient->hms_nsba ==60){
-            if($this->income - $setting->pat_profile >= 600000){
-                $doctorexp = ($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
+            if($this->income >= 600000){
+                $doctorexp = ($this->income) * ($patient->hms_nsba / 100);
             }else{
                 $doctorexp = 0;
             }
@@ -87,9 +98,9 @@ class ConvertedPat extends Component
         }
     }else{
 
-        $opPrice = ($this->income - $setting->pat_profile);
+        $opPrice = ($this->income);
 
-        $doctorexp =($this->income - $setting->pat_profile) * ($patient->hms_nsba / 100);
+        $doctorexp =($this->income) * ($patient->hms_nsba / 100);
 
 
         if($patient->hms_nsba  == 60 && $patient->operation->name =="ولادة قيصرية"){
@@ -106,7 +117,7 @@ class ConvertedPat extends Component
         $operation = [
             "patinet_id"=>$id,
             "doctor_id"=>$patient->doctor_id,
-            "operation_price"=>$this->income - $setting->pat_profile,
+            "operation_price"=>$this->income,
             "operation_name"=>$patient->operation->name,
             "doctorexp"=>$doctorexp,
             "helper"=>$helper,

@@ -61,7 +61,7 @@
 
     }
 
-    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $data = App\Models\Payments::where("payment_type",2)->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("redirect",$st);
 
     if($doctor && $type=="doctor"){
@@ -158,7 +158,7 @@
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>
-                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->date}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
                     
                     @if($type=="doctor")

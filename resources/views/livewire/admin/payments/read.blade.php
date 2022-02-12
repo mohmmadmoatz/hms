@@ -142,25 +142,24 @@
                                 <tr>
                                     <td>
                 
-                                        {{$total_income_iqd}} دينار
-                                        <hr>
-                                        {{$total_income_usd}} دولار
+                                        @convert($total_income_iqd) دينار
+                                       |
+                                        @convert($total_income_usd) دولار
                 
                                     </td>
                 
                                     <td>
                 
-                                        {{$total_expense_iqd}} دينار
-                                        <hr>
-                                        {{$total_expense_usd}} دولار
+                                        @convert($total_expense_iqd) دينار  |   @convert($total_expense_usd) دولار
+                                        
+                                       
                 
                                     </td>
                 
                                     <td>
                 
-                                        {{$total_income_iqd - $total_expense_iqd}} دينار
-                                        <hr>
-                                        {{$total_income_usd - $total_expense_usd}} دولار
+                                        @convert($total_income_iqd - $total_expense_iqd) دينار |  @convert($total_income_usd - $total_expense_usd) دولار
+                                        
                 
                 
                                     </td>

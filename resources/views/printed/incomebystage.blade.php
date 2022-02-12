@@ -60,7 +60,7 @@
 
     
 
-    $data = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $data = App\Models\Payments::where("payment_type",2)->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("redirect",$st);
 
     if($doctor){
@@ -70,7 +70,7 @@
     $data = $data->get();
 
 
-    $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $iqd = App\Models\Payments::where("payment_type",2)->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("redirect",$st);
 
     if($doctor){
@@ -81,7 +81,7 @@
    
     
     
-    $usd = App\Models\Payments::where("payment_type",2)->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    $usd = App\Models\Payments::where("payment_type",2)->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("redirect",$st);
 
     if($doctor){
@@ -142,7 +142,7 @@
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>
-                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->date}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
                   
                     <td>

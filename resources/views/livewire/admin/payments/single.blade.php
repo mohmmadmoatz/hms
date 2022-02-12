@@ -2,7 +2,16 @@
 
 <td>{{$payments->wasl_number}}</td>
 
-<td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">{{$payments->payment_type ==1 ?'صرف' :'قبض'}}</span> </td>
+<td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">
+    {{$payments->payment_type ==1 ?'صرف' :'قبض'}}
+
+    @if($payments->redirect)
+    <hr>
+        {{$payments->stagename->name ??""}}
+    @endif
+
+</span> 
+</td>
     <td> <span class="@if($payments->payment_type ==1) text-danger @else text-success @endif">
         @convert($payments->amount_usd)
         @if($payments->return_usd)
@@ -27,7 +36,7 @@
 
      </td>
     <td> {{ $payments->description }} </td>
-    <td> {{ $payments->created_at }} </td>    
+    <td> {{ $payments->date }} </td>    
     @if(config('easy_panel.crud.payments.delete') or config('easy_panel.crud.payments.update'))
         <td>
 

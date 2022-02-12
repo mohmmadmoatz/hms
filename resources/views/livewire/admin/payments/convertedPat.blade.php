@@ -45,7 +45,7 @@
            
             @endphp
             @foreach($data as $item)
-            <tr wire:key="{{$item->id}}" x-data="{ receptModal : false ,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
+            <tr wire:key="{{$item->id}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
                 <td>{{$item->id}}</td>
                 <td>{{$item->name}}</td>
 
@@ -85,13 +85,13 @@
                             @endphp
 
                             @if($item->operation->name =="ولادة طبيعية")
-                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;income={{$item->operation->price + $setting->pat_profile}};description="{{$item->operation->name}}";amount_iqd=income;amount_usd=0;'>
+                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla=1000;income={{$item->operation->price}};description="{{$item->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
                                 
                             قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
                             </button>
                             @else
-                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;income={{$item->operation->price + $setting->pat_profile}};description="{{$item->operation->name}}";amount_iqd=income;amount_usd=0;'>
+                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla={{$setting->pat_profile}};income={{$item->operation->price}};description="{{$item->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
                             قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
                             </button>
@@ -129,19 +129,29 @@
                                 <label>اسم الجراح</label>
                                 <input type="text" class="form-control" readonly value="{{$item->doctor->name ?? ''}}">
                             </div>
-                            <div class="col-md-12">
-                                <label>المبلغ الأجمالي
-                                    (مبلغ العملية + فتح طبلة)
+                           
+                            <div class="col-md-6">
+                                <label>
+                                    فتح طبلة
                                 </label>
-                               <input  type="text" class="form-control" x-model="income">
+                               <input  type="text" class="form-control" x-model="tabla" x-on:change = "amount_iqd = income *1 + tabla * 1">
                            </div>
 
-                           <div class="col-md-4">
+                           <div class="col-md-6">
+                            <label>
+                                مبلغ العملية
+                            </label>
+                           <input  type="text" class="form-control" x-model="income">
+                       </div>
+
+                           
+
+                           <div class="col-md-6">
                             <label>دينار</label>
                            <input  type="text" class="form-control"  x-model="amount_iqd">
                        </div>
 
-                       <div class="col-md-4">
+                       <div class="col-md-6">
                         <label>دولار</label>
                        <input  type="text" class="form-control"  x-model="amount_usd">
                    </div>

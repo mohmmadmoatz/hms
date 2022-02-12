@@ -68,7 +68,7 @@ z-index: -1;
     <table class="table" style="width: 100%;">
         <tbody><tr>
             <th style="text-align: right;">
-                <span style="color:3ba8b1">التاريخ : {{$data->created_at}}</span>
+                <span style="color:3ba8b1">التاريخ : {{$data->date}}</span>
             </th>
             <th style="text-align: left;">
                 <span dir="ltr" style="color:3ba8b1;margin-left: 80px;font-size: 25px;">No: {{$data->wasl_number}}</span>

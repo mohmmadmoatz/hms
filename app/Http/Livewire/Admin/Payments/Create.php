@@ -37,8 +37,8 @@ class Create extends Component
     public $paydoctor;
     public $stname;
     public $stid;
-    public $created_at;
-    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid','redirect_doctor_id','paydoctor'];
+    public $date;
+    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid','redirect_doctor_id','paydoctor','date'];
 
     
     protected $rules = [
@@ -69,6 +69,9 @@ class Create extends Component
 
     public function initDirect()
     {
+        if($this->redirect){
+
+        
         $this->amount_iqd = Stage::find($this->redirect)->total_price;
         if($this->redirect_doctor_id){
             $doctor_id=$this->redirect_doctor_id;
@@ -93,10 +96,12 @@ class Create extends Component
         $this->redirect_nurse_price = Stage::find($this->redirect)->other_price;
 
     }
+    }
 
     public function mount()
     {
-        $this->created_at = date("Y-m-d");
+        $this->date = date("Y-m-d");
+        
         $this->wasl_number=Payments::withTrashed()->where("payment_type",$this->payment_type)->max("wasl_number") + 1;
         if($this->redirect){
             $this->initDirect();
@@ -168,7 +173,7 @@ class Create extends Component
         "redirect"=>$this->redirect,
         "return_iqd"=>$return_iqd,
         "return_usd"=>$return_usd,
-        'created_at'=>$this->created_at
+        'date'=>$this->date
     ];
 
   
@@ -197,11 +202,11 @@ class Create extends Component
             $data = OperationHold::query();
             $date1 = explode(" - ", $this->daterange)[0];
             $date2 = explode(" - ", $this->daterange)[1];
-            $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $data = $data->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
 
             $dataPay = Payments::query();
             
-            $dataPay = $dataPay->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $dataPay = $dataPay->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
            
         if($this->payto =="doctor"){
 

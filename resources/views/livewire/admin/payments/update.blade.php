@@ -1,10 +1,10 @@
 <div class="card">
     <div class="card-header p-0">
-        <h3 class="card-title">{{ __('UpdateTitle', ['name' => __('Payments') ]) }}</h3>
+        <h3 class="card-title">تعديل السند</h3>
         <div class="px-2 mt-4">
             <ul class="breadcrumb mt-3 py-3 px-4 rounded" style="background-color: #e9ecef!important;">
                 <li class="breadcrumb-item"><a href="@route(getRouteName().'.home')" class="text-decoration-none">{{ __('Dashboard') }}</a></li>
-                <li class="breadcrumb-item"><a href="@route(getRouteName().'.payments.read')" class="text-decoration-none">{{ __(\Illuminate\Support\Str::plural('Payments')) }}</a></li>
+                <li class="breadcrumb-item"><a href="@route(getRouteName().'.payments.read')" class="text-decoration-none">السندات</a></li>
                 <li class="breadcrumb-item active">{{ __('Update') }}</li>
             </ul>
         </div>
@@ -25,6 +25,18 @@
             </div>
             
             <div class="row">
+
+            @if($account_type ==2 && $payment_type==2)
+              <div class="col-md-12">
+                <label for="">توجيه المريض الى : </label>
+                <select class="form-control" wire:model="redirect" wire:change="initDirect">
+                    <option value="">اختيار التوجيه</option>
+                    @foreach(App\Models\Stage::where("id","!=",5)->get() as $item)
+                    <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
+                </select>
+              </div>
+              @endif
                 <div class="col-md-6">
                     <div class='form-group'>
                         <label for='inputamount' class='col-sm-2 control-label'>دينار</label>
@@ -42,6 +54,40 @@
     
               
                   </div>
+
+                  @if($redirect)
+
+              
+
+              <div class="col-md-6">
+                 
+                  <div>
+                    <script>
+                        $(function () {
+        $('.selectpicker2').selectpicker();
+        });
+                    </script>
+                <div class='form-group' wire:ignore>
+                    <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
+                    
+                    <select class="form-control selectpicker2" data-live-search="true" wire:model="redirect_doctor_id" wire:change="changeDoctor">
+                        <option value="">يرجى اختيار طبيب</option>
+                        @foreach(App\Models\User::where('user_type','resident')->orWhere("user_type","doctor")->orWhere("user_type","rays")->get() as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+
+                        @endforeach
+                    </select>
+                    
+                </div>
+            </div>
+              </div>
+
+                <div class="col-md-6">
+                    <label>اجور الطبيب</label>
+                    <input type="text" class="form-control" wire:model.lazy="redirect_doctor_price">
+                </div>
+
+              @endif
     
                 
               </div>
