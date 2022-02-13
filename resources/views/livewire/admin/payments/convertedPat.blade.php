@@ -121,6 +121,10 @@
                     <div class="bg-white shadow rounded p-5" @click.away="receptModal = false" >
                         <h5 class="pb-2 border-bottom">سند قبض</h5>
                         <div class="row">
+                        <div class="col-md-12">
+                                <label>التاريخ</label>
+                                <input type="date" class="form-control" wire:model.lazy="date">
+                            </div>
                             <div class="col-md-6">
                                 <label>رقم الوصل</label>
                                 <input type="text" class="form-control" x-model="wasl_number">
@@ -141,7 +145,7 @@
                             <label>
                                 مبلغ العملية
                             </label>
-                           <input  type="text" class="form-control" x-model="income">
+                           <input  type="text" class="form-control" x-model="income" x-on:change = "amount_iqd = income *1 + tabla * 1">
                        </div>
 
                            

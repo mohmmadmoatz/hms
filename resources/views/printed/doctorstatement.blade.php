@@ -55,12 +55,12 @@
       $data = App\Models\OperationHold::where("mqema_id",$id)
     ->whereNull("mqema_paid")
     ->where("operation_name","ولادة طبيعية")
-    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     }else{
       $data = App\Models\OperationHold::where("doctor_id",$id)
     ->whereNull("doctor_paid")
-    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
 
     }

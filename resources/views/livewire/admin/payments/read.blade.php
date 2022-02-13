@@ -67,16 +67,14 @@
                                 <option value="2">قبض</option>
                             </select>
                         </div>
-                        <div class="col-md-4" wire:ignore>
+                        <div class="col-md-4" >
                             <label for="">الفترة</label>
                             <div class="input-group">
-                                <input autocomplete="off" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange"
+                                <input onchange="daterangeGo()" autocomplete="off" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange"
                                     wire:ignore>
 
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" onclick="daterangeGo()">
-                                        فلترة
-                                    </button>
+                                    
                                     @if($datefilterON)
                                     <button class="btn btn-danger" wire:click="$set('datefilterON',false)">
                                         الغاء

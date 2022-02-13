@@ -44,7 +44,7 @@
     $date1 = explode(" - ", $dates)[0];
 $date2 = explode(" - ", $dates)[1];
     $data = App\Models\OperationHold::whereNull("helper_paid")
-    ->whereBetween("created_at",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+    ->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
     @endphp
 

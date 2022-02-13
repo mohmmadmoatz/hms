@@ -165,6 +165,16 @@
 @endif
 
 @if(Auth::user()->user_type  == "info")
+
+<li
+    class='sidebar-item @isActive([getRouteName().".operation.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".operation.read"], "active") '
+        href="@route(getRouteName().'.operation.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("list") }}" class="feather-icon"></i>
+        <span class="hide-menu">العمليات</span>
+    </a>
+</li>
+
 <li
     class='sidebar-item @isActive([getRouteName().".setting.update"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".setting.update"], "active") '

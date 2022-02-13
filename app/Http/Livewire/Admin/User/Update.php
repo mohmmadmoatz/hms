@@ -26,7 +26,7 @@ class Update extends Component
         $this->user = $user;
         $this->name = $this->user->name;
         $this->email = $this->user->email;
-        $this->password = $this->user->password;
+     
         $this->image = $this->user->image;        
         $this->user_type = $this->user->user_type;        
     }
@@ -44,6 +44,10 @@ class Update extends Component
         
         if($this->getPropertyValue('image') and is_object($this->image)) {
             $this->image = $this->getPropertyValue('image')->store('images/articles','public');
+        }
+
+        if($this->password){
+            $this->password = bcrypt($this->password);
         }
 
         $this->user->update([

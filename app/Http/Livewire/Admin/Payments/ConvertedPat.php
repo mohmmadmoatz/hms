@@ -24,7 +24,13 @@ class ConvertedPat extends Component
     public $description;
     public $patprofile;
     public $tabla;
+    public $date;
     protected $queryString = ['search'];
+
+    public function mount()
+    {
+        $this->date = Date("Y-m-d");
+    }
 
     public function loadNumberRecept()
     {
@@ -63,6 +69,12 @@ class ConvertedPat extends Component
         
         $data =[
             'payment_type' => 2,
+
+            "operation_price"=>$this->income,
+            "operation_profile"=>$this->tabla,
+            "operation_doctor"=>$patient->doctor_id,
+            "operation_name"=>$patient->operation->name,
+            "operation_nsba"=>$patient->hms_nsba,
             'amount_iqd' => $this->amount_iqd,
             'amount_usd' => $this->amount_usd,
             'return_iqd' => $return_iqd,
@@ -72,7 +84,7 @@ class ConvertedPat extends Component
             'user_id' => auth()->id(),
             "patinet_id"=>$id,
             "wasl_number"=>$this->wasl_number,
-            "date"=>date("Y-m-d")
+            "date"=>$this->date
         ];
 
 
@@ -103,11 +115,22 @@ class ConvertedPat extends Component
         $doctorexp =($this->income) * ($patient->hms_nsba / 100);
 
 
-        if($patient->hms_nsba  == 60 && $patient->operation->name =="ولادة قيصرية"){
+    if($patient->hms_nsba  == 60 && $patient->operation->name =="ولادة قيصرية"){
         if($opPrice < $setting->min_op_price){
             $fixedNsba = $setting->min_op_price * ($setting->hnsba  / 100);
             $doctorexp = abs($opPrice - $fixedNsba);
         }
+    }elseif ($opPrice < $patient->operation->price) {
+
+        if($opPrice <= 200000){
+            $doctorexp = $opPrice / 2;
+        }else{
+            $fixedNsba = $patient->operation->price * ($setting->hnsba  / 100);
+            $doctorexp = abs($opPrice - $fixedNsba);
+        }
+
+        
+        
     }
 
         $nurse_price=$setting->nurse_price;
@@ -131,15 +154,22 @@ class ConvertedPat extends Component
             "qabla"=>$setting->qabla,
             "ambulance"=>$ambulance,
             "nurse_price"=>$nurse_price,
+            "date"=>$this->date
            
         ];
 
-        OperationHold::create($operation);
+        $operationid = OperationHold::create($operation);
+
+
+
+        $updatepayments = Payments::find($number->id);
+
+        $updatepayments->operation_id = $operationid->id;
+        $updatepayments->save();
 
 
        
         $patdata = Patient::find($id);
-
         $patdata->paid =1;
         $patdata->save();
 

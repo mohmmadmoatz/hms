@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Admin\Payments;
 
 use App\Models\Payments;
+use App\Models\Setting;
+use App\Models\OperationHold;
 use App\Models\User;
 use App\Models\Stage;
 use Livewire\Component;
@@ -25,6 +27,13 @@ class Update extends Component
     public $redirect_nurse_price;
     public $redirect_doctor_id;
    
+    public $operation_price;
+    public $operation_profile;
+    public $operation_doctor;
+    public $operation_id;
+    public $operation_name;
+    public $operation_nsba;
+
     
     protected $rules = [
         'payment_type' => 'required',        'amount_usd' => 'required', 'amount_iqd' => 'required',        
@@ -92,6 +101,14 @@ class Update extends Component
         $this->redirect_nurse_price = $this->payments->redirect_nurse_price;  
         $this->redirect_doctor_id = $this->payments->redirect_doctor_id;  
 
+        $this->operation_price = $this->payments->operation_price;  
+        $this->operation_profile = $this->payments->operation_profile;  
+        $this->operation_doctor = $this->payments->operation_profile; 
+        $this->operation_id = $this->payments->operation_id; 
+        
+        $this->operation_nsba = $this->payments->operation_nsba; 
+        $this->operation_name = $this->payments->operation_name; 
+
     }
 
     public function updated($input)
@@ -110,16 +127,64 @@ class Update extends Component
             'amount_usd' => $this->amount_usd,
             'amount_iqd' => $this->amount_iqd,
             'description' => $this->description,
-        "redirect"=>$this->redirect,
-        'redirect_doctor_price' => $this->redirect_doctor_price,
-        'redirect_doctor_id' => $this->redirect_doctor_id,
-        'redirect_nurse_price' => $this->redirect_nurse_price,
+            "redirect"=>$this->redirect,
+            'redirect_doctor_price' => $this->redirect_doctor_price,
+            'redirect_doctor_id' => $this->redirect_doctor_id,
+            'redirect_nurse_price' => $this->redirect_nurse_price,
+            'operation_price' => $this->operation_price,
+            'operation_profile' => $this->operation_profile,
+            'operation_doctor' => $this->operation_doctor,
             'user_id' => auth()->id(),
         ]);
+
+        if($this->operation_id){
+            $updateOperation = OperationHold::find($this->operation_id);
+            $setting = Setting::find(1);
+
+            if($this->operation_name == "ولادة طبيعية"){
+                if($this->operation_nsba ==60){
+                    if($this->operation_price >= 600000){
+                        $doctorexp = ($this->operation_price) * ($this->operation_nsba / 100);
+                    }else{
+                        $doctorexp = 0;
+                    }
+                }else{
+                    $doctorexp = 0;
+                }
+            }else{
+        
+                $opPrice = ($this->operation_price);
+        
+                $doctorexp =($this->operation_price) * ($this->operation_nsba / 100);
+        
+        
+                if($this->operation_nsba  == 60 && $this->operation_name =="ولادة قيصرية"){
+                if($opPrice < $setting->min_op_price){
+                    $fixedNsba = $setting->min_op_price * ($setting->hnsba  / 100);
+                    $doctorexp = abs($opPrice - $fixedNsba);
+                }
+            }
+        
+                $nurse_price=$setting->nurse_price;
+        
+            }
+
+            
+            $updateOperation->operation_price = $this->operation_price;
+            $updateOperation->doctorexp = $doctorexp;
+            $updateOperation->nsba = $this->operation_nsba;
+            $updateOperation->save();
+
+        }
     }
 
     public function render()
     {
+        
+        if($this->payments->operation_id !=null){
+            $this->amount_iqd = $this->operation_price + $this->operation_profile;
+        }
+
         return view('livewire.admin.payments.update', [
             'payments' => $this->payments
         ])->layout('admin::layouts.app', ['title' => __('UpdateTitle', ['name' => __('Payments') ])]);

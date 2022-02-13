@@ -118,9 +118,9 @@ class Read extends Component
         if($this->datefilterON){
             $date1 = explode(" - ", $this->daterange)[0];
             $date2 = explode(" - ", $this->daterange)[1];
-            $data = $data->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
-            $summations = $summations->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
-            $summations2 = $summations2->whereBetween('created_at',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $data = $data->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $summations = $summations->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $summations2 = $summations2->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
 
         }
 
@@ -158,6 +158,7 @@ class Read extends Component
     public function render()
     {
        
+  
 
         return view('livewire.admin.payments.read', [
             'paymentss' => $this->payments,
