@@ -15,7 +15,7 @@ class Read extends Component
 
     public $search;
 
-    protected $queryString = ['search','patient_id','groupdata','account_type',"idnumber"];
+    protected $queryString = ['search','patient_id','groupdata','account_type',"idnumber","daterange"];
 
     protected $listeners = ['paymentsDeleted'];
 
@@ -47,6 +47,8 @@ class Read extends Component
         $this->daterange = $date;
         $this->datefilterON = true;
     }
+
+  
 
     public function paymentsDeleted(){
         // Nothing ..

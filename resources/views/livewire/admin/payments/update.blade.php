@@ -26,6 +26,11 @@
             
             <div class="row">
 
+            <div class="col-md-6">
+                    <label for="">رقم الوصل</label>
+                    <input type="text" class="form-control" wire:model.lazy="wasl_number">
+                </div>
+
             @if($account_type ==2 && $payment_type==2 && $redirect)
               <div class="col-md-12">
                 <label for="">توجيه المريض الى : </label>

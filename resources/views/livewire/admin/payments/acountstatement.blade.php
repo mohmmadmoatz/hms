@@ -38,16 +38,14 @@
 
                         
                         
-                        <div class="col-md-4" wire:ignore>
+                        <div class="col-md-4">
                             <label for="">الفترة</label>
                             <div class="input-group">
-                                <input autocomplete="off" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange"
+                                <input autocomplete="off" onchange="daterangeGo()" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange"
                                     wire:ignore>
 
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" onclick="daterangeGo()">
-                                        فلترة
-                                    </button>
+                                    
                                     @if($datefilterON)
                                     <button class="btn btn-danger" wire:click="$set('datefilterON',false)">
                                         الغاء
@@ -85,7 +83,7 @@
 
                    
                                     <td>
-                                    <a href="@route(getRouteName().'.payments.read')?patient_id={{$item->Patient->id}}&account_type=2" class="btn btn-info">عرض السندات</a>
+                                    <a href="@route(getRouteName().'.payments.read')?patient_id={{$item->Patient->id}}&account_type=2&daterange={{$daterange}}" class="btn btn-info">عرض السندات</a>
                                     <a href="@route(getRouteName().'.payments.create')?account_id={{$item->Patient->id}}&payment_type=2&account_type=2" class="btn btn-info">سند قبض</a>
                                     </td>
                                 </tr>
@@ -102,3 +100,11 @@
     </div>
 </div>
 
+<script>
+    function daterangeGo() {
+        var element = document.getElementById("reportrange")
+        console.log(element.value)
+        Livewire.emit('searchBydate');
+        @this.searchBydate(element.value)
+    }
+</script>

@@ -34,7 +34,8 @@ class Update extends Component
     public $operation_name;
     public $operation_nsba;
 
-    
+    public $wasl_number;
+
     protected $rules = [
         'payment_type' => 'required',        'amount_usd' => 'required', 'amount_iqd' => 'required',        
     ];
@@ -108,6 +109,7 @@ class Update extends Component
         
         $this->operation_nsba = $this->payments->operation_nsba; 
         $this->operation_name = $this->payments->operation_name; 
+        $this->wasl_number = $this->payments->wasl_number; 
 
     }
 
@@ -134,6 +136,7 @@ class Update extends Component
             'operation_price' => $this->operation_price,
             'operation_profile' => $this->operation_profile,
             'operation_doctor' => $this->operation_doctor,
+            'wasl_number' => $this->wasl_number,
             'user_id' => auth()->id(),
         ]);
 

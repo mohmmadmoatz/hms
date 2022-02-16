@@ -49,6 +49,13 @@ class PatStatement extends Component
             });
         }
 
+        if($this->datefilterON){
+            $date1 = explode(" - ", $this->daterange)[0];
+            $date2 = explode(" - ", $this->daterange)[1];
+            $data = $data->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+        }
+
+
         $data->with("Patient:id,name");
         $data->groupBy("patinet_id");
         $data->latest();
