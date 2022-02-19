@@ -40,5 +40,5 @@ return [
     'lazy_mode' => true,
 
     // enabled actions, If you want to create crud you must put action name here
-    'actions' => ["user","clinic","patient","checkup",'operation','stock','stockoperation','rays','sonar','room','payments','warehouse','setting',"warehouseexport","warehouseitem",'operationhold','stage'],
+    'actions' => ["user","clinic","patient","checkup",'operation','stock','stockoperation','rays','sonar','room','payments','warehouse','setting',"warehouseexport","warehouseitem",'operationhold','stage','bank'],
 ];

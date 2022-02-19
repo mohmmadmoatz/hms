@@ -106,5 +106,10 @@
     "Operationholds": "Operationholds",
     "Total_price": "Total_price",
     "Stage": "Stage",
-    "Stages": "Stages"
+    "Stages": "Stages",
+    "Wasl_number": "Wasl_number",
+    "Amount_iqd": "Amount_iqd",
+    "Amount_usd": "Amount_usd",
+    "Bank": "Bank",
+    "Banks": "Banks"
 }

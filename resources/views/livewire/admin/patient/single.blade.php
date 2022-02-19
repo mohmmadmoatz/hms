@@ -7,13 +7,13 @@
     @if(config('easy_panel.crud.patient.delete') or config('easy_panel.crud.patient.update'))
         <td>
 
-   @if(Auth::user()->user_type  == "info" || Auth::user()->user_type  == "superadmin")
+  
             @if(config('easy_panel.crud.patient.update'))
                 <a href="@route(getRouteName().'.patient.update', ['patient' => $patient->id])" class="btn text-primary mt-1">
                     <i class="icon-pencil"></i>
                 </a>
             @endif
-            @endif
+        
    @if(Auth::user()->user_type  == "info" || Auth::user()->user_type  == "superadmin")
             @if(config('easy_panel.crud.patient.delete'))
                 <button @click.prevent="modalIsOpen = true" class="btn text-danger mt-1">
@@ -35,13 +35,13 @@
             <a target="blank" class="btn btn-outline-info" href="@route('printcard')?id={{$patient->id}}">طباعة الباج</a>
             
 
-            @if(Auth::user()->user_type  == "info" || Auth::user()->user_type  == "superadmin")
+            
             @if($patient->status==5)
             <a target="blank" class="btn btn-outline-info" href="@route('printedForm')?id={{$patient->id}}">طباعة الطبلة</a>
             @endif
-            @endif
+          
 
-             @if(Auth::user()->user_type  == "accountant" || Auth::user()->user_type  == "superadmin")
+           @if(Auth::user()->user_type  == "accountant" || Auth::user()->user_type  == "superadmin")
             <a target="blank" class="btn btn-outline-info" href="@route(getRouteName().'.payments.read')?patient_id={{$patient->id}}">كشف حساب</a>
             @endif
             @if($patient->room_id)

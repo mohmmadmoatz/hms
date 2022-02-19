@@ -67,24 +67,32 @@
     $sum_outcome_iqd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where("doctor_id","=",0)
-    ->where("account_name","!=","مخدر")
+    ->where(function ($query){
+    $query->where("account_name","!=","مخدر")
     ->where("account_name","!=","مساعد مخدر")
     ->where("account_name","!=","مساعد جراح")
     ->where("account_name","!=","القابلة")
     ->where("account_name","!=","ممرضة")
     ->where("account_name","!=","اسعاف طفل")
+    ->orWhereNull("account_name");
+        
+})
     ->whereNull("is_stage")
     ->sum("amount_iqd");
 
     $sum_outcome_usd = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("payment_type",1)
     ->where("doctor_id","=",0)
-    ->where("account_name","!=","مخدر")
+    ->where(function ($query){
+    $query->where("account_name","!=","مخدر")
     ->where("account_name","!=","مساعد مخدر")
     ->where("account_name","!=","مساعد جراح")
     ->where("account_name","!=","القابلة")
     ->where("account_name","!=","ممرضة")
     ->where("account_name","!=","اسعاف طفل")
+    ->orWhereNull("account_name");
+        
+})
     ->whereNull("is_stage")
     ->sum("amount_usd");
 
@@ -171,12 +179,15 @@
           </thead>
 
           <tbody>
-                <tr>
+                 <tr>
                       <th>المتراكم السابق</th>
                       <th>@convert($sum_old_income_iqd - $sum_old_outcome_iqd)</th>
-                      <th>@convert($sum_old_income_usd- $sum_old_outcome_usd)</th>
+                      <th>@convert($sum_old_income_usd - $sum_old_outcome_usd)</th>
                     
                  </tr>
+
+               
+
                  <tr>
                       <th>المقبوض لهذه اليوم (الفترة)</th>
                       <th>@convert($sum_income_iqd)</th>
@@ -207,9 +218,17 @@
                  </tr>
 
                  <tr>
+                      <th>المسحوب</th>
+                      <th>@convert(App\Models\Bank::sum("amount_iqd"))</th>
+                      <th>@convert(App\Models\Bank::sum("amount_usd"))</th>
+                      
+                    
+                 </tr>
+
+                 <tr>
                       <th>الصافي لغاية هذه الفترة</th>
-                      <th>@convert($full_net_iqd)</th>
-                      <th>@convert($full_net_usd)</th>
+                      <th>@convert($full_net_iqd - App\Models\Bank::sum("amount_iqd"))</th>
+                      <th>@convert($full_net_usd -  App\Models\Bank::sum("amount_usd"))</th>
                  </tr>
           </tbody>
 

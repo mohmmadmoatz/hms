@@ -108,5 +108,10 @@
     "Operationholds": "Operationholds",
     "Total_price": "Total_price",
     "Stage": "Stage",
-    "Stages": "Stages"
+    "Stages": "Stages",
+    "Wasl_number": "رقم الوصل",
+    "Amount_iqd": "المبلغ (دينار)",
+    "Amount_usd": "المبلغ (دولار)",
+    "Bank": "وصل سحب",
+    "Banks": "الخزنة"
 }

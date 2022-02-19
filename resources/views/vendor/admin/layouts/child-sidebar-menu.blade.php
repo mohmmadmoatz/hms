@@ -127,6 +127,14 @@
     </a>
 </li>
 
+<li
+    class='sidebar-item @isActive([getRouteName().".bank.read", getRouteName().".bank.create", getRouteName().".bank.update"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".bank.read", getRouteName().".bank.create", getRouteName().".bank.update"], "active") '
+        href="@route(getRouteName().'.bank.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">سحوبات الخزنة</span>
+    </a>
+</li>
 
 
 <li

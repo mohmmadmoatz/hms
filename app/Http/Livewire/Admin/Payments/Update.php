@@ -185,7 +185,7 @@ class Update extends Component
     {
         
         if($this->payments->operation_id !=null){
-            $this->amount_iqd = $this->operation_price + $this->operation_profile;
+           // $this->amount_iqd = $this->operation_price + $this->operation_profile;
         }
 
         return view('livewire.admin.payments.update', [
