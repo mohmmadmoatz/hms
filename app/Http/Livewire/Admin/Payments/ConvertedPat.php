@@ -137,6 +137,12 @@ class ConvertedPat extends Component
 
     }
 
+    if($patient->operation->name == "ولادة قيصرية" || $patient->operation->name == "ولادة طبيعية"){
+        $ambulance=$setting->ambulance;
+    }else{
+        $ambulance=0;
+    }
+
         $operation = [
             "patinet_id"=>$id,
             "doctor_id"=>$patient->doctor_id,
