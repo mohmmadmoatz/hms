@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Warehouseitem;
 
-use App\Models\WarehouseItem;
+use App\Models\Warehouseproduct;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -36,7 +36,7 @@ class Read extends Component
 
     public function render()
     {
-        $data = WarehouseItem::query();
+        $data = Warehouseproduct::query();
 
         if(config('easy_panel.crud.warehouseitem.search')){
             $array = (array) config('easy_panel.crud.warehouseitem.search');
@@ -63,6 +63,6 @@ class Read extends Component
 
         return view('livewire.admin.warehouseitem.read', [
             'warehouseitems' => $data
-        ])->layout('admin::layouts.app', ['title' => __(\Str::plural('WarehouseItem')) ]);
+        ])->layout('admin::layouts.app', ['title' => "مواد المخزن" ]);
     }
 }

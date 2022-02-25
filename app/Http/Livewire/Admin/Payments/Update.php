@@ -120,6 +120,14 @@ class Update extends Component
 
     public function update()
     {
+        if(!$this->amount_iqd){
+            $this->amount_iqd =0;
+        }
+
+        if(!$this->amount_usd){
+            $this->amount_usd =0;
+        }
+        
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('UpdatedMessage', ['name' => __('Payments') ]) ]);

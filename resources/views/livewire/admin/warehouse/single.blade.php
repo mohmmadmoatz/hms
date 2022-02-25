@@ -12,13 +12,14 @@
     <td> {{ $warehouse->user->name }} </td>    
     @if(config('easy_panel.crud.warehouse.delete') or config('easy_panel.crud.warehouse.update'))
         <td>
-
+        @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
             @if(config('easy_panel.crud.warehouse.update'))
                 <a href="@route(getRouteName().'.warehouse.update', ['warehouse' => $warehouse->id])" class="btn text-primary mt-1">
                     <i class="icon-pencil"></i>
                 </a>
             @endif
-
+            @endif
+            @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
             @if(config('easy_panel.crud.warehouse.delete'))
                 <button @click.prevent="modalIsOpen = true" class="btn text-danger mt-1">
                     <i class="icon-trash"></i>
@@ -33,6 +34,7 @@
                         </div>
                     </div>
                 </div>
+            @endif
             @endif
         </td>
     @endif

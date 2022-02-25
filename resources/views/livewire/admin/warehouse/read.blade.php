@@ -13,9 +13,14 @@
 
                     <div class="row justify-content-between mt-4 mb-4">
                         @if(config('easy_panel.crud.warehouse.create'))
+
+                        @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
                         <div class="col-md-4 right-0">
                             <a href="@route(getRouteName().'.warehouse.create')" class="btn btn-success">اضافة</a>
                         </div>
+                        @endif
+                        
+
                         @endif
                         @if(config('easy_panel.crud.warehouse.search'))
                         <div class="col-md-4">

@@ -12,10 +12,12 @@
                     </ul>
 
                     <div class="row justify-content-between mt-4 mb-4">
+                    @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
                         @if(config('easy_panel.crud.warehouseexport.create'))
                         <div class="col-md-4 right-0">
                             <a href="@route(getRouteName().'.warehouseexport.create')" class="btn btn-success">انشاء طلب جديد</a>
                         </div>
+                        @endif
                         @endif
                         @if(config('easy_panel.crud.warehouseexport.search'))
                         <div class="col-md-4">
@@ -40,7 +42,7 @@
                     <tr>
                         <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
                         <td style='cursor: pointer' wire:click="sort('date')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'date') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'date') fa-sort-amount-up ml-2 @endif'></i> {{ __('Date') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('total')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'total') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'total') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجمالي المبلغ') }} </td>
+                       
                         <td> {{ __('User Name') }} </td>
                         
                         @if(config('easy_panel.crud.warehouseexport.delete') or config('easy_panel.crud.warehouseexport.update'))

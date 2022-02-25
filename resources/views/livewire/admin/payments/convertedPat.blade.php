@@ -49,9 +49,17 @@
                 <td>{{$item->id}}</td>
                 <td>{{$item->name}}</td>
 
-                 @if($item->status != 5)
+                @if($item->status != 5)
+
+               
                 <td>{{$item->stage->name ?? ""}}</td>
+                @if($item->status ==2)
+                <td>@convert($item->total_lab) د.ع</td>
+                @else
                 <td>@convert($item->stage->total_price) د.ع</td>
+
+                @endif
+
                 @endif
 
               
@@ -64,10 +72,36 @@
 
                         @if($item->status !=5)
 
+                        @if($item->status ==2)
+
+                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->total_lab}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
+                        @convert($item->total_lab) د.ع
+                        من المريض
+                        </a>
+                        
+                        <table x-show="showlab" class="table table-bordered">
+                            <tr>
+                                <th>الفحص</th>
+                                <th>السعر</th>
+                            </tr>
+                            @foreach(json_decode($item->lab) as $x)
+                            <tr>
+                                <td>
+                                    {{$x->name}}
+                                </td>
+                                <td>
+                                {{$x->amount}}
+                                </td>
+                            </tr>
+                            @endforeach
+                        </table>
+
+                        @else
                         <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
                         @convert($item->stage->total_price) د.ع
                         من المريض
                         </a>
+                        @endif
 
                         @elseif($item->status == 5)
                             @php

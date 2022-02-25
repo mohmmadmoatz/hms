@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Warehouse;
 
 use App\Models\Warehouse;
 use App\Models\WarehouseItem;
+use App\Models\Warehouseproduct;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -36,25 +37,37 @@ class Create extends Component
         $this->validateOnly($input);
     }
 
+    public function selectitem()
+    {
+        $product=Warehouseproduct::find($this->item);
+        $this->amount = $product->amount;
+        $this->qty = 1;
+        $this->qtynow = $product->qtynow;
+        $this->total = $product->amount;
+    }
+
     public function addItem()
     {
-       $this->items[]=  [
-        "name"=>$this->item,
-        "amount"=>$this->amount,
-        "qty"=>$this->qty,
-        "total"=>$this->total
-       ];
-
-       $this->item = "";
-       $this->amount = 0;
-       $this->qty = 1;
-       $this->total = "";
+        $product=Warehouseproduct::find($this->item);
+        $this->items[]=  [
+         "name"=>$this->item,
+         "productname"=>$product->name,
+         "amount"=>$this->amount,
+         "qty"=>$this->qty,
+         "total"=>$this->total
+        ];
+ 
+        
+        $this->amount = 0;
+        $this->qty = 1;
+        $this->total = "";
 
     }
 
     public function deleteItem($index)
     {
-        array_splice($this->items,$index);
+        array_splice($this->items,$index,1);
+
     }
 
     public function create()
@@ -82,6 +95,7 @@ class Create extends Component
           
             $newitem = new WarehouseItem();
             $newitem->name = $item['name'];
+            $newitem->product_id = $item['name'];
             $newitem->qty = $item['qty'];
             $newitem->amount = $item['amount'];
             $newitem->total = $item['total'];

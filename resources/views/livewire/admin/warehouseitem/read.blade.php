@@ -12,10 +12,12 @@
                     </ul>
 
                     <div class="row justify-content-between mt-4 mb-4">
+                    @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
                         @if(config('easy_panel.crud.warehouseitem.create'))
                         <div class="col-md-4 right-0">
-                            <a href="@route(getRouteName().'.warehouseitem.create')" class="btn btn-success">{{ __('CreateTitle', ['name' => __('WarehouseItem') ]) }}</a>
+                            <a href="@route(getRouteName().'.warehouseitem.create')" class="btn btn-success">اضافة مادة</a>
                         </div>
+                        @endif
                         @endif
                         @if(config('easy_panel.crud.warehouseitem.search'))
                         <div class="col-md-4">
@@ -39,8 +41,10 @@
                     <tbody>
                     <tr>
                         <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('qty')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'qty') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'qty') fa-sort-amount-up ml-2 @endif'></i> {{ __('Qty') }} </td>
-                        <td> {{ __('العدد الحالي') }} </td>
+           
+                        <td> {{ __('الكمية الواردة') }} </td>
+                        <td> {{ __('الكمية المستهلكة') }} </td>
+                        <td> {{ __('الكمية الباقية') }} </td>
                         
                         @if(config('easy_panel.crud.warehouseitem.delete') or config('easy_panel.crud.warehouseitem.update'))
                         <td>{{ __('Action') }}</td>

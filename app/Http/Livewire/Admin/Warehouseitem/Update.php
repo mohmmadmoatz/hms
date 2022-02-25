@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Warehouseitem;
 
-use App\Models\WarehouseItem;
+use App\Models\Warehouseproduct;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,16 +13,16 @@ class Update extends Component
     public $warehouseitem;
 
     public $name;
-    public $qty;
+    public $amount;
     
     protected $rules = [
-        'name' => 'required',        'qty' => 'required',        
+        'name' => 'required',        
     ];
 
-    public function mount(WarehouseItem $warehouseitem){
+    public function mount(Warehouseproduct $warehouseitem){
         $this->warehouseitem = $warehouseitem;
         $this->name = $this->warehouseitem->name;
-        $this->qty = $this->warehouseitem->qty;        
+        $this->amount = $this->warehouseitem->amount;        
     }
 
     public function updated($input)
@@ -38,7 +38,7 @@ class Update extends Component
         
         $this->warehouseitem->update([
             'name' => $this->name,
-            'qty' => $this->qty,            
+            'amount' => $this->amount,            
         ]);
     }
 
@@ -46,6 +46,6 @@ class Update extends Component
     {
         return view('livewire.admin.warehouseitem.update', [
             'warehouseitem' => $this->warehouseitem
-        ])->layout('admin::layouts.app', ['title' => __('UpdateTitle', ['name' => __('WarehouseItem') ])]);
+        ])->layout('admin::layouts.app', ['title' => "تعديل مادة" ]);
     }
 }

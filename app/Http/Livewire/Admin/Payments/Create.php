@@ -72,7 +72,9 @@ class Create extends Component
         if($this->redirect){
 
         
+        if($this->redirect !=2)
         $this->amount_iqd = Stage::find($this->redirect)->total_price;
+
         if($this->redirect_doctor_id){
             $doctor_id=$this->redirect_doctor_id;
         }else{
@@ -135,6 +137,13 @@ class Create extends Component
     public function create($print=null)
     {
 
+        if(!$this->amount_iqd){
+            $this->amount_iqd =0;
+        }
+
+        if(!$this->amount_usd){
+            $this->amount_usd =0;
+        }
      
 
         $return_iqd =0;

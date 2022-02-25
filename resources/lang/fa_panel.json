@@ -77,7 +77,7 @@
     "Description": "الوصف",
     "Date": "التاريخ",
     "Payment_type": "Payment_type",
-    "Amount": "Amount",
+    "Amount": "السعر",
     "Patinet_id": "Patinet_id",
     "Payments": "Payments",
     "Supplier_name": "اسم المحل",
@@ -113,5 +113,9 @@
     "Amount_iqd": "المبلغ (دينار)",
     "Amount_usd": "المبلغ (دولار)",
     "Bank": "وصل سحب",
-    "Banks": "الخزنة"
+    "Banks": "الخزنة",
+    "Lab": "فحص مختبر",
+    "Labs": "فحوصات مختبر",
+    "Labsetting": "فحص",
+    "Labsettings": "اعداد الفحوصات"
 }

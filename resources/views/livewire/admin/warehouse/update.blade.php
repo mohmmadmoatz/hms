@@ -19,7 +19,7 @@
                     <!-- Supplier_name Input -->
                     <div class='form-group'>
                         <label for='inputsupplier_name' class=' control-label'>
-                            {{ __('Supplier_name') }}</label>
+                            {{ __('اسم المندوب او الشركة') }}</label>
                         <input type='text' wire:model.lazy='supplier_name'
                             class="form-control @error('supplier_name') is-invalid @enderror" id='inputsupplier_name'>
                         @error('supplier_name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
@@ -87,7 +87,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" class="form-control" wire:model="item"></td>
+                        <td wire:ignore>
+                            <select class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
+                                <option value="">يرجى اختيار المادة</option>
+                                 @foreach(App\Models\Warehouseproduct::get() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                 @endforeach
+                            </select>
+                        </td>
                         <td><input type="number" class="form-control" wire:model="amount"></td>
                         <td><input type="number" class="form-control" wire:model="qty"></td>
                         <td><input readonly type="number" class="form-control" wire:model="total"></td>
@@ -99,7 +106,8 @@
                     <tr>
 
                     
-                    <td>{{$item['name']}}</td>
+                        <td>{{$item['productname']}}</td>
+
                     <td>@convert($item['amount'])</td>
                     <td>{{$item['qty']}}</td>
                     <td>@convert($item['total'])</td>

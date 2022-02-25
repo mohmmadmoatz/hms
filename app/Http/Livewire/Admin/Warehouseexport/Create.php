@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Warehouseexport;
 
 use App\Models\WarehouseExport;
-use App\Models\WarehouseItem;
+use App\Models\Warehouseproduct;
 use App\Models\WarehouseExportItem;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -29,7 +29,7 @@ class Create extends Component
 
     public function addItem()
     {
-      $product=WarehouseItem::find($this->item);
+      $product=Warehouseproduct::find($this->item);
        $this->items[]=  [
         "name"=>$this->item,
         "productname"=>$product->name,
@@ -47,7 +47,7 @@ class Create extends Component
 
     public function deleteItem($index)
     {
-        array_splice($this->items,$index);
+        array_splice($this->items,$index,1);
     }
 
     public function updated($input)
@@ -84,7 +84,7 @@ class Create extends Component
 
     public function selectitem()
     {
-        $product=WarehouseItem::find($this->item);
+        $product=Warehouseproduct::find($this->item);
         $this->amount = $product->amount;
         $this->qty = 1;
         $this->qtynow = $product->qtynow;

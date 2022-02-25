@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Warehouseitem;
 
-use App\Models\WarehouseItem;
+use App\Models\Warehouseproduct;
 use Livewire\Component;
 
 class Single extends Component
@@ -10,7 +10,7 @@ class Single extends Component
 
     public $warehouseitem;
 
-    public function mount(WarehouseItem $warehouseitem){
+    public function mount(Warehouseproduct $warehouseitem){
         $this->warehouseitem = $warehouseitem;
     }
 

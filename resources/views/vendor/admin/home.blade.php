@@ -73,6 +73,7 @@
                     </div>
 
 </div>
+@endif
 
 @if(Auth::user()->user_type  == "accountant")
 <div align="center">
@@ -81,7 +82,7 @@
 </div>
 @endif
 
-@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info")
+@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info" ||  Auth::user()->user_type  == "tabq")
 <div class="row">
 <div class="col-md-12">
                             <div class="input-group">
@@ -120,7 +121,7 @@
             </div>
             
 @endif
-@endif
+
 
 
 

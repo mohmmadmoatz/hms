@@ -172,6 +172,10 @@
 </li>
 @endif
 
+@if(Auth::user()->user_type  == "tabq")
+
+@endif
+
 @if(Auth::user()->user_type  == "info")
 
 <li
@@ -316,6 +320,58 @@
 </li>
 @endif
 
+
+@if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "tabq")
+<li class='sidebar-item'>
+
+    
+
+    <a class='sidebar-link has-arrow' href="javascript:void(0)" aria-expanded="false">
+        <i  class="fa fa-flask"></i>
+        <span class="hide-menu">قسم المختبر</span>
+    </a>
+
+    <ul aria-expanded="false" class="collapse first-level base-level-line">
+    @if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin")
+    <li class="sidebar-item @isActive(getRouteName().'.'.'labsetting'.'.read')">
+            <a href="@route(getRouteName().'.labsetting.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'labsetting'.'.read')">
+                <span class="hide-menu"> تهئية الفحوصات </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.pat')">
+            <a href="@route(getRouteName().'.lab.pat')"
+                class="sidebar-link @isActive(getRouteName().'.'.'lab'.'.pat')">
+                <span class="hide-menu"> اعادة توجيه المرضى </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.converted')">
+            <a href="@route(getRouteName().'.lab.converted')"
+                class="sidebar-link @isActive(getRouteName().'.'.'lab'.'.converted')">
+                <span class="hide-menu"> المرضى الداخلين </span>
+            </a>
+        </li>
+        @endif
+        <li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.read')">
+            <a href="@route(getRouteName().'.lab.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'lab'.'.read')">
+                <span class="hide-menu"> الملفات السابقة </span>
+            </a>
+        </li>
+
+       
+        
+    </ul>
+
+
+
+
+
+</li>
+@endif
+
 @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
 <li class='sidebar-item'>
 
@@ -333,6 +389,7 @@
                 <span class="hide-menu"> القوائم </span>
             </a>
         </li>
+        
         <li class="sidebar-item @isActive(getRouteName().'.'.'warehouseitem'.'.read')">
             <a href="@route(getRouteName().'.warehouseitem.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'warehouseitem'.'.read')">

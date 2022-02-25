@@ -111,5 +111,9 @@
     "Amount_iqd": "Amount_iqd",
     "Amount_usd": "Amount_usd",
     "Bank": "Bank",
-    "Banks": "Banks"
+    "Banks": "Banks",
+    "Lab": "Lab",
+    "Labs": "Labs",
+    "Labsetting": "Labsetting",
+    "Labsettings": "Labsettings"
 }

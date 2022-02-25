@@ -1,8 +1,9 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> {{ $warehouseexport->name }} </td>
     <td> {{ $warehouseexport->date }} </td>
-    <td> @convert($warehouseexport->total ) </td>
+    
     <td> {{ $warehouseexport->user->name }} </td>    
+    @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
     @if(config('easy_panel.crud.warehouseexport.delete') or config('easy_panel.crud.warehouseexport.update'))
         <td>
 
@@ -28,5 +29,6 @@
                 </div>
             @endif
         </td>
+        @endif
     @endif
 </tr>

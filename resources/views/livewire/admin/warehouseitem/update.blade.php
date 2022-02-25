@@ -22,12 +22,7 @@
                 @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
             
-            <!-- Qty Input -->
-            <div class='form-group'>
-                <label for='inputqty' class='col-sm-2 control-label'> {{ __('Qty') }}</label>
-                <input type='number' wire:model.lazy='qty' class="form-control @error('qty') is-invalid @enderror" id='inputqty'>
-                @error('qty') <div class='invalid-feedback'>{{ $message }}</div> @enderror
-            </div>
+      
             
 
         </div>

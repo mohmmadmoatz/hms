@@ -43,10 +43,10 @@
                         <thead>
                             <tr>
                                 <th>اسم المادة</th>
-                                <th>السعر</th>
+                              
                                 <th>العدد</th>
                                 <th>العدد الحالي</th>
-                                <th>الأجمالي</th>
+                            
                                 <th></th>
                             </tr>
         
@@ -56,15 +56,15 @@
                                 <td wire:ignore>
                                     <select class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
                                         <option value="">يرجى اختيار المادة</option>
-                                         @foreach(App\Models\WarehouseItem::get() as $item)
+                                         @foreach(App\Models\Warehouseproduct::get() as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
                                          @endforeach
                                     </select>
                                 </td>
-                                <td><input type="number" class="form-control" wire:model="amount"></td>
+                              
                                 <td><input type="number" class="form-control" wire:model="qty"></td>
                                 <td>{{$qtynow}}</td>
-                                <td><input readonly type="number" class="form-control" wire:model="total"></td>
+                                
                                 <td>
                                     <a href="#addPlus" wire:click="addItem()" class="btn btn-info"><i class="fa fa-plus"></i></a>
                                 </td>
@@ -74,10 +74,10 @@
         
                             
                             <td>{{$item['productname']}}</td>
-                            <td>@convert($item['amount'])</td>
+                         
                             <td>{{$item['qty']}}</td>
                             <td></td>
-                            <td>@convert($item['total'])</td>
+                          
                             <td>
                                 <a href="#delete" class="btn btn-danger" wire:click="deleteItem({{$loop->index}})"><i class="fa fa-trash"></i></a>
                             </td>
@@ -88,15 +88,7 @@
                 </div>
 
 
-                <div class="col-md-6">
-                    <!-- Total Input -->
-            <div class='form-group'>
-                <label for='inputtotal' class='col-sm-2 control-label'> {{ __('الأجمالي') }}</label>
-                <input readonly type='text' wire:model.lazy='totalmenu'
-                    class="form-control @error('total') is-invalid @enderror" id='inputtotal'>
-                @error('total') <div class='invalid-feedback'>{{ $message }}</div> @enderror
-            </div>
-                </div>
+              
 
 
         </div>

@@ -1,10 +1,13 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> {{ $warehouseitem->name }} </td>
-    <td> {{ $warehouseitem->qty }} </td>    
-    <td> {{ $warehouseitem->qtynow }} </td>    
+    <td> {{ $warehouseitem->incomeqty }} </td>    
+    <td> {{ $warehouseitem->exportqty }} </td>    
+    <td> {{ $warehouseitem->qtynow }} </td>  
+    @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
     @if(config('easy_panel.crud.warehouseitem.delete') or config('easy_panel.crud.warehouseitem.update'))
         <td>
 
+        
             @if(config('easy_panel.crud.warehouseitem.update'))
                 <a href="@route(getRouteName().'.warehouseitem.update', ['warehouseitem' => $warehouseitem->id])" class="btn text-primary mt-1">
                     <i class="icon-pencil"></i>
@@ -27,5 +30,6 @@
                 </div>
             @endif
         </td>
+        @endif
     @endif
 </tr>

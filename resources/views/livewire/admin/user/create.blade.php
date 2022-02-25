@@ -50,6 +50,8 @@
                                     <option value="lab">lab</option>
                                     <option value="rays">rays</option>
                                     <option value="sonar">sonar</option>
+                                    <option value="tabq">طابق</option>
+                                    <option value="stockmanagment">مخزن</option>
 
                                 </select>
             </div>

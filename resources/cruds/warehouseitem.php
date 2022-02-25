@@ -7,7 +7,7 @@ return [
     'search' => ["name"],
 
     // Manage actions in crud
-    'create' => false,
+    'create' => true,
     'update' => true,
     'delete' => true,
 
@@ -19,18 +19,18 @@ return [
     // It will use Laravel validation system
     'validation' => [
         'name' => 'required',
-        'qty' => 'required',
+       
     ],
 
     // Write every fields in your db which you want to have a input
     // Available types : "ckeditor", "text", "file", "textarea", "password", "number", "email", "select"
     'fields' => [
         'name' => 'text',
-        'qty' => 'number',
+        'amount' => 'number',
     ],
 
    
 
     // which kind of data should be showed in list page
-    'show' => ['name', 'qty'],
+    'show' => ['name', 'amount'],
 ];
