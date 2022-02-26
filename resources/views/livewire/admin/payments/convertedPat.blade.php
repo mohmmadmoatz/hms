@@ -78,12 +78,13 @@
                         @convert($item->total_lab) د.ع
                         من المريض
                         </a>
-                        
+                        @if($item->lab)
                         <table x-show="showlab" class="table table-bordered">
                             <tr>
                                 <th>الفحص</th>
                                 <th>السعر</th>
                             </tr>
+                            
                             @foreach(json_decode($item->lab) as $x)
                             <tr>
                                 <td>
@@ -95,6 +96,7 @@
                             </tr>
                             @endforeach
                         </table>
+                        @endif
 
                         @else
                         <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
