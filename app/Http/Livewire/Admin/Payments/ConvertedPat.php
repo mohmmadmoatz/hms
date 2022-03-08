@@ -51,6 +51,14 @@ class ConvertedPat extends Component
     {
 
         
+        if(!$this->amount_iqd){
+            $this->amount_iqd =0;
+        }
+
+        if(!$this->amount_usd){
+            $this->amount_usd =0;
+        }
+
         
         $return_iqd =0;
         $return_usd =0;

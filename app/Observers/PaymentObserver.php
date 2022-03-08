@@ -25,6 +25,7 @@ class PaymentObserver
             $payments->wasl_number=$lastNumber;
             $payments->save();
         }
+        
         //
        
     }

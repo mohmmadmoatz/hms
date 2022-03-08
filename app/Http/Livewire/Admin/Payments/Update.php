@@ -6,6 +6,7 @@ use App\Models\Payments;
 use App\Models\Setting;
 use App\Models\OperationHold;
 use App\Models\User;
+use App\Models\Patient;
 use App\Models\Stage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -120,6 +121,15 @@ class Update extends Component
 
     public function update()
     {
+
+        if(!$this->amount_iqd){
+            $this->amount_iqd =0;
+        }
+
+        if(!$this->amount_usd){
+            $this->amount_usd =0;
+        }
+
         if(!$this->amount_iqd){
             $this->amount_iqd =0;
         }
@@ -151,7 +161,7 @@ class Update extends Component
         if($this->operation_id){
             $updateOperation = OperationHold::find($this->operation_id);
             $setting = Setting::find(1);
-
+            $patient = Patient::find($this->patinet_id);
             if($this->operation_name == "ولادة طبيعية"){
                 if($this->operation_nsba ==60){
                     if($this->operation_price >= 600000){
@@ -174,6 +184,15 @@ class Update extends Component
                     $fixedNsba = $setting->min_op_price * ($setting->hnsba  / 100);
                     $doctorexp = abs($opPrice - $fixedNsba);
                 }
+            }elseif ($opPrice < $patient->operation->price) {
+
+                if($opPrice <= 200000){
+                    $doctorexp = $opPrice / 2;
+                }else{
+                    $fixedNsba = $patient->operation->price * ($setting->hnsba  / 100);
+                    $doctorexp = abs($opPrice - $fixedNsba);
+                }
+         
             }
         
                 $nurse_price=$setting->nurse_price;
