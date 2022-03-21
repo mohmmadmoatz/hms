@@ -2,29 +2,22 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header p-0">
-                <h3 class="card-title">{{ __('ListTitle', ['name' => __(\Illuminate\Support\Str::plural('Lab')) ]) }}</h3>
+                <h3 class="card-title">فحوصات المختبر</h3>
 
                 <div class="px-2 mt-4">
 
                     <ul class="breadcrumb mt-3 py-3 px-4 rounded" style="background-color: #e9ecef!important;">
                         <li class="breadcrumb-item"><a href="@route(getRouteName().'.home')" class="text-decoration-none">{{ __('Dashboard') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __(\Illuminate\Support\Str::plural('Lab')) }}</li>
+                        <li class="breadcrumb-item active">فحوصات المختبر</li>
                     </ul>
 
                     <div class="row justify-content-between mt-4 mb-4">
-                        @if(config('easy_panel.crud.lab.create'))
-                        <div class="col-md-6" wire:ignore>
-             
-                            <select wire:model.lazy="patient_id" class="form-control selectpicker"
-                                data-live-search="true">
-                                <option value="">فلترة حسب المريض</option>
-                                @foreach(App\Models\Patient::latest()->get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
+                        @if(config('easy_panel.crud.labtest.create'))
+                        <div class="col-md-4 right-0">
+                            <a href="@route(getRouteName().'.labtest.create')" class="btn btn-success">انشاء فحص</a>
                         </div>
                         @endif
-                        @if(config('easy_panel.crud.lab.search'))
+                        @if(config('easy_panel.crud.labtest.search'))
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" @if(config('easy_panel.lazy_mode')) wire:model.lazy="search" @else wire:model="search" @endif placeholder="{{ __('Search') }}" value="{{ request('search') }}">
@@ -45,24 +38,22 @@
                 <table class="table table-hover">
                     <tbody>
                     <tr>
-                        <td> {{ __('Patient Name') }} </td>
-                        <td> الفحوصات </td>
-                        <td style='cursor: pointer' wire:click="sort('notes')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'notes') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'notes') fa-sort-amount-up ml-2 @endif'></i> {{ __('Notes') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('created_at')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'created_at') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'created_at') fa-sort-amount-up ml-2 @endif'></i> التاريخ </td>
+                    <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
+                    <td style='cursor: pointer' wire:click="sort('amount')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'amount') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'amount') fa-sort-amount-up ml-2 @endif'></i> {{ __('Amount') }} </td>
                         
-                        @if(config('easy_panel.crud.rays.delete') or config('easy_panel.crud.rays.update'))
+                        @if(config('easy_panel.crud.labtest.delete') or config('easy_panel.crud.labtest.update'))
                         <td>{{ __('Action') }}</td>
                         @endif
                     </tr>
 
-                    @foreach($labs as $lab)
-                        @livewire('admin.lab.single', ['lab' => $lab], key($lab->id))
+                    @foreach($labtests as $labtest)
+                        @livewire('admin.labtest.single', ['labtest' => $labtest], key($labtest->id))
                     @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="m-auto pt-3 pr-3">
-                {{ $labs->appends(request()->query())->links() }}
+                {{ $labtests->appends(request()->query())->links() }}
             </div>
 
         </div>

@@ -4,6 +4,13 @@ namespace App\Http\Livewire\Admin\Lab;
 
 use App\Models\Lab;
 use App\Models\Payments;
+use App\Models\Patient;
+use App\Models\Testcomponet;
+use App\Models\PatTests;
+use App\Models\PatTestComponet;
+
+
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -16,10 +23,45 @@ class Create extends Component
     public $image;
     public $payment_id;
     protected $queryString = ['patient_id','payment_id'];
-    
+    public $tests = [];
+    public $indexID = 0;
+ 
+
     protected $rules = [
         'patient_id' => 'required',        
     ];
+
+    public function mount()
+    {
+        $pat = Patient::find($this->patient_id);
+        if($pat){
+
+       
+        $this->tests = json_decode($pat->lab,true);
+        
+        if(count($this->tests)){
+           
+            $this->indexID = 0;
+            
+            for ($i=0; $i < count($this->tests); $i++) { 
+                $this->tests[$i]["items"] = Testcomponet::where("test_id",$this->tests[$i]['id'])->get()->toArray();
+            }
+            
+        }
+
+           // dd($this->tests);
+            
+            
+        }
+        
+    }
+
+   public function updatekey($parent,$index,$value)
+   {
+    $this->tests[$parent]['items'][$index]['result'] = $value;
+   
+
+   }
 
     public function updated($input)
     {
@@ -36,12 +78,34 @@ class Create extends Component
             $this->image = $this->getPropertyValue('image')->store('images/labs');
         }
 
+       
+
         $labdata = Lab::create([
             'patient_id' => $this->patient_id,
             'notes' => $this->notes,
             'image' => $this->image,            
         ]);
 
+        foreach ($this->tests as $item) {
+
+           $newtest =  new PatTests();
+           $newtest->lab_id = $labdata->id;
+           $newtest->test_id = $item['id'];
+           $newtest->amount = $item['amount'];
+           $newtest->save();
+
+           foreach ($item['items'] as $sub) {
+               
+               $newsub = new PatTestComponet();
+               $newsub->pat_test_id = $newtest->id;
+               $newsub->componet_id = $sub['id'];
+               $newsub->test_id = $sub['test_id'];
+               $newsub->result = $sub['result'] ?? 0;
+               $newsub->save();
+           }
+           
+
+        }
        
 
         $pat = Payments::find($this->payment_id);
@@ -53,6 +117,7 @@ class Create extends Component
 
     public function render()
     {
+        
         return view('livewire.admin.lab.create')
             ->layout('admin::layouts.app', ['title' => __('CreateTitle', ['name' => __('Lab') ])]);
     }

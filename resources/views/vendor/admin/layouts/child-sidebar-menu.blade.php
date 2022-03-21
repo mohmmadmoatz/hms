@@ -333,9 +333,9 @@
 
     <ul aria-expanded="false" class="collapse first-level base-level-line">
     @if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin")
-    <li class="sidebar-item @isActive(getRouteName().'.'.'labsetting'.'.read')">
-            <a href="@route(getRouteName().'.labsetting.read')"
-                class="sidebar-link @isActive(getRouteName().'.'.'labsetting'.'.read')">
+    <li class="sidebar-item @isActive(getRouteName().'.'.'labtest'.'.read')">
+            <a href="@route(getRouteName().'.labtest.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'labtest'.'.read')">
                 <span class="hide-menu"> تهئية الفحوصات </span>
             </a>
         </li>
@@ -357,7 +357,7 @@
         <li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.read')">
             <a href="@route(getRouteName().'.lab.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'lab'.'.read')">
-                <span class="hide-menu"> الملفات السابقة </span>
+                <span class="hide-menu"> فحوصات المرضى </span>
             </a>
         </li>
 

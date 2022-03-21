@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::get('/summery', function () {
+    return view('printed.summery');
+})->name("summery");
+
 Route::get('/printForm', function () {
     return view('printed.patientForm');
 })->name("printedForm");
@@ -90,6 +94,10 @@ Route::get('/nurse', function () {
 Route::get('/ambulance', function () {
     return view('printed.ambulance');
 })->name("ambulance");
+
+Route::get('/labprint', function () {
+    return view('printed.labtest');
+})->name("labprint");
 
 
 Auth::routes();

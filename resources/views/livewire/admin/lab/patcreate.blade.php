@@ -80,7 +80,7 @@
                                 <td wire:ignore>
                                     <select wire:change="selectitem" class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
                                         <option value="">يرجى اختيار الفحص</option>
-                                         @foreach(App\Models\LabSetting::get() as $item)
+                                         @foreach(App\Models\LabTest::get() as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
                                          @endforeach
                                     </select>

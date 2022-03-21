@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Lab;
 
 use App\Models\Patient;
-use App\Models\LabSetting;
+use App\Models\LabTest;
 use App\Models\Room;
 use App\Models\MedicineProfile;
 use Livewire\Component;
@@ -44,7 +44,7 @@ class Labpatcreate extends Component
     public function selectitem()
     {
         if($this->item){
-            $item=LabSetting::find($this->item);
+            $item=LabTest::find($this->item);
             $this->amount = $item->amount;
         }
        
@@ -58,7 +58,7 @@ class Labpatcreate extends Component
 
     public function addItem()
     {
-        $product=LabSetting::find($this->item);
+        $product=LabTest::find($this->item);
         $this->items[]=  [
          "id"=>$this->item,
          "name"=>$product->name,

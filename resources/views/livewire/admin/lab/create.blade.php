@@ -28,15 +28,61 @@
                 @error('notes') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
             
-            <!-- Image Input -->
-            <div class='form-group'>
-                <label for='inputimage' class='col-sm-2 control-label'> {{ __('Image') }}</label>
-                <input type='file' wire:model='image' class="form-control-file @error('image') is-invalid @enderror" id='inputimage'>
-                @if($image and !$errors->has('image') and $image instanceof \Livewire\TemporaryUploadedFile and (in_array( $image->guessExtension(), ['png', 'jpg', 'gif', 'jpeg'])))
-                    <a href="{{ $image->temporaryUrl() }}"><img width="200" height="200" class="img-fluid shadow" src="{{ $image->temporaryUrl() }}" alt=""></a>
-                @endif
-                @error('image') <div class='invalid-feedback'>{{ $message }}</div> @enderror
-            </div>
+          
+            <hr>
+
+            @if(count($tests))
+
+            @foreach($tests as $item)
+                <a wire:click="$set('indexID', {{$loop->index}})"  class="btn  @if($indexID == $loop->index) btn-info @else btn-secondary @endif my-2" href="#select">{{$item['name']}} </a>
+            @endforeach
+
+            <table class="table table-bordered" dir="ltr">
+                <thead>
+                    <tr style="text-align:left">
+                        <th>Test</th>
+                        <th>Result</th>
+                        <th>Unit</th>
+                        <th>Normal Range</th>
+                      
+                    </tr>
+
+                    @foreach($tests[$indexID]['items'] as $item)
+                    <tr>
+                        <th> {{$item['name']}} </th>
+                        <th>
+
+                        @if($item['result_type'] == "value")
+                        <input type="text" class="form-control" wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
+                        @endif
+
+                        @if($item['result_type'] == "select")
+
+                        <select class="form-control"  wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
+                            <option value="">Select</option>
+                            @foreach(json_decode($item['options']) as $sub)
+                            <option value="{{$sub}}">{{$sub}}</option>
+
+                            @endforeach
+                        </select>
+
+                     
+                        
+                        @endif
+
+                        </th>
+                        <th> {{$item['unit']}} </th>
+                        <th>{{$item['normal_range']}}</th>
+                
+                    </tr>
+                    @endforeach
+
+                    
+                    
+
+                </thead>
+            </table>
+            @endif
             
         </div>
 

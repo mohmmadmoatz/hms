@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Lab;
+namespace App\Http\Livewire\Admin\Labtest;
 
-use App\Models\Lab;
+use App\Models\LabTest;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,16 +15,14 @@ class Read extends Component
 
     public $search;
 
-    protected $queryString = ['search','patient_id'];
+    protected $queryString = ['search'];
 
-    protected $listeners = ['labDeleted'];
+    protected $listeners = ['labtestDeleted'];
 
     public $sortType;
     public $sortColumn;
 
-    public $patient_id;
-
-    public function labDeleted(){
+    public function labtestDeleted(){
         // Nothing ..
     }
 
@@ -38,10 +36,10 @@ class Read extends Component
 
     public function render()
     {
-        $data = Lab::query();
+        $data = LabTest::query();
 
-        if(config('easy_panel.crud.lab.search')){
-            $array = (array) config('easy_panel.crud.lab.search');
+        if(config('easy_panel.crud.labtest.search')){
+            $array = (array) config('easy_panel.crud.labtest.search');
             $data->where(function (Builder $query) use ($array){
                 foreach ($array as $item) {
                     if(!is_array($item)) {
@@ -55,10 +53,6 @@ class Read extends Component
             });
         }
 
-        if($this->patient_id){
-            $data = $data->where("patient_id",$this->patient_id);
-        }
-
         if($this->sortColumn) {
             $data->orderBy($this->sortColumn, $this->sortType);
         } else {
@@ -67,8 +61,8 @@ class Read extends Component
 
         $data = $data->paginate(config('easy_panel.pagination_count', 15));
 
-        return view('livewire.admin.lab.read', [
-            'labs' => $data
-        ])->layout('admin::layouts.app', ['title' => __(\Str::plural('Lab')) ]);
+        return view('livewire.admin.labtest.read', [
+            'labtests' => $data
+        ])->layout('admin::layouts.app', ['title' => __(\Str::plural('LabTest')) ]);
     }
 }
