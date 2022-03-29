@@ -49,6 +49,10 @@
     $date2 = explode(" - ", $dates)[1];
 
      $payments = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
+     ->whereNull("operation_id")
+    ->get();
+
+    $operation = App\Models\OperationHold::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
    
 
@@ -81,8 +85,8 @@
                     </th>
                 </tr>
         </table>
-
-        <hr>
+        <h4>العمليات</h4>
+       
         <table class="table table-bordered table-striped">
 
           <thead>
@@ -90,18 +94,50 @@
                       <th>الأيراد</th>
                       <th>نسبة الطبيب</th>
                       <th>نسبة المستشفى</th>
-                      <th>تفاصيل الاستقطاع من نسبة المستشفى</th>
+                      <!-- <th>تفاصيل الاستقطاع من نسبة المستشفى</th> -->
                       <th>صافي ايراد المستشفى</th>
                  </tr>
           </thead>
 
           <tbody>
+  <!-- Operations -->
 
-            @foreach($payments as $item)
-
+            @foreach($operation as $item)
+            @php
+              $payment = App\Models\Payments::where("payment_type",2)->where("wasl_number",$item->payment_number)->first();
+            @endphp
             <tr>
-                <td>@convert($item->amount_iqd) د.ع / @convert($item->amount_usd) $</td>
-                <td>@convert($item->redirect_doctor_price) د.ع</td>
+                <td>@convert($item->operation_price) د.ع </td>
+                <td>@convert($item->doctorexp) د.ع</td>
+                <td>@convert($item->operation_price - $item->doctorexp) د.ع</td>
+
+                <!-- <td> 
+                  مساعد جراح : 
+                  @convert($item->helper) د.ع
+                  <hr>
+                  مخدر : 
+                  @convert($item->m5dr) د.ع
+                  <hr>
+                  مساعد مخدر : 
+                  @convert($item->helperm5dr) د.ع
+
+                  <hr>
+                  ممرضة : 
+                  @convert($item->nurse_price) د.ع
+
+                  <hr>
+                  اسعاف طفل : 
+                  @convert($item->ambulance) د.ع
+                  <hr>
+                  الأجمالي : @convert($item->helper + $item->m5dr + $item->helperm5dr + $item->nurse_price + $item->ambulance)  د.ع
+
+                </td> -->
+
+                <td>
+                  <!-- To do status -->
+
+                  @convert(($item->operation_price - $item->doctorexp) - ($item->helper + $item->m5dr + $item->helperm5dr + $item->nurse_price + $item->ambulance) ) د.ع
+                </td>
             
            </tr>
 
@@ -111,6 +147,42 @@
           </tbody>
 
     </table>
+
+    <h4>العام</h4>
+       
+    <table class="table table-bordered table-striped">
+
+      <thead>
+             <tr>
+                  <th>الأيراد</th>
+                  <th>نسبة الطبيب</th>
+                  <th>نسبة المستشفى</th>
+               
+                  <th>صافي ايراد المستشفى</th>
+             </tr>
+      </thead>
+
+      <tbody>
+<!-- Operations -->
+
+        @foreach($payments as $item)
+       
+        <tr>
+            <td>@convert($item->amount_iqd) د.ع / @convert($item->amount_usd) $</td>
+            <td>@convert($item->redirect_doctor_price) د.ع</td>
+            <td>@convert($item->amount_iqd - $item->redirect_doctor_price) د.ع / @convert($item->amount_usd) $</td>
+
+            <td>@convert($item->amount_iqd - $item->redirect_doctor_price) د.ع / @convert($item->amount_usd) $</td>
+            
+        
+       </tr>
+
+        @endforeach
+
+
+      </tbody>
+
+</table>
 
       </div>
      

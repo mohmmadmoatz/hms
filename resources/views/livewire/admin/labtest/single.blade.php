@@ -1,5 +1,6 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> {{ $labtest->name }} </td>    
+    <td> {{ $labtest->category->name }} </td>    
     <td> {{ $labtest->amount }} </td>    
     @if(config('easy_panel.crud.labtest.delete') or config('easy_panel.crud.labtest.update'))
         <td>

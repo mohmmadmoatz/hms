@@ -44,6 +44,8 @@
                         <td style='cursor: pointer' wire:click="sort('date')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'date') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'date') fa-sort-amount-up ml-2 @endif'></i> {{ __('Date') }} </td>
                        
                         <td> {{ __('User Name') }} </td>
+
+                        <td> {{ __('رقم القائمة') }} </td>
                         
                         @if(config('easy_panel.crud.warehouseexport.delete') or config('easy_panel.crud.warehouseexport.update'))
                         <td>{{ __('Action') }}</td>

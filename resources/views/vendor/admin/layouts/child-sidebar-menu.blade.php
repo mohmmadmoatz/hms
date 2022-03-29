@@ -173,7 +173,14 @@
 @endif
 
 @if(Auth::user()->user_type  == "tabq")
-
+<li
+    class='sidebar-item @isActive([getRouteName().".followup.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".followup.read"], "active") '
+        href="@route(getRouteName().'.followup.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("note") }}" class="feather-icon"></i>
+        <span class="hide-menu">ملاحظات الممرضة والعلاج</span>
+    </a>
+</li>
 @endif
 
 @if(Auth::user()->user_type  == "info")
@@ -333,12 +340,7 @@
 
     <ul aria-expanded="false" class="collapse first-level base-level-line">
     @if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin")
-    <li class="sidebar-item @isActive(getRouteName().'.'.'labtest'.'.read')">
-            <a href="@route(getRouteName().'.labtest.read')"
-                class="sidebar-link @isActive(getRouteName().'.'.'labtest'.'.read')">
-                <span class="hide-menu"> تهئية الفحوصات </span>
-            </a>
-        </li>
+   
 
         <li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.pat')">
             <a href="@route(getRouteName().'.lab.pat')"
@@ -353,6 +355,9 @@
                 <span class="hide-menu"> المرضى الداخلين </span>
             </a>
         </li>
+
+      
+
         @endif
         <li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.read')">
             <a href="@route(getRouteName().'.lab.read')"
@@ -360,7 +365,14 @@
                 <span class="hide-menu"> فحوصات المرضى </span>
             </a>
         </li>
-
+        @if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin")
+        <li class="sidebar-item @isActive(getRouteName().'.'.'labtest'.'.read')">
+            <a href="@route(getRouteName().'.labtest.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'labtest'.'.read')">
+                <span class="hide-menu"> تهئية الفحوصات </span>
+            </a>
+        </li>
+        @endif
        
         
     </ul>
@@ -396,6 +408,7 @@
                 <span class="hide-menu"> المواد </span>
             </a>
         </li>
+
         <li class="sidebar-item @isActive(getRouteName().'.'.'warehouseexport'.'.read')">
             <a href="@route(getRouteName().'.warehouseexport.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'warehouseexport'.'.read')">
@@ -413,4 +426,23 @@
 
 </li>
 
+@endif
+
+
+@if(Auth::user()->user_type  == "operation")
+<li
+    class='sidebar-item @isActive([getRouteName().".operationhold.list"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".operationhold.list"], "active") '
+        href="@route(getRouteName().'.operationhold.list')" aria-expanded="false">
+        <i data-feather="{{ get_icon("file") }}" class="feather-icon"></i>
+        <span class="hide-menu">العمليات</span>
+    </a>
+</li>
+<li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.read')">
+            <a href="@route(getRouteName().'.lab.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'lab'.'.read')">
+                <i data-feather="{{ get_icon("file") }}" class="feather-icon"></i>
+                <span class="hide-menu"> فحوصات المرضى </span>
+            </a>
+        </li>
 @endif

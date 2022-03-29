@@ -165,6 +165,16 @@ class Create extends Component
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('Payments') ])]);
 
+        if(!$this->redirect_doctor_id){
+            $this->redirect_doctor_price = 0;
+        }
+
+        if($this->redirect == 1){
+            if(!$this->redirect_doctor_id){
+                $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "يرجى اختيار الطبيب"]);
+               return;
+            }
+        }
 
         $data =[
         'payment_type' => $this->payment_type,

@@ -1,27 +1,22 @@
 <tr x-data="{ modalIsOpen : false }">
-    <td> {{ $warehouseexport->name }} </td>
-    <td> {{ $warehouseexport->date }} </td>
-    
-    <td> {{ $warehouseexport->user->name }} </td>    
-    <td> {{ $warehouseexport->menu_no }} </td>    
-    @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
-    @if(config('easy_panel.crud.warehouseexport.delete') or config('easy_panel.crud.warehouseexport.update'))
+    <td> {{ $labcategory->name }} </td>    
+    @if(config('easy_panel.crud.labcategory.delete') or config('easy_panel.crud.labcategory.update'))
         <td>
 
-            @if(config('easy_panel.crud.warehouseexport.update'))
-                <a href="@route(getRouteName().'.warehouseexport.update', ['warehouseexport' => $warehouseexport->id])" class="btn text-primary mt-1">
+            @if(config('easy_panel.crud.labcategory.update'))
+                <a href="@route(getRouteName().'.labcategory.update', ['labcategory' => $labcategory->id])" class="btn text-primary mt-1">
                     <i class="icon-pencil"></i>
                 </a>
             @endif
 
-            @if(config('easy_panel.crud.warehouseexport.delete'))
+            @if(config('easy_panel.crud.labcategory.delete'))
                 <button @click.prevent="modalIsOpen = true" class="btn text-danger mt-1">
                     <i class="icon-trash"></i>
                 </button>
                 <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
                     <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false" >
-                        <h5 class="pb-2 border-bottom">{{ __('DeleteTitle', ['name' => __('WarehouseExport') ]) }}</h5>
-                        <p>{{ __('DeleteMessage', ['name' => __('WarehouseExport') ]) }}</p>
+                        <h5 class="pb-2 border-bottom">{{ __('DeleteTitle', ['name' => __('LabCategory') ]) }}</h5>
+                        <p>{{ __('DeleteMessage', ['name' => __('LabCategory') ]) }}</p>
                         <div class="mt-5 d-flex justify-content-between">
                             <a wire:click.prevent="delete" class="text-white btn btn-success shadow">{{ __('Yes, Delete it.') }}</a>
                             <a @click.prevent="modalIsOpen = false" class="text-white btn btn-danger shadow">{{ __('No, Cancel it.') }}</a>
@@ -30,6 +25,5 @@
                 </div>
             @endif
         </td>
-        @endif
     @endif
 </tr>

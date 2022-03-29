@@ -61,6 +61,14 @@ class Create extends Component
 
     public function create()
     {
+
+        if($this->status == 1){
+            if(!$this->redirect_doctor_id){
+                $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "يرجى اختيار الطبيب"]);
+                return;
+            }
+        }
+
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('Patient') ])]);

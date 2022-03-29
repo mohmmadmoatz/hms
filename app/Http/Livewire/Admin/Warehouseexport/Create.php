@@ -23,6 +23,8 @@ class Create extends Component
     public $qtynow;
     public $totalmenu;
 
+    public $menu_no;
+
     protected $rules = [
         'name' => 'required',        'date' => 'required',        
     ];
@@ -66,6 +68,7 @@ class Create extends Component
             'date' => $this->date,
             'total' => $this->totalmenu,
             'user_id' => auth()->id(),
+            'menu_no'=>$this->menu_no
         ]);
 
         foreach ($this->items as $item) {

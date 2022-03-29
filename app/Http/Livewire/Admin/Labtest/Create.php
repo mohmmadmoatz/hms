@@ -15,6 +15,7 @@ class Create extends Component
     public $name;
     public $compontes = [];
     public $amount;
+    public $category_id;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -72,7 +73,8 @@ class Create extends Component
 
        $testid =  LabTest::create([
             'name' => $this->name,            
-            'amount' => $this->amount,            
+            'amount' => $this->amount,
+            'category_id'=>$this->category_id            
         ]);
 
         foreach ($this->compontes as $item) {

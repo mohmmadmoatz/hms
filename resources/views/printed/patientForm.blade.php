@@ -227,9 +227,57 @@ border: 4px solid #dee2e6;
 
 
       </div>
-      <img width="100%" height="100%" src="formimages/img1.jpg" alt="" srcset="">
-      <p style="page-break-after: always;">&nbsp;</p>
+      
+      <!-- <img width="100%" height="100%" src="formimages/img1.jpg" alt="" srcset=""> -->
+      
+
+      <!-- <p style="page-break-after: always;">&nbsp;</p> -->
+      
+
       <p style="page-break-before: always;">&nbsp;</p>
+      
+     <table width="100%">
+       <tr>
+         <th style="text-align:left"> <h2 style="color: #e3006f;
+       font-weight: bold;">FollowUp -Charts</h2></th>
+       <th style="text-align:right"> <h2 style="color: #e3006f;
+       font-weight: bold;">ملاحظات الممرضة والعلاج</h2></th>
+       </tr>
+     </table>
+
+     <table class="table table-bordered">
+
+     <tr>
+       <thead>
+         <th class="thead">B.P</th>
+         <th class="thead">P.R</th>
+         <th class="thead">Drain</th>
+         <th class="thead">I.Take</th>
+         <th class="thead">Out.put</th>
+         <th class="thead">Spo2</th>
+         <th class="thead">Temp</th>
+         <th class="thead">اسم الممرضة</th>
+         <th class="thead">العلاج</th>
+         <th class="thead">التاريخ والوقت</th>
+       </thead>
+     </tr>
+
+     @foreach(App\Models\FollowUp::where("pat_id",$data->id)->get() as $item)
+      <tr>
+      <th class="input">{{$item->bp}}</th>
+         <th class="input">{{$item->pr}}</th>
+         <th class="input">{{$item->drain}}</th>
+         <th class="input">{{$item->itake}}</th>
+         <th class="input">{{$item->output}}</th>
+         <th class="input">{{$item->spo2}}</th>
+         <th class="input">{{$item->Temp}}</th>
+         <th class="input">{{$item->user->name}}</th>
+         <th class="input">{{$item->treatment}}</th>
+         <th class="input">{{$item->date}}</th>
+      </tr>
+      @endforeach
+     </table>
+
       <img width="100%" src="formimages/img2.jpg" alt="" srcset="">
       <p style="page-break-after: always;">&nbsp;</p>
       <p style="page-break-before: always;">&nbsp;</p>

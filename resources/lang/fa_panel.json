@@ -119,5 +119,18 @@
     "Labsetting": "فحص",
     "Labsettings": "اعداد الفحوصات",
     "Labtest": "فحص مختبر",
-    "Labtests": "فحوصات المختبر"
+    "Labtests": "فحوصات المختبر",
+    "Labcategory": "تصنيف الفحص",
+    "Labcategories": "تصنيفات الفحوصات",
+    "Bp": "Bp",
+    "Pr": "Pr",
+    "Drain": "Drain",
+    "Itake": "Itake",
+    "Spo2": "Spo2",
+    "Temp": "Temp",
+    "Treatment": "Treatment",
+    "Pat Name": "Pat Name",
+    "Pat_id": "Pat_id",
+    "Followup": "Followup",
+    "Followups": "Followups"
 }

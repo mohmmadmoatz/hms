@@ -16,6 +16,7 @@ class Update extends Component
 
     public $name;
     public $amount;
+    public $category_id;
 
     public $compontes = [];
 
@@ -28,6 +29,7 @@ class Update extends Component
         $this->labtest = $labtest;
         $this->name = $this->labtest->name;
         $this->amount = $this->labtest->amount;
+        $this->category_id = $this->labtest->category_id;
         
         $compontes =  Testcomponet::where("test_id",$this->labtest->id)->get();
         $this->compontes = $compontes->toArray();
@@ -91,7 +93,9 @@ class Update extends Component
         
         $this->labtest->update([
             'name' => $this->name,    
-            'amount' => $this->amount,            
+            'amount' => $this->amount,      
+            'category_id'=>$this->category_id            
+
 
         ]);
 

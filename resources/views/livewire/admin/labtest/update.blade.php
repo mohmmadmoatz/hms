@@ -15,24 +15,33 @@
         <div class="card-body">
 
             
-           <!-- Name Input -->
-           <div class="row">
-               <div class="col-md-6">
-               <div class='form-group'>
-                <label for='inputname' class='col-sm-2 control-label'> {{ __('Name') }}</label>
-                <input type='text' wire:model.lazy='name' class="form-control @error('name') is-invalid @enderror" id='inputname'>
-                @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            <div class="row">
+                <div class="col-md-4">
+                    <div class='form-group'>
+                        <label for='inputname' class=' control-label'> {{ __('Name') }}</label>
+                        <input type='text' wire:model.lazy='name'
+                            class="form-control @error('name') is-invalid @enderror" id='inputname'>
+                        @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="">التصنيف</label>
+                    <select class="form-control" wire:model = "category_id">
+                        <option value=""></option>
+                        @foreach(App\Models\LabCategory::get() as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <div class='form-group'>
+                        <label for='inputname' class=' control-label'>السعر</label>
+                        <input type='number' wire:model.lazy='amount'
+                            class="form-control @error('amount') is-invalid @enderror" id='inputname'>
+                        @error('amount') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                    </div>
+                </div>
             </div>
-               </div>
-               <div class="col-md-6">
-               <div class='form-group'>
-                <label for='inputname' class='col-sm-2 control-label'>السعر</label>
-                <input type='number' wire:model.lazy='amount' class="form-control @error('amount') is-invalid @enderror" id='inputname'>
-                @error('amount') <div class='invalid-feedback'>{{ $message }}</div> @enderror
-            </div>
-               </div>
-           </div>
-            
             <h4>عناصر الفحص
 
 <button wire:click.prevent="addComponet" class="btn btn-info">اضافة عنصر</button>

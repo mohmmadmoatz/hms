@@ -59,7 +59,7 @@ $lab = App\Models\Lab::find($id);
 <body>
 
   
-
+@foreach(App\Models\PatTests::where("lab_id",$lab->id)->get() as $item)
   <div class="py-2">
     <div class="container">
       <div class="row">
@@ -87,7 +87,7 @@ $lab = App\Models\Lab::find($id);
                </tr>
         </table>
 
-        @foreach(App\Models\PatTests::where("lab_id",$lab->id)->get() as $item)
+       
         <div class="container-fluid content-block">
         <h2 align="center">{{$item->test->name ??""}}</h2>
         <hr>
@@ -125,7 +125,7 @@ $lab = App\Models\Lab::find($id);
     
 
 
-        @endforeach
+     
 
 
 
@@ -141,7 +141,8 @@ $lab = App\Models\Lab::find($id);
   <img id="footer" src="{{asset('d.png')}}" width="100%">
 
   </div>
-
+  <div style="page-break-before: always"></div>
+  @endforeach
 
 </body>
 

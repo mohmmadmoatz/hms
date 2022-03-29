@@ -17,10 +17,10 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <!-- Name Input -->
                     <div class='form-group'>
-                        <label for='inputname' class='col-sm-2 control-label'> {{ __('القسم') }}</label>
+                        <label for='inputname' class=' control-label'> {{ __('القسم') }}</label>
                         <input type='text' wire:model.lazy='name'
                             class="form-control @error('name') is-invalid @enderror" id='inputname'>
                         @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
@@ -28,14 +28,19 @@
                 </div>
            
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                      <!-- Date Input -->
             <div class='form-group'>
-                <label for='inputdate' class='col-sm-2 control-label'> {{ __('Date') }}</label>
+                <label for='inputdate' class=' control-label'> {{ __('Date') }}</label>
                 <input type='date' wire:model.lazy='date' class="form-control @error('date') is-invalid @enderror"
                     id='inputdate'>
                 @error('date') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">رقم القائمة</label>
+                    <input type="text" class="form-control" wire:model.lazy="menu_no">
                 </div>
            
                 <div class="col-md-12">

@@ -23,6 +23,7 @@ class Update extends Component
     public $amount;
     public $qty;
     public $totalmenu;
+    public $menu_no;
     protected $rules = [
         'name' => 'required',        'date' => 'required',        
     ];
@@ -51,6 +52,7 @@ class Update extends Component
         $this->name = $this->warehouseexport->name;
         $this->date = $this->warehouseexport->date;
         $this->totalmenu = $this->warehouseexport->totalmenu;   
+        $this->menu_no = $this->warehouseexport->menu_no;   
         $this->items =  WarehouseExportItem::where("export_id",$this->warehouseexport->id)->get();
         
         $this->items  = $this->items->toarray();   
@@ -77,6 +79,8 @@ class Update extends Component
             'date' => $this->date,
             'total' => $this->totalmenu,
             'user_id' => auth()->id(),
+            'menu_no'=>$this->menu_no
+
         ]);
 
         WarehouseExportItem::where("export_id",$this->warehouseexport->id)->delete();

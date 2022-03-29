@@ -33,4 +33,11 @@ class OperationHold extends Model
         return $this->belongsTo("App\Models\User",'mqema_id');
     }
 
+    /**
+     * Get the payment that owns the OperationHold
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+   
+
 }
