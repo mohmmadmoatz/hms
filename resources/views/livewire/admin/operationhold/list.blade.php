@@ -102,8 +102,8 @@ table.table-fit tbody td, table.table-fit tfoot td {
                     <td>
                       
 
-                        <a  href="@route(getRouteName().'.lab.read')?patient_id={{$operationhold->Patient->id}}" target="_blank" >الفحوصات</a>
-                        <a class="btn btn-info" href="@route('printedForm')?id={{$operationhold->Patient->id}}" target="_blank" >فتح الطبلة</a>
+                        <a  href="@route(getRouteName().'.lab.read')?patient_id={{$operationhold->Patient->id??''}}" target="_blank" >الفحوصات</a>
+                        <a class="btn btn-info" href="@route('printedForm')?id={{$operationhold->Patient->id??''}}" target="_blank" >فتح الطبلة</a>
                         <button @click.prevent="modalIsOpen = true" class="btn text-danger mt-1">
                             <i class="icon-trash"></i>
                         </button>
