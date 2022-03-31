@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
+            @if(Auth::user()->user_type  != "investor")
             <div class="card-header p-0">
                 <h3 class="card-title p-2">الكشوفات</h3>
 
@@ -14,6 +15,7 @@
                    
                 </div>
             </div>
+            @endif
 
             <div class="card-body">
                 <div class="row">
@@ -39,6 +41,7 @@
                     <div class="col-md-12">
                         <hr>
                     </div>
+                    @if(Auth::user()->user_type  != "investor")
 
                     @if($datefilterON)
                     <script>
@@ -278,6 +281,30 @@
                         <a href = "@route('doctorpays')?daterange={{$daterange}}&doctor_id={{$by_doctor}}&payas={{$payas}}" target="_blank" class="btn btn-primary btn-block"> كشف المدفوعات </a>
                         
                     </div>
+                    @endif
+                    @else
+                    <div class="col-md-12 py-2">
+                        <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">الميزانية</a>
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>الكشف العام</h3>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">تصفية حسب التوجيه</label>
+                        <select wire:model.lazy="stage" class="form-control" >
+                            <option value="">جميع التوجيهات</option>
+                            @foreach(App\Models\Stage::where("id","!=",5)->get() as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-12 py-2">
+                        <a href = "@route('summery')?daterange={{$daterange}}&stage={{$stage}}" target="_blank" class="btn btn-secondary btn-block">فتح الكشف</a>
+
+                    </div>
+
                     @endif
                 </div>
             </div>

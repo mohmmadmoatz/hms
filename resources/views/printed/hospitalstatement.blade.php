@@ -189,7 +189,15 @@
                
 
                  <tr>
-                      <th>المقبوض لهذه اليوم (الفترة)</th>
+                      <th>
+                        <a href="@route('income')?daterange={{$dates}}">
+
+                        المقبوض لهذه اليوم (الفترة)
+
+                        </a>
+                        
+
+                      </th>
                       <th>@convert($sum_income_iqd)</th>
 
                       <th>@convert($sum_income_usd)</th>
@@ -197,7 +205,13 @@
                  </tr>
 
                  <tr>
-                      <th>المدفوع لهذه اليوم (الفترة)</th>
+                      <th>
+ <a href="@route('doctorpays')?daterange={{$dates}}">
+ المدفوع لهذه اليوم (الفترة)
+
+ </a>
+                    
+                    </th>
                       <th>@convert($sum_paid_iqd)</th>
 
                       <th>@convert($sum_paid_usd)</th>
@@ -205,7 +219,10 @@
                  </tr>
 
                  <tr>
-                      <th>المصاريف</th>
+                      <th>
+                      <a href="@route('expense')?daterange={{$dates}}">المصاريف</a>
+
+                      </th>
                       <th>@convert($sum_outcome_iqd)</th>
 
                       <th>@convert($sum_outcome_usd)</th>

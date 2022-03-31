@@ -53,6 +53,7 @@
                                     <option value="tabq">طابق</option>
                                     <option value="stockmanagment">مخزن</option>
                                     <option value="operation">عمليات</option>
+                                    <option value="investor">مستثمر</option>
 
                                 </select>
             </div>

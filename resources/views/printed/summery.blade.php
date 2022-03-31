@@ -13,10 +13,17 @@
   font-family: tajwal;
   src: url({{asset('css/Tajawal-Regular.ttf')}});
 }
-    body {
-    font-family: tajwal;
+   
 
-  }
+  html{
+  height: 100%;
+}
+body{
+  position: relative;
+  height: 100%;
+  font-family: tajwal;
+ 
+}
   h3{
     font-family: tajwal !important;
   }
@@ -31,8 +38,12 @@
       text-align: right;
   }
 
-  .table-striped tbody tr:nth-of-type(odd) th {
-    background-color: rgba(0, 0, 0, .05)!important;
+  .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0,0,0,.05) !important;
+}
+.table-striped tbody tr:nth-of-type(odd) th {
+    
+    background-color: rgba(0,0,0,.05) !important;
 }
 
 </style>
@@ -45,12 +56,23 @@
    
     $dates = $_GET['daterange'];
 
+    $stage = $_GET['stage'];
+    $stagedata = App\Models\Stage::find($stage);
+
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
 
+    
+
      $payments = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-     ->whereNull("operation_id")
-    ->get();
+     ->where("operation_id",0)
+     ->where("payment_type",2);
+
+     if($stage){
+       $payments= $payments->where("redirect",$stage);
+     }
+
+     $payments = $payments->get();
 
     $operation = App\Models\OperationHold::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
@@ -65,7 +87,7 @@
           <img  src="{{asset('formimages/hmslogo.png')}}" width="250px">
         </div>
       </div>
-      <div class="row py-3">
+      
         
         <table class="table">
                 <tr>
@@ -85,21 +107,27 @@
                     </th>
                 </tr>
         </table>
-        <h4>العمليات</h4>
-       
+        @if(!$stage)
+        <h4 style="    text-align: right;">العمليات</h4>
+        <div class="card-body table-responsive p-0">
+
+     
         <table class="table table-bordered table-striped">
 
-          <thead>
+              <thead>
                  <tr>
+              
+                    
                       <th>الأيراد</th>
                       <th>نسبة الطبيب</th>
                       <th>نسبة المستشفى</th>
                       <!-- <th>تفاصيل الاستقطاع من نسبة المستشفى</th> -->
                       <th>صافي ايراد المستشفى</th>
+              
                  </tr>
-          </thead>
+                 </thead>
 
-          <tbody>
+       
   <!-- Operations -->
 
             @foreach($operation as $item)
@@ -107,6 +135,7 @@
               $payment = App\Models\Payments::where("payment_type",2)->where("wasl_number",$item->payment_number)->first();
             @endphp
             <tr>
+          
                 <td>@convert($item->operation_price) د.ع </td>
                 <td>@convert($item->doctorexp) د.ع</td>
                 <td>@convert($item->operation_price - $item->doctorexp) د.ع</td>
@@ -144,20 +173,29 @@
             @endforeach
 
 
-          </tbody>
+      
 
     </table>
+    @endif
+    </div>
+ 
+    @if($stage)
+    <h4 style="text-align: right;">{{$stagedata->name}}</h4>
+    @else
+    <h4 style="text-align: right;">العام</h4>
 
-    <h4>العام</h4>
-       
+    @endif   
     <table class="table table-bordered table-striped">
 
       <thead>
              <tr>
+                
                   <th>الأيراد</th>
+                  <th>وذالك عن</th>
                   <th>نسبة الطبيب</th>
                   <th>نسبة المستشفى</th>
-               
+                  <th>التوجيه</th>
+              
                   <th>صافي ايراد المستشفى</th>
              </tr>
       </thead>
@@ -166,13 +204,28 @@
 <!-- Operations -->
 
         @foreach($payments as $item)
-       
+        @php
+        $doctorprice = $item->redirect_doctor_price;
+        if(!$doctorprice){
+          $doctorprice =0; 
+        }
+        @endphp
         <tr>
+          
+         
             <td>@convert($item->amount_iqd) د.ع / @convert($item->amount_usd) $</td>
-            <td>@convert($item->redirect_doctor_price) د.ع</td>
-            <td>@convert($item->amount_iqd - $item->redirect_doctor_price) د.ع / @convert($item->amount_usd) $</td>
+            <td>{{$item->description}}</td>
+            <td>@convert($doctorprice ?? 0) د.ع</td>
+            <td>@convert($item->amount_iqd - $doctorprice) د.ع / @convert($item->amount_usd) $</td>
 
-            <td>@convert($item->amount_iqd - $item->redirect_doctor_price) د.ع / @convert($item->amount_usd) $</td>
+            <td>
+              @if($item->redirect)
+             
+                  {{$item->stagename->name ??""}}
+              @endif
+            </td>
+
+            <td>@convert($item->amount_iqd - $doctorprice) د.ع / @convert($item->amount_usd) $</td>
             
         
        </tr>
@@ -184,7 +237,7 @@
 
 </table>
 
-      </div>
+      
      
     </div>
   </div>

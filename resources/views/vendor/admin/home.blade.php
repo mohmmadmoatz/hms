@@ -2,6 +2,17 @@
 
 <div>
 
+@if(Auth::user()->user_type  == "investor")
+
+<h3>مرحبا بكم في نظام مستشفى صحة المرأة</h3>
+
+<hr>
+
+@livewire("admin.statement.home")
+
+
+@endif
+
 @if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "info" || Auth::user()->user_type  == "accountant")
 <div class="card-group">
  <div class="card border-right">
