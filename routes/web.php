@@ -100,14 +100,11 @@ Route::get('/labprint', function () {
 })->name("labprint");
 
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/backup', [App\Http\Controllers\HomeController::class, 'backup'])->name('backup');

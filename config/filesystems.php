@@ -35,6 +35,18 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'remote-sftp' => [
+            'driver' => 'sftp',
+            'host' => '104.238.176.133',
+            'username' => 'root',
+            'password' => 'B8j(nRK7hxGWUVR2',
+            'visibility' => 'public',
+            'permPublic' => 0766, /// <- this one did the trick
+    // 'port' => 22,
+            'root' => '/var/www/html/hms/fromlocal',
+    // 'timeout' => 30,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

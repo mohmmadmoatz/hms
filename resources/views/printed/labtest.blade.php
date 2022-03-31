@@ -146,4 +146,11 @@ $lab = App\Models\Lab::find($id);
 
 </body>
 
+<script>
+  setTimeout(() => {
+            window.print()
+            window.close()
+        }, 1500);
+</script>
+
 </html>

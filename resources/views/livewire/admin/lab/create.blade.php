@@ -88,6 +88,7 @@
 
         <div class="card-footer">
             <button type="submit" class="btn btn-info ml-4">{{ __('Create') }}</button>
+            <button wire:click.prevent = "create(true)" class="btn btn-info ml-4">انشاء وطباعة</button>
             <a href="@route(getRouteName().'.lab.read')" class="btn btn-default float-left">{{ __('Cancel') }}</a>
         </div>
     </form>

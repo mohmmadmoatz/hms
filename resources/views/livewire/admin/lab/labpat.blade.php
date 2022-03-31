@@ -35,48 +35,35 @@
 
                         
                         
+                       
+                        <div class="col-12 card table-responsive" wire:poll.7000ms>
+                            <table class="table table-hover">
+                            <tr>
+                                  
+                                    <th>رقم المريض</th>
+                                    <th>الأسم</th>
+                                    
+                                </tr>
+                              
+                                @foreach($patients as $item)
+                                <tr>
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->name}}</td>
+                                    
+                    
+                    
+                    
+                                </tr>
+                                @endforeach
+                            </table>
+                        </div>
+
 
                     </div>
                 </div>
             </div>
 
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <td style='cursor: pointer' wire:click="sort('id')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'id') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'id') fa-sort-amount-up ml-2 @endif'></i> {{ __('Id') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('gender')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'gender') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'gender') fa-sort-amount-up ml-2 @endif'></i> {{ __('Gender') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('phone')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'phone') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'phone') fa-sort-amount-up ml-2 @endif'></i> {{ __('Phone') }} </td>
-                    
-
-                        
-                        @if(config('easy_panel.crud.patient.delete') or config('easy_panel.crud.patient.update'))
-                        <td>{{ __('Action') }}</td>
-                        @endif
-                    </tr>
-
-                    @foreach($patients as $patient)
-                    <tr x-data="{ modalIsOpen : false }">
-                        <td> {{ $patient->id }} </td>
-                        <td> {{ $patient->name }} </td>
-                        <td> {{ $patient->gender }} </td>
-                        <td> {{ $patient->phone }} </td>
-
-                        <td>
-                            <button class="btn btn-danger">توجيه الى الحسابات</button>
-                        </td>
-                        
-                       
-                    </tr>
-                    
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="m-auto pt-3 pr-3">
-                {{ $patients->appends(request()->query())->links() }}
-            </div>
+           
 
         </div>
     </div>

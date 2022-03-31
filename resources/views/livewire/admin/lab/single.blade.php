@@ -8,6 +8,9 @@
     <td> {{ $lab->created_at }} </td>    
     @if(config('easy_panel.crud.lab.delete') or config('easy_panel.crud.lab.update'))
         <td>
+        @if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin" )
+
+
 
             @if(config('easy_panel.crud.lab.update'))
                 <a href="@route(getRouteName().'.lab.update', ['lab' => $lab->id])" class="btn text-primary mt-1">
@@ -29,6 +32,7 @@
                         </div>
                     </div>
                 </div>
+            @endif
             @endif
         </td>
     @endif

@@ -68,7 +68,7 @@ class Create extends Component
         $this->validateOnly($input);
     }
 
-    public function create()
+    public function create($print=false)
     {
         $this->validate();
 
@@ -111,6 +111,12 @@ class Create extends Component
         $pat = Payments::find($this->payment_id);
         $pat->redirect_done = $labdata->id;
         $pat->save();
+
+
+        if($print == true)
+        $this->dispatchBrowserEvent('open-window', ['url' => route("labprint") . "?id=$labdata->id"]);
+        
+
 
         $this->reset();
     }
