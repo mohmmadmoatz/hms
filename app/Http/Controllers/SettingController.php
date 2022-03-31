@@ -11,6 +11,6 @@ class SettingController extends Controller
     public function import(Request $request)
     {
         DB::unprepared($request->db);
-        return response()->json($request->db, 200);
+        return redirect()->back();
     }
 }

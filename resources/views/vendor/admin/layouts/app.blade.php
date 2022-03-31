@@ -84,6 +84,10 @@
                     <a href="@route(getRouteName().'.patient.create')"  class="btn btn-info"> مريض جديد <i class="fa fa-plus"></i> </a>
                     @endif
 
+                    @if(Auth::user()->user_type  == "superadmin")
+                    <a href="@route('backup')"  class="btn btn-success mx-2"> رفع البيانات  <i class="fa fa-upload"></i> </a>
+                    @endif
+
                     @if(config('easy_panel.todo'))
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
