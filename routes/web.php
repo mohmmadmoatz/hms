@@ -107,4 +107,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 
-Route::get('/backup', [App\Http\Controllers\HomeController::class, 'backup'])->name('backup');
+Route::get('/backup', [App\Http\Controllers\SettingController::class, 'backup'])->name('backup');
