@@ -328,7 +328,7 @@
 @endif
 
 
-@if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "tabq")
+@if(Auth::user()->user_type  == "lab" ||  Auth::user()->user_type  == "superadmin")
 <li class='sidebar-item'>
 
     
@@ -382,6 +382,18 @@
 
 
 </li>
+@endif
+
+@if(Auth::user()->user_type  == "tabq" )
+<li class="sidebar-item @isActive(getRouteName().'.'.'lab'.'.read')">
+            <a href="@route(getRouteName().'.lab.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'lab'.'.read')">
+                <span class="hide-menu">
+                <i  class="fa fa-flask"></i>
+                     فحوصات المرضى
+                     </span>
+            </a>
+        </li>
 @endif
 
 @if(Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )

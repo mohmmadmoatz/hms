@@ -14,7 +14,7 @@
                     <div class="row justify-content-between mt-4 mb-4">
                         @if(config('easy_panel.crud.followup.create'))
                         <div class="col-md-4 right-0">
-                            <a href="@route(getRouteName().'.followup.create')" class="btn btn-success">اضافة ملاحظة</a>
+                            <a href="@route(getRouteName().'.followup.create')?pat_id={{$patient_id}}" class="btn btn-success">اضافة ملاحظة</a>
                         </div>
                         @endif
                         @if(config('easy_panel.crud.followup.search'))
@@ -37,12 +37,19 @@
              
                             <select wire:model.lazy="patient_id" class="form-control selectpicker"
                                 data-live-search="true">
-                                <option value="">فلترة حسب المريض</option>
-                                @foreach(App\Models\Patient::latest()->get() as $item)
+                                <option value="">يرجى اختيار المريض</option>
+                                @foreach(App\Models\Patient::latest()->where("room_id","!=",0)->get() as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
+                        
+                        @if($patient_id)
+                        <div class="col-md-6">
+                            <a class="btn btn-info" href="@route('printfollow')?id={{$patient_id}}">طباعة الملاحظات</a>
+                        </div>
+                        @endif
+
                         @endif
                     </div>
                 </div>

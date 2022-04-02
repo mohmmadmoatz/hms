@@ -21,6 +21,8 @@ class Create extends Component
     public $date;
     public $output;
     
+    protected $queryString = ['pat_id'];
+
     protected $rules = [
         'pat_id' => 'required',        'date' => 'required',        
     ];

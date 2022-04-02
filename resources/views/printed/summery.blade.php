@@ -72,8 +72,9 @@ body{
        $payments= $payments->where("redirect",$stage);
      }
 
-     $payments = $payments->get();
+     $payments= $payments->where("redirect","!=",2);
 
+    $payments = $payments->get();
     $operation = App\Models\OperationHold::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->get();
    

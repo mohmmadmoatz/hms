@@ -15,8 +15,8 @@ class SettingController extends Controller
     public function import(Request $request)
     {
         DB::unprepared($request->db);
-        Payments::where("date","<","2022-03-31")->delete();
-        OperationHold::where("date","<","2022-03-31")->delete();
+        Payments::where("date","<","2022-04-01")->delete();
+        OperationHold::where("date","<","2022-04-01")->delete();
         return "done";
     }
 

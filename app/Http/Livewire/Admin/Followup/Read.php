@@ -15,7 +15,7 @@ class Read extends Component
 
     public $search;
 
-    protected $queryString = ['search'];
+    protected $queryString = ['search','patient_id'];
 
     protected $listeners = ['followupDeleted'];
 
@@ -57,6 +57,8 @@ class Read extends Component
 
         if($this->patient_id){
             $data = $data->where("pat_id",$this->patient_id);
+        }else{
+            $data = $data->where("id","0");
         }
 
 

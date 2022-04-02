@@ -25,6 +25,11 @@ Route::get('/printForm', function () {
     return view('printed.patientForm');
 })->name("printedForm");
 
+Route::get('/printfollow', function () {
+    return view('printed.followup');
+})->name("printfollow");
+
+
 Route::get('/printcard', function () {
     return view('printed.card');
 })->name("printcard");

@@ -227,15 +227,15 @@ border: 4px solid #dee2e6;
 
 
       </div>
-      
-      <!-- <img width="100%" height="100%" src="formimages/img1.jpg" alt="" srcset=""> -->
-      
+      @if(App\Models\FollowUp::where("pat_id",$data->id)->count()==0)
+      <img width="100%" height="100%" src="formimages/img1.jpg" alt="" srcset="">
+      @endif
 
       <!-- <p style="page-break-after: always;">&nbsp;</p> -->
       
 
       <p style="page-break-before: always;">&nbsp;</p>
-      
+      @if(App\Models\FollowUp::where("pat_id",$data->id)->count() > 0)
      <table width="100%">
        <tr>
          <th style="text-align:left"> <h2 style="color: #e3006f;
@@ -273,10 +273,11 @@ border: 4px solid #dee2e6;
          <th class="input">{{$item->Temp}}</th>
          <th class="input">{{$item->user->name}}</th>
          <th class="input">{{$item->treatment}}</th>
-         <th class="input">{{$item->date}}</th>
+         <th class="input">{{$item->created_at}}</th>
       </tr>
       @endforeach
      </table>
+     @endif
 
       <img width="100%" src="formimages/img2.jpg" alt="" srcset="">
       <p style="page-break-after: always;">&nbsp;</p>
