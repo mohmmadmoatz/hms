@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Admin\Followup;
 
 use App\Models\FollowUp;
+use App\Models\Patient;
+
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -39,6 +41,7 @@ class Read extends Component
     public function render()
     {
         $data = FollowUp::query();
+        $pats = Patient::latest()->where("room_id","!=",0)->whereNotNull("opration_id");
 
         if(config('easy_panel.crud.followup.search')){
             $array = (array) config('easy_panel.crud.followup.search');
@@ -68,10 +71,12 @@ class Read extends Component
             $data->latest('id');
         }
 
+        $pats = $pats->limit(10)->get();
         $data = $data->paginate(config('easy_panel.pagination_count', 15));
 
         return view('livewire.admin.followup.read', [
-            'followups' => $data
+            'followups' => $data,
+            'pats' => $pats
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('FollowUp')) ]);
     }
 }

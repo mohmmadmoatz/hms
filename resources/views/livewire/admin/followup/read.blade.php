@@ -11,6 +11,55 @@
                         <li class="breadcrumb-item active">ملاحظات الممرضة والعلاج</li>
                     </ul>
 
+                    <div class="row">
+                        <div class="col-md-6" wire:ignore>
+             
+                            <select wire:model.lazy="patient_id" class="form-control selectpicker"
+                                data-live-search="true">
+                                <option value="">يرجى اختيار المريض</option>
+                                @foreach($pats as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </div>
+                    @if(!$patient_id)
+
+            <div class="card-body table-responsive p-0">
+              
+                  
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td style='cursor: pointer' wire:click="sort('id')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'id') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'id') fa-sort-amount-up ml-2 @endif'></i> {{ __('Id') }} </td>
+                            <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
+                            <td style='cursor: pointer' wire:click="sort('gender')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'gender') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'gender') fa-sort-amount-up ml-2 @endif'></i> {{ __('Gender') }} </td>
+                            <td style='cursor: pointer' wire:click="sort('phone')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'phone') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'phone') fa-sort-amount-up ml-2 @endif'></i> {{ __('Phone') }} </td>
+                            <td></td>
+                        </tr>
+                        @foreach($pats as $item)
+                       <tr>
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->name}}</td>
+                        <td>{{$item->gender}}</td>
+                        <td>{{$item->phone}}</td>
+                        <td>
+                            <button wire:click="$set('patient_id', {{$item->id}})" class="btn btn-info">ملاحظات المريض</button>
+                        </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+@endif
+              
+
+                </div>
+
+                    @if($patient_id)
+
                     <div class="row justify-content-between mt-4 mb-4">
                         @if(config('easy_panel.crud.followup.create'))
                         <div class="col-md-4 right-0">
@@ -33,16 +82,7 @@
                             <hr>
                         </div>
 
-                        <div class="col-md-6" wire:ignore>
-             
-                            <select wire:model.lazy="patient_id" class="form-control selectpicker"
-                                data-live-search="true">
-                                <option value="">يرجى اختيار المريض</option>
-                                @foreach(App\Models\Patient::latest()->where("room_id","!=",0)->get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                       
                         
                         @if($patient_id)
                         <div class="col-md-6">
@@ -84,6 +124,8 @@
             <div class="m-auto pt-3 pr-3">
                 {{ $followups->appends(request()->query())->links() }}
             </div>
+
+            @endif
 
         </div>
     </div>
