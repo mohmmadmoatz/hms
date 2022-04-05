@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Patient;
 
 use App\Models\Patient;
 use App\Models\Room;
+use App\Models\Setting;
 use App\Models\MedicineProfile;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -55,7 +56,8 @@ class Create extends Component
     public function mount()
     {
         $this->inter_at = date("Y-m-d");
-        $this->hms_nsba=60;
+        $this->hms_nsba=100 - Setting::find(1)->hnsba;
+
                 
     }
 
@@ -118,7 +120,9 @@ class Create extends Component
 
         $this->reset();
 
-        $this->hms_nsba=60;
+
+
+        $this->hms_nsba=100 - Setting::find(1)->hnsba;
         $this->inter_at = date("Y-m-d");
 
 

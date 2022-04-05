@@ -104,8 +104,8 @@
         <div class="col-md-12">
         <label>المريض محول ام لا</label>
                     <select type="text" class="form-control" wire:model.lazy="hms_nsba">
-                        <option value="60">نعم</option>
-                        <option value="40">لا</option>
+                    <option value="{{100 - App\Models\Setting::find(1)->hnsba}}">نعم</option>
+                        <option value="{{App\Models\Setting::find(1)->hnsba}}">لا</option>
                 </select>
 </div>
             <div class="col-md-12 py-2">

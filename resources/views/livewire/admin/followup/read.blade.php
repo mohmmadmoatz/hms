@@ -18,7 +18,7 @@
                                 data-live-search="true">
                                 <option value="">يرجى اختيار المريض</option>
                                 @foreach($pats as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->user->id ?? ''}}">{{$item->user->name ??""}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -36,18 +36,20 @@
                         <tr>
                             <td style='cursor: pointer' wire:click="sort('id')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'id') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'id') fa-sort-amount-up ml-2 @endif'></i> {{ __('Id') }} </td>
                             <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
+                            <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Room') }} </td>
                             <td style='cursor: pointer' wire:click="sort('gender')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'gender') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'gender') fa-sort-amount-up ml-2 @endif'></i> {{ __('Gender') }} </td>
                             <td style='cursor: pointer' wire:click="sort('phone')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'phone') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'phone') fa-sort-amount-up ml-2 @endif'></i> {{ __('Phone') }} </td>
                             <td></td>
                         </tr>
                         @foreach($pats as $item)
                        <tr>
-                        <td>{{$item->id}}</td>
-                        <td>{{$item->name}}</td>
-                        <td>{{$item->gender}}</td>
-                        <td>{{$item->phone}}</td>
+                        <td>{{$item->user->id}}</td>
+                        <td>{{$item->user->name}}</td>
+                        <td>{{$item->name}} - (الطابق {{$item->floor}}) </td>
+                        <td>{{$item->user->gender}}</td>
+                        <td>{{$item->user->phone}}</td>
                         <td>
-                            <button wire:click="$set('patient_id', {{$item->id}})" class="btn btn-info">ملاحظات المريض</button>
+                            <button wire:click="$set('patient_id', {{$item->user->id}})" class="btn btn-info">ملاحظات المريض</button>
                         </td>
                         </tr>
                         @endforeach
