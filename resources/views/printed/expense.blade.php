@@ -13,13 +13,16 @@
   font-family: tajwal;
   src: url({{asset('css/Tajawal-Regular.ttf')}});
 }
-    body {
-    font-family: tajwal;
+html{
+  height: 100%;
+  }
 
-  }
-  h3{
-    font-family: tajwal !important;
-  }
+body{
+  position: relative;
+  height: 100%;
+  font-family: tajwal;
+}
+ 
   h4{
     font-family: tajwal !important;
   }
@@ -30,6 +33,16 @@
   table{
       text-align: right;
   }
+
+ 
+
+  .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0,0,0,.05) !important;
+}
+.table-striped tbody tr:nth-of-type(odd) th {
+    
+    background-color: rgba(0,0,0,.05) !important;
+}
 
 </style>
 
@@ -71,8 +84,7 @@
           <img  src="{{asset('formimages/hmslogo.png')}}" width="250px">
         </div>
       </div>
-      <div class="row py-3">
-        
+       
         <table class="table">
                 <tr>
                     <th>تقرير</th>
@@ -94,17 +106,20 @@
 
         <hr>
         <table class="table table-bordered table-striped">
-                <tr>
-                    <th>رقم الوصل</th>
-                    <th>التاريخ</th>
-                    <th>المستلم</th>
-                    <th>المبلغ</th>
-                    <th>العملية</th>
-                </tr>
+          <thead>
+            <tr>
+              <th>رقم الوصل</th>
+              <th>التاريخ</th>
+              <th>المستلم</th>
+              <th>المبلغ</th>
+              <th>العملية</th>
+          </tr>
+          </thead>
+               
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>
-                    <td>{{$item->created_at}}</td>
+                    <td style="width:110px">{{$item->date}}</td>
                     <td>
     
                  @if($item->account_type==2) <span>  {{ $item->Patient->name ??""}} </span> @endif
@@ -130,7 +145,7 @@
                 </tr>
         </table>
 
-      </div>
+    
      
     </div>
   </div>

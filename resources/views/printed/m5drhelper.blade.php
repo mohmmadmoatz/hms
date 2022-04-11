@@ -37,6 +37,15 @@
         display: none !important;
     }
 }
+
+  .table-striped tbody tr:nth-of-type(odd) td {
+      background-color: rgba(0,0,0,.05) !important;
+  }
+  .table-striped tbody tr:nth-of-type(odd) th {
+      
+      background-color: rgba(0,0,0,.05) !important;
+  }
+
 </style>
 
 
@@ -63,7 +72,7 @@ $date2 = explode(" - ", $dates)[1];
           <img  src="{{asset('formimages/hmslogo.png')}}" width="250px">
         </div>
       </div>
-      <div class="row py-3">
+      
         
         <table class="table">
                 <tr>
@@ -90,13 +99,16 @@ $date2 = explode(" - ", $dates)[1];
 
         <hr>
         <table class="table table-bordered table-striped">
-                <tr>
-                    <th>رقم الوصل</th>
-                    <th>التاريخ</th>
-                    <th>اسم المريض</th>
-                    <th>اجور مساعد مخدر</th>
-                    <th>العملية</th>
-                </tr>
+          <thead>
+            <tr>
+              <th>رقم الوصل</th>
+              <th>التاريخ</th>
+              <th>اسم المريض</th>
+              <th>اجور مساعد مخدر</th>
+              <th>العملية</th>
+          </tr>
+          </thead>
+             
                 @foreach($data as $item)
                 <tr>
                 <td>{{$item->payment_number}}</td>
@@ -120,7 +132,7 @@ $date2 = explode(" - ", $dates)[1];
                 </tr>
         </table>
 
-      </div>
+   
      
     </div>
   </div>

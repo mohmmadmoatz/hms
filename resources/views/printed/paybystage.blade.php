@@ -38,7 +38,13 @@
         display: none !important;
     }
 }
-
+.table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0,0,0,.05) !important;
+}
+.table-striped tbody tr:nth-of-type(odd) th {
+    
+    background-color: rgba(0,0,0,.05) !important;
+}
 </style>
 
 
@@ -93,7 +99,8 @@
 
         <hr>
         <table class="table table-bordered table-striped">
-                <tr>
+        <thead>
+        <tr>
                     <th>رقم الوصل</th>
                     <th>التاريخ</th>
                     <th>اسم المريض</th>
@@ -101,6 +108,8 @@
                    
                     <th>العملية</th>
                 </tr>
+        </thead>
+              
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>

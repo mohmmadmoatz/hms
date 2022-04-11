@@ -13,10 +13,20 @@
   font-family: tajwal;
   src: url({{asset('css/Tajawal-Regular.ttf')}});
 }
-    body {
-    font-family: tajwal;
-
+   
+  html{
+  height: 100%;
   }
+
+body{
+  position: relative;
+  height: 100%;
+  font-family: tajwal;
+ 
+}
+
+
+
   h3{
     font-family: tajwal !important;
   }
@@ -30,6 +40,14 @@
   table{
       text-align: right;
   }
+
+  .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0,0,0,.05) !important;
+}
+.table-striped tbody tr:nth-of-type(odd) th {
+    
+    background-color: rgba(0,0,0,.05) !important;
+}
 
 </style>
 
@@ -58,7 +76,7 @@
           <img  src="{{asset('formimages/hmslogo.png')}}" width="250px">
         </div>
       </div>
-      <div class="row py-3">
+  
         
         <table class="table">
                 <tr>
@@ -80,7 +98,10 @@
         </table>
 
         <hr>
+        <div class="card-body table-responsive p-0">
+
         <table class="table table-bordered table-striped">
+          <thead>
                 <tr>
                     <th>رقم الوصل</th>
                     <th>التاريخ</th>
@@ -89,10 +110,11 @@
                     <th>مرجع</th>
                     <th>العملية</th>
                 </tr>
+</thead>
                 @foreach($data as $item)
                 <tr>
                     <td>{{$item->wasl_number}}</td>
-                    <td>{{$item->date}}</td>
+                    <td style="width:110px">{{$item->date}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
                   
                     <td>
@@ -145,8 +167,9 @@
                     @convert($usd) $</td>
                 </tr>
         </table>
+</div>
 
-      </div>
+    
      
     </div>
   </div>

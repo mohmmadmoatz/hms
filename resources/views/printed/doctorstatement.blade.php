@@ -37,6 +37,14 @@
         display: none !important;
     }
 }
+
+.table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(0,0,0,.05) !important;
+}
+.table-striped tbody tr:nth-of-type(odd) th {
+    
+    background-color: rgba(0,0,0,.05) !important;
+}
 </style>
 
 
@@ -75,15 +83,19 @@
           <img  src="{{asset('formimages/hmslogo.png')}}" width="250px">
         </div>
       </div>
-      <div class="row py-3">
+    
         
         <table class="table">
+          <thead>
+
+          
                 <tr>
                     <th>الدكتور</th>
                     <th>الفترة</th>
                     <th>تاريخ التقرير</th>
                     <th class="no-print"></th>
                 </tr>
+              </thead>
                 <tr>
                     <th>
                         {{$doctor->name ??""}}
@@ -109,15 +121,18 @@
 
         <hr>
         <table class="table table-bordered table-striped">
-                <tr>
-                    <th>رقم القبض</th>
-                    <th>التاريخ</th>
-                    <th>اسم المريض</th>
-                    <th>سعر العملية</th>
-                  @if($doctor->user_type=="doctor")  <th>نسبة الطبيب</th> @endif
-                    <th>اجور الطبيب</th>
-                    <th>العملية</th>
-                </tr>
+          <thead>
+            <tr>
+              <th>رقم القبض</th>
+              <th>التاريخ</th>
+              <th>اسم المريض</th>
+              <th>سعر العملية</th>
+            @if($doctor->user_type=="doctor")  <th>نسبة الطبيب</th> @endif
+              <th>اجور الطبيب</th>
+              <th>العملية</th>
+          </tr>
+          </thead>
+               
                 @foreach($data as $item)
                 <tr>
                    <td>{{$item->payment_number}}</td>
@@ -149,7 +164,7 @@
                 </tr>
         </table>
 
-      </div>
+    
      
     </div>
   </div>

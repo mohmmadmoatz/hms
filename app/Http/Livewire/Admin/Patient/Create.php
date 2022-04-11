@@ -56,7 +56,7 @@ class Create extends Component
     public function mount()
     {
         $this->inter_at = date("Y-m-d");
-        $this->hms_nsba=100 - Setting::find(1)->hnsba;
+        $this->hms_nsba= 100 - Setting::find(1)->hnsba;
 
                 
     }
