@@ -32,7 +32,7 @@ class SettingController extends Controller
         exec($command, $output, $returnVar);
         $contents=  file_get_contents(storage_path() . "/" . $filename);
 
-        $response = Http::post('http://104.238.176.133/hms/public/api/importdb', [
+        $response = Http::post('http://womanhealth.hospital/api/importdb', [
             'db' => $contents,
         ]);
 
