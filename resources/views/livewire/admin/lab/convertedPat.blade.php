@@ -50,8 +50,11 @@
 
               
                 <td>
-                    <a href="@route(getRouteName().'.lab.create')?patient_id={{$item->Patient->id}}&payment_id={{$item->id}}">
-                        انشاء فحص مختبر</a></td>
+                    
+                    <a href="@route(getRouteName().'.lab.create')?patient_id={{$item->Patient->id ??''}}&payment_id={{$item->id}}">
+                        انشاء فحص مختبر</a>
+                    
+                </td>
 
 
             </tr>

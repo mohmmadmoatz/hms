@@ -56,6 +56,7 @@
         <th>Result</th>
         <th>Unit</th>
         <th>Normal Range</th>
+        <th>سعر الفحص</th>
         <th></th>
     </tr>
 
@@ -81,6 +82,10 @@
         </th>
         <th><input value="{{$item['unit']}}" type="text" class="form-control" wire:change="changekey('unit',$event.target.value,{{$loop->index}})"> </th>
         <th><textarea class="form-control" wire:change="changekey('normal_range',$event.target.value,{{$loop->index}})">{{$item['normal_range']}}</textarea></th>
+
+        <th>
+                            <input type="text" class="form-control" wire:change="changekey('price',$event.target.value,{{$loop->index}})" value="{{$item['price']}}" >
+                        </th>
         <th><button wire:click.prevent="deleteItem({{$loop->index}})" class="btn btn-danger"> <i class="fa fa-trash"></i> </button></th>
 
     </tr>

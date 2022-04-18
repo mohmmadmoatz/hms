@@ -33,10 +33,22 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data=  $data->where('redirect',2)->whereNull("redirect_done")->get();
+
+
+
+
+        $data=  $data->latest()->where('redirect',2)->whereNull("redirect_done")
+        ->with("Patient:name,id,lab")
+        ->get();
+
+        $filtered = $data->filter(function ($value, $key) {
+            return $value->Patient->lab;
+        });
+
+        
 
         return view('livewire.admin.lab.convertedPat', [
-            'data' => $data
+            'data' => $filtered
         ])->layout('admin::layouts.app', ['title' => "محولين الى المختبر" ]);
     }
 }

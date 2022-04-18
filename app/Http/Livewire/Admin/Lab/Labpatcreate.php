@@ -6,8 +6,10 @@ use App\Models\Patient;
 use App\Models\LabTest;
 use App\Models\Room;
 use App\Models\MedicineProfile;
+use App\Models\Testcomponet;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+
 
 class Labpatcreate extends Component
 {
@@ -20,11 +22,17 @@ class Labpatcreate extends Component
     public $status;
     public $age;
     public $image;
-
     public $item;
     public $items = [];
     public $amount;
     public $totalamount=0;
+    public $components = [];    
+    public $testID;
+    public $selectall;
+
+    public $patient_id;
+    protected $queryString = ['patient_id'];
+
     protected $rules = [
         'name' => 'required',        
     ];
@@ -46,8 +54,46 @@ class Labpatcreate extends Component
         if($this->item){
             $item=LabTest::find($this->item);
             $this->amount = $item->amount;
+            $this->testID = $this->item;
         }
        
+    }
+
+
+    public function selectAllComp($value)
+    {   
+        if($value){
+            $this->components = Testcomponet::where('test_id',$this->testID)->pluck("id");
+
+            $this->calculateTestAmount();
+
+        }else{
+            //$this->components = [];
+        }
+    }
+
+    public function updatedComponents()
+    {
+        $this->calculateTestAmount();
+    }
+
+    public function calculateTestAmount()
+    {
+        
+        $amount =0;
+
+        foreach ($this->components as $item => $value) {
+           $price = Testcomponet::find($value)->price;
+           $amount += $price;
+        }
+
+        if($amount > 0){
+            $this->amount = $amount;
+        }else{
+            $this->amount = $item=LabTest::find($this->testID)->amount;
+        }
+
+
     }
 
     public function deleteitem($index)
@@ -63,15 +109,21 @@ class Labpatcreate extends Component
          "id"=>$this->item,
          "name"=>$product->name,
          "amount"=>$this->amount,
+         "selectedcomponents"=>$this->components,
+         "category_id"=>$product->category_id,
         ];
         $this->amount = 0;
         $this->qty = 1;
         $this->total = "";
+        $this->item = "";
+        $this->testID="";
+        $this->components = [];
 
     }
 
     public function create()
     {
+        if(!$this->patient_id)
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('Patient') ])]);
@@ -80,17 +132,29 @@ class Labpatcreate extends Component
             $this->image = $this->getPropertyValue('image')->store('images/patients','public');
         }
         
-        $this->patientid=Patient::create([
-            'name' => $this->name,
-            'gender' => $this->gender,
-            'phone' => $this->phone,
-            'status' => 2,
-            'image' => $this->image,            
-            'age' => $this->age,     
-            'lab'=>json_encode($this->items),
-            "total_lab"=>$this->totalamount
-                       
-        ]);
+        if($this->patient_id){
+            $patient = Patient::find($this->patient_id);
+            $patient->lab = json_encode($this->items);
+            $patient->paid = 0;
+            $patient->status =2;
+            $patient->total_lab = $this->totalamount;
+            $patient->save();
+
+        }else{
+            Patient::create([
+                'name' => $this->name,
+                'gender' => $this->gender,
+                'phone' => $this->phone,
+                'status' => 2,
+                'image' => $this->image,            
+                'age' => $this->age,     
+                'lab'=>json_encode($this->items),
+                "total_lab"=>$this->totalamount
+                           
+            ]);
+        }
+
+        
 
        
 

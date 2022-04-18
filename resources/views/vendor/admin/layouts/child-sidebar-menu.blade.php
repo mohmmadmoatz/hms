@@ -407,6 +407,14 @@
     </a>
 
     <ul aria-expanded="false" class="collapse first-level base-level-line">
+
+    <li class="sidebar-item @isActive(getRouteName().'.'.'unit'.'.read')">
+            <a href="@route(getRouteName().'.unit.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'unit'.'.read')">
+                <span class="hide-menu"> الوحدات </span>
+            </a>
+        </li>
+
         <li class="sidebar-item @isActive(getRouteName().'.'.'warehouse'.'.read')">
             <a href="@route(getRouteName().'.warehouse.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'warehouse'.'.read')">

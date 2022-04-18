@@ -248,7 +248,7 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data=  $data->where('paid',0)->get();
+        $data=  $data->latest()->where('paid',0)->get();
         return view('livewire.admin.payments.convertedPat', [
             'data' => $data
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('Payments')) ]);

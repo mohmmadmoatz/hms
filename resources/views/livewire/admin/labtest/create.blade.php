@@ -38,7 +38,7 @@
                 <div class="col-md-4">
                     <div class='form-group'>
                         <label for='inputname' class=' control-label'>السعر</label>
-                        <input type='number' wire:model.lazy='amount'
+                        <input  type='number' wire:model.lazy='amount'
                             class="form-control @error('amount') is-invalid @enderror" id='inputname'>
                         @error('amount') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -61,6 +61,7 @@
                         <th>Result</th>
                         <th>Unit</th>
                         <th>Normal Range</th>
+                        <th>سعر الفحص</th>
                         <th></th>
                     </tr>
 
@@ -90,9 +91,15 @@
                         </th>
                         <th><input type="text" class="form-control"
                                 wire:change="changekey('unit',$event.target.value,{{$loop->index}})"> </th>
+                       
                         <th><textarea class="form-control"
                                 wire:change="changekey('normal_range',$event.target.value,{{$loop->index}})"></textarea>
                         </th>
+
+                        <th>
+                            <input type="text" class="form-control" wire:change="changekey('price',$event.target.value,{{$loop->index}})">
+                        </th>
+
                         <th><button wire:click.prevent="deleteItem({{$loop->index}})" class="btn btn-danger"> <i
                                     class="fa fa-trash"></i> </button></th>
                     </tr>

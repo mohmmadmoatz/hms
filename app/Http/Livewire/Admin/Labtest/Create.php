@@ -32,7 +32,8 @@ class Create extends Component
             "result_type"=>"value",
             "options"=>[],
             "unit"=>"",
-            "normal_range"=>""
+            "normal_range"=>"",
+            "price"=>0
         ];
     }
 
@@ -85,6 +86,7 @@ class Create extends Component
           $new->options = json_encode($item['options']);
           $new->unit = $item['unit'];
           $new->normal_range = $item['normal_range'];
+          $new->price = $item['price'];
           $new->save();
         }
 

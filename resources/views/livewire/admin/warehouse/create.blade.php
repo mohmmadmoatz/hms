@@ -81,6 +81,7 @@
                     <tr>
                         <th>اسم المادة</th>
                         <th>السعر</th>
+                        <th>الوحدة</th>
                         <th>العدد</th>
                         <th>الأجمالي</th>
                         <th></th>
@@ -100,7 +101,22 @@
                                 </td>
 
                         <td><input type="number" class="form-control" wire:model="amount"></td>
-                        <td><input type="number" class="form-control" wire:model="qty"></td>
+                        <td>
+                            <select class="form-control" wire:model="unit">
+                                <option value="">{{App\Models\UnitConv::where("product_id",$productID)->first()->base->name ?? "قطعة"}}</option>
+
+                                @foreach(App\Models\UnitConv::where("product_id",$productID)->get() as $item)
+                                    <option value="{{$item->id}}">{{$item->unit->name}} ({{$item->factor}})</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" wire:model="qtyInput">
+                            @if($unit)
+                             {{App\Models\UnitConv::where("id",$unit)->first()->base->name ?? ""}} : {{(App\Models\UnitConv::where("id",$unit)->first()->factor ?? 1) * ($qtyInput == ""? 1 : $qtyInput)}}
+                            @endif
+
+                        </td>
                         <td><input readonly type="number" class="form-control" wire:model="total"></td>
                         <td>
                             <a href="#addPlus" wire:click="addItem()" class="btn btn-info"><i class="fa fa-plus"></i></a>
@@ -113,7 +129,19 @@
                     <td>{{$item['productname']}}</td>
 
                     <td>@convert($item['amount'])</td>
-                    <td>{{$item['qty']}}</td>
+                    <td>
+
+                        {{$item['qtyinput']}}
+
+                    {{App\Models\UnitConv::where("id",$item['unit'])->first()->unit->name ?? ""}}
+
+                    </td>
+                    <td>
+                        {{$item['qty']}}
+                        {{App\Models\UnitConv::where("id",$item['unit'])->first()->base->name ?? ""}}
+                        
+
+                    </td>
                     <td>@convert($item['total'])</td>
                     <td>
                         <a href="#delete" class="btn btn-danger" wire:click="deleteItem({{$loop->index}})"><i class="fa fa-trash"></i></a>

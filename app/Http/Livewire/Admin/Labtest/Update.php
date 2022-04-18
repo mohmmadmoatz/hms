@@ -109,6 +109,8 @@ class Update extends Component
             $new->options = json_encode($item['options']);
             $new->unit = $item['unit'];
             $new->normal_range = $item['normal_range'];
+             $new->price = $item['price'];
+
             $new->save();
           }
     }

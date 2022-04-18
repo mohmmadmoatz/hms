@@ -19,11 +19,28 @@
         <div class="card-body">
 
             <div class="row">
+
+                <div class="col-md-12" wire:ignore>
+                <h4>اختيار مريض</h4>
+
+                    <select class="form-control selectpicker" data-live-search="true" wire:model.lazy="patient_id">
+                        <option value="">مريض جديد</option>
+                        @foreach(App\Models\Patient::latest()->get() as $patient)
+                        <option value="{{$patient->id}}">{{$patient->id}} - {{$patient->name}}</option>
+
+                        @endforeach
+                    </select>
+                </div>
+               
+                <div class="col-md-12">
+                    <hr>
+                   
+                </div>
                 <div class="col-md-4">
                     <!-- Name Input -->
                     <div class='form-group'>
                         <label for='inputname' class='control-label'> {{ __('Name') }}</label>
-                        <input type='text' wire:model.lazy='name'
+                        <input @if($patient_id) disabled @endif type='text' wire:model.lazy='name'
                             class="form-control @error('name') is-invalid @enderror" id='inputname'>
                         @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -33,7 +50,7 @@
                     <div class='form-group'>
                         <label for='inputgender' class='control-label'> {{ __('Gender') }}</label>
 
-                        <select wire:model="gender" class="form-control">
+                        <select @if($patient_id) readonly @endif wire:model="gender" class="form-control">
                             <option value=""></option>
 
                             <option>ذكر</option>
@@ -47,7 +64,7 @@
                     <!-- Phone Input -->
                     <div class='form-group'>
                         <label for='inputphone' class='control-label'> {{ __('Phone') }}</label>
-                        <input type='text' wire:model.lazy='phone'
+                        <input @if($patient_id) readonly @endif type='text' wire:model.lazy='phone'
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -57,11 +74,12 @@
 
                     <div class='form-group'>
                         <label for='inputphone' class='control-label'> {{ __('العمر') }}</label>
-                        <input type='number' wire:model.lazy='age' 
+                        <input  @if($patient_id) readonly @endif type='number' wire:model.lazy='age' 
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('age') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
                 </div>
+                
 
                 <div class="col-md-12">
                     <hr>
@@ -77,13 +95,36 @@
                         </tr>
                         <tr>
                         
-                                <td wire:ignore>
-                                    <select wire:change="selectitem" class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
+                                <td >
+                                    <div wire:ignore>
+                                    <select  wire:change="selectitem" class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
                                         <option value="">يرجى اختيار الفحص</option>
                                          @foreach(App\Models\LabTest::get() as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
                                          @endforeach
                                     </select>
+                                    </div>
+                                    
+
+                                    <hr>
+                                    <p>حدد العناصر المطلوبة </p>
+                                    
+                                    <table class="table table-hover">
+                                            <tr>
+                                                <th>العنصر</th>
+                                                <th>السعر</th>
+                                               <th></th>
+                                            </tr>
+                                            @foreach(App\Models\Testcomponet::where("test_id",$testID)->get() as $x)
+                                            <tr wire:key="{{$x->id}}">
+                                                <td>{{$x->name}}</td>
+                                                <td>{{$x->price}}</td>
+                                                <td>
+                                                    <input type="checkbox" wire:model="components" value="{{$x->id}}">
+                                                </td>
+                                            @endforeach
+                                    </table>
+
                                 </td>
                             <td>
                                 <input type="text" class="form-control" wire:model.lazy="amount">

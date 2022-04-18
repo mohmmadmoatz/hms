@@ -44,7 +44,7 @@ class Create extends Component
             $this->indexID = 0;
             
             for ($i=0; $i < count($this->tests); $i++) { 
-                $this->tests[$i]["items"] = Testcomponet::where("test_id",$this->tests[$i]['id'])->get()->toArray();
+                $this->tests[$i]["items"] = Testcomponet::whereIn("id",$this->tests[$i]['selectedcomponents'])->get()->toArray();
             }
             
         }
@@ -90,6 +90,7 @@ class Create extends Component
 
            $newtest =  new PatTests();
            $newtest->lab_id = $labdata->id;
+           $newtest->category_id = $item['category_id'];
            $newtest->test_id = $item['id'];
            $newtest->amount = $item['amount'];
            $newtest->save();

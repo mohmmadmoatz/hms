@@ -54,12 +54,17 @@
 
 $id = $_GET['id'];
 $lab = App\Models\Lab::find($id);
+$tests = App\Models\PatTests::where("lab_id",$lab->id)->get();
+
+$testSameCategory = $tests->groupBy('category_id');  
+//dd($testSameCategory);
+
 @endphp
 
 <body>
 
-  
-@foreach(App\Models\PatTests::where("lab_id",$lab->id)->get() as $item)
+
+@foreach($testSameCategory as $item)
   <div class="py-2">
     <div class="container">
       <div class="row">
@@ -68,10 +73,6 @@ $lab = App\Models\Lab::find($id);
         </div>
       </div>
       <div class="row py-3">
-        
-        
-
-     
         <table class="table table-bordered table-striped" style="text-align:left">
                <tr>
                    <th>Name: <span style="float:right"> {{$lab->patient->name}} </span> </th>
@@ -87,9 +88,9 @@ $lab = App\Models\Lab::find($id);
                </tr>
         </table>
 
-       
+        @foreach($item as $test)
         <div class="container-fluid content-block">
-        <h2 align="center">{{$item->test->name ??""}}</h2>
+        <h2 align="center">{{$test->test->name ??""}}</h2>
         <hr>
         </div>
 
@@ -102,8 +103,9 @@ $lab = App\Models\Lab::find($id);
                 <th>Normal Range</th>
             </tr>
         </thead>
+       
         <tbody>
-            @foreach(App\Models\PatTestComponet::where("pat_test_id",$item->id)->get() as $sub)
+            @foreach(App\Models\PatTestComponet::where("pat_test_id",$test->id)->get() as $sub)
         <tr>
                 <th>{{$sub->componet->name ??""}}</th>
                 <th>{{$sub->result ??""}}</th>
@@ -115,6 +117,7 @@ $lab = App\Models\Lab::find($id);
             </tr>
             @endforeach
         </tbody>
+
         <tfoot>
     <tr>
       <td id="spacer" colspan="4"></td>
@@ -122,6 +125,7 @@ $lab = App\Models\Lab::find($id);
   </tfoot>
         </table>
 
+        @endforeach
     
 
 
@@ -149,7 +153,7 @@ $lab = App\Models\Lab::find($id);
 <script>
   setTimeout(() => {
             window.print()
-            window.close()
+           window.close()
         }, 1500);
 </script>
 
