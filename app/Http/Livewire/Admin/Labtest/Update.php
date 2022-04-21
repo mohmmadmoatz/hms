@@ -49,13 +49,22 @@ class Update extends Component
 
     public function deleteItem($index)
     {
+        $new = Testcomponet::find($this->compontes[$index]['id'] ?? 0);
+        
+        if($new){
+            $new->delete();
+        }
         array_splice($this->compontes,$index,1);
-
+       
+        
     }
 
     public function deleteopt($index,$parent)
     {
+
         array_splice($this->compontes[$parent]['options'],$index,1);
+
+
 
     }
 
@@ -66,7 +75,8 @@ class Update extends Component
             "result_type"=>"value",
             "options"=>[],
             "unit"=>"",
-            "normal_range"=>""
+            "normal_range"=>"",
+            "price"=>"",
         ];
     }
 
@@ -99,9 +109,15 @@ class Update extends Component
 
         ]);
 
-        Testcomponet::where("test_id",$this->labtest->id)->delete();
+      //  dd($this->compontes);
+
+       // Testcomponet::where("test_id",$this->labtest->id)->delete();
+
+        
 
         foreach ($this->compontes as $item) {
+            $new = Testcomponet::find($item['id'] ?? 0);
+            if(!$new)
             $new = new Testcomponet();
             $new->test_id = $this->labtest->id;
             $new->name = $item['name'];
@@ -109,10 +125,10 @@ class Update extends Component
             $new->options = json_encode($item['options']);
             $new->unit = $item['unit'];
             $new->normal_range = $item['normal_range'];
-             $new->price = $item['price'];
-
+            $new->price = $item['price'];
             $new->save();
-          }
+            }
+          
     }
 
     public function render()

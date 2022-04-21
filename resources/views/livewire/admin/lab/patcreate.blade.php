@@ -89,7 +89,13 @@
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <tr>
-                            <th>اسم الفحص</th>
+                            <th>
+                                اسم الفحص
+
+                                <a wire:loading ><i class="fas fa-spinner fa-spin" ></i></a>
+
+
+                            </th>
                             <th>السعر</th>
                             <th></th>
                         </tr>
@@ -113,7 +119,7 @@
                                             <tr>
                                                 <th>العنصر</th>
                                                 <th>السعر</th>
-                                               <th></th>
+                                               <th><button class="btn btn-danger" wire:click.prevent="selectall">تحديد الكل</button></th>
                                             </tr>
                                             @foreach(App\Models\Testcomponet::where("test_id",$testID)->get() as $x)
                                             <tr wire:key="{{$x->id}}">

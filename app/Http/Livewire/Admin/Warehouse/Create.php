@@ -82,6 +82,21 @@ class Create extends Component
 
     public function create()
     {
+
+        if(count($this->items) ==0){
+
+            if($this->productID){
+                $this->addItem();
+               
+                $this->totalmenu = 0;
+                $this->total = $this->qty *  $this->amount;
+                foreach ($this->items as $item) {
+                   $this->totalmenu+= $item['total'];
+                }
+               
+        }
+    }
+
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('Warehouse') ])]);

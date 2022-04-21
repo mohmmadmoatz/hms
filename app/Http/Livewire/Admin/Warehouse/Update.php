@@ -82,7 +82,7 @@ class Update extends Component
         $this->items  = $this->items->toarray(); 
 
         for ($i=0; $i < count($this->items); $i++) { 
-            $this->items[$i]['productname'] = Warehouseproduct::find($this->items[$i]['product_id'])->name;
+            $this->items[$i]['productname'] = Warehouseproduct::find($this->items[$i]['product_id'])->name ??"";
         }
         
     }

@@ -59,7 +59,8 @@ class Create extends Component
    public function updatekey($parent,$index,$value)
    {
     $this->tests[$parent]['items'][$index]['result'] = $value;
-   
+    
+   // dd($this->tests[$parent]['items'][$index]['result']);
 
    }
 

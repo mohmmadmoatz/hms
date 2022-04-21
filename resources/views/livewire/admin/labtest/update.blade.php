@@ -64,19 +64,37 @@
     <tr>
         <th> <input type="text" class="form-control" wire:change="changekey('name',$event.target.value,{{$loop->index}})" value="{{$item['name']}}"> </th>
         <th>
+            <div class="input-group">
 
-            <select class="form-control" wire:change="changekey('result_type',$event.target.value,{{$loop->index}})">
-                <option @if($item['result_type'] == "value") selected @endif  value="value">Value</option>
-                <option @if($item['result_type'] == "select") selected @endif  value="select">Select</option>
-            </select>
+                <select class="form-control" wire:change="changekey('result_type',$event.target.value,{{$loop->index}})">
+                    <option @if($item['result_type'] == "value") selected @endif  value="value">Value</option>
+                    <option @if($item['result_type'] == "select") selected @endif  value="select">Select</option>
+                </select>
+
+                <div class="input-group-append">
+                    @if($item['result_type'] == "select")
+               
+                    <button wire:click.prevent="addopt({{$loop->index}})" class="btn btn-info">Add Option</button>
+                    @endif
+                </div>
+
+            </div>
+
+            
 
             @if($item['result_type'] == "select")
-               <button wire:click.prevent="addopt({{$loop->index}})" class="btn btn-info">Add Option</button>
-              @foreach($item['options'] as $opt)
+               
+                <hr>
+
+               @foreach($item['options'] as $opt)
+                <div class="input-group mt-3">
                 <input value="{{$opt}}" type="text" class="form-control" wire:change="changesub($event.target.value,{{$loop->index}},{{$loop->parent->index}})">
-                <button wire:click.prevent="deleteopt({{$loop->index}},{{$loop->parent->index}})" class="btn btn-danger"> <i class="fa fa-trash"></i> </button>
-              
+                    <div class="input-group-append">
+                    <button wire:click.prevent="deleteopt({{$loop->index}},{{$loop->parent->index}})" class="btn btn-danger"> <i class="fa fa-trash"></i> </button>
+                    </div>
+                </div>
                 @endforeach
+
             @endif
 
         </th>

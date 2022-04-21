@@ -60,16 +60,13 @@ class Labpatcreate extends Component
     }
 
 
-    public function selectAllComp($value)
+    public function selectall()
     {   
-        if($value){
+       
             $this->components = Testcomponet::where('test_id',$this->testID)->pluck("id");
-
             $this->calculateTestAmount();
 
-        }else{
-            //$this->components = [];
-        }
+       
     }
 
     public function updatedComponents()
@@ -123,6 +120,22 @@ class Labpatcreate extends Component
 
     public function create()
     {
+
+        if(count($this->items) ==0){
+
+            if($this->testID){
+                $this->addItem();
+                
+                $total=0;
+        foreach ($this->items as $item) {
+           $total = $total + $item['amount'];
+        }
+        $this->totalamount = $total;
+
+            }
+            
+        }
+
         if(!$this->patient_id)
         $this->validate();
 

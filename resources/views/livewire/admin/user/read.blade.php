@@ -74,6 +74,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="m-auto pt-3 pr-3">
+                {{ $users->appends(request()->query())->links() }}
+            </div>
       
 
         </div>

@@ -53,7 +53,7 @@
                         <th>
 
                         @if($item['result_type'] == "value")
-                        <input type="text" class="form-control" wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
+                        <input type="text" value = "{{$item['result'] ?? ''}}" class="form-control" wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
                         @endif
 
                         @if($item['result_type'] == "select")
@@ -61,8 +61,7 @@
                         <select class="form-control"  wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
                             <option value="">Select</option>
                             @foreach(json_decode($item['options']) as $sub)
-                            <option value="{{$sub}}">{{$sub}}</option>
-
+                            <option @if($item['result'] == $sub) selected @endif value="{{$sub}}">{{$sub}}</option>
                             @endforeach
                         </select>
 

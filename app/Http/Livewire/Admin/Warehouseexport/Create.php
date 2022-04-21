@@ -7,7 +7,7 @@ use App\Models\Warehouseproduct;
 use App\Models\WarehouseExportItem;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-
+use App\Models\UnitConv;
 class Create extends Component
 {
     use WithFileUploads;
@@ -25,6 +25,9 @@ class Create extends Component
 
     public $menu_no;
 
+    public $unit;
+    public $qtyInput;
+    public $productID;
     protected $rules = [
         'name' => 'required',        'date' => 'required',        
     ];
@@ -32,11 +35,15 @@ class Create extends Component
     public function addItem()
     {
       $product=Warehouseproduct::find($this->item);
+      $qty =  $this->qtyInput * (UnitConv::where("id",$this->unit)->first()->factor ?? 1);
+
        $this->items[]=  [
         "name"=>$this->item,
         "productname"=>$product->name,
         "amount"=>$this->amount,
-        "qty"=>$this->qty,
+        "qty"=>$qty,
+        "unit"=>$this->unit,
+        "qtyinput"=>$this->qtyInput,
         "total"=>$this->total
        ];
 
@@ -44,6 +51,9 @@ class Create extends Component
        $this->amount = 0;
        $this->qty = 1;
        $this->total = "";
+       $this->unit = "";
+       $this->qtyInput = 1;
+       $this->productID = "";
 
     }
 
@@ -59,6 +69,22 @@ class Create extends Component
 
     public function create()
     {
+
+        if(count($this->items) ==0){
+
+            if($this->productID){
+                $this->addItem();
+               
+                $this->totalmenu = 0;
+                $this->total = $this->qty *  $this->amount;
+                foreach ($this->items as $item) {
+                   $this->totalmenu+= $item['total'];
+                }
+               
+        }
+    }
+
+
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('WarehouseExport') ])]);
@@ -76,6 +102,10 @@ class Create extends Component
             $newitem = new WarehouseExportItem();
             $newitem->product_id = $item['name'];
             $newitem->qty = $item['qty'];
+        
+            $newitem->qtyinput = $item['qtyinput'];
+            $newitem->unit = $item['unit'];
+
             $newitem->amount = $item['amount'];
             $newitem->total = $item['total'];
             $newitem->export_id = $menu->id;
@@ -92,6 +122,8 @@ class Create extends Component
         $this->qty = 1;
         $this->qtynow = $product->qtynow;
         $this->total = $product->amount;
+        $this->productID = $product->id;
+        $this->qtyInput =1;
     }
 
     public function render()
