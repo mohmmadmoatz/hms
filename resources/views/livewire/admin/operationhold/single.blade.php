@@ -1,10 +1,39 @@
-<tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false}">
-    <td> {{ $operationhold->id }} </td>
+<tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false,convertModal:false}">
+    <td> {{ $loop }} </td>
     <td> {{ $operationhold->payment_number}} </td>
     <td> {{ $operationhold->Patient->name ??"" }} </td>
     <td> {{ $operationhold->doctor->name ?? "" }} </td>
     <td> @convert( $operationhold->operation_price) </td>
-    <td> {{$operationhold->operation_name}} </td>
+    
+    <td> 
+    @if($operationhold->operation_name == "ولادة طبيعية")
+    <button class="btn btn-info" x-on:click = "convertModal=true">ولادة طبيعية (تحويل الى قيصرية )</button>
+
+    <div x-show="convertModal" class="cs-modal animate__animated animate__fadeIn">
+        <div class="bg-white shadow rounded p-5" @click.away="convertModal = false" >
+            <h5 class="pb-2 border-bottom">تحويل الى قيصرية</h5>
+            
+                <p>هل انت متأكد من تحويل العملية الى عملية قيصرية ؟ </p>
+            
+
+                <label for="">سعر العملية</label>
+                <input type="text" class="form-control" wire:model.lazy="income">
+
+                سوف يتم انشاء وصل قبض جديد بقيمة
+                <span class="text-primary">@convert($income -  $operationhold->operation_price )</span>
+
+            <div class="mt-5 d-flex justify-content-between">
+                <a  @click.prevent="convertModal = false;" wire:click.prevent="convertToQ({{$operationhold->id}})" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>
+                <a @click.prevent="convertModal = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
+            </div>
+        </div>
+    </div>
+
+    @else
+        {{$operationhold->operation_name}} 
+        @endif
+    </td>
+
     <td> 
         @if(!$operationhold->doctor_paid)
         @if($operationhold->operation_name != "ولادة طبيعية" || $operationhold->supervised)

@@ -77,7 +77,6 @@ class ConvertedPat extends Component
         
         $data =[
             'payment_type' => 2,
-
             "operation_price"=>$this->income,
             "operation_profile"=>$this->tabla,
             "operation_doctor"=>$patient->doctor_id,

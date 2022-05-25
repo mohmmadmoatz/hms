@@ -133,7 +133,10 @@
 
                     </div>
 
-                   
+                    <div class="col-md-6 py-2">
+                        <a href = "@route('statistics')?daterange={{$daterange}}" target="_blank" class="btn-block btn btn-success">كشف احصائيات العمليات</a>
+
+                    </div>
 
                     
 

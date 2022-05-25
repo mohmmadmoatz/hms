@@ -105,6 +105,11 @@ Route::get('/labprint', function () {
 })->name("labprint");
 
 
+Route::get('/statistics', function () {
+    return view('printed.statistics');
+})->name("statistics");
+
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

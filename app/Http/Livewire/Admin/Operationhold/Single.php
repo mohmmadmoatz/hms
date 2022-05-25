@@ -6,7 +6,8 @@ use App\Models\OperationHold;
 use Livewire\Component;
 use App\Models\Payments;
 use App\Models\Setting;
-
+use App\Models\Patient;
+use App\Models\Operation;
 class Single extends Component
 {
 
@@ -22,14 +23,100 @@ class Single extends Component
     public $ambulance;
     public $ambulance_doctor;
     public $mqema_id;
+    public $loop;
+    public $income;
+    public $wasl_number;
     protected $listeners = ['postAdded'];
 
     public function postAdded(){
       
     }
 
-    public function mount(OperationHold $operationhold){
+    public function mount(OperationHold $operationhold,$loop){
         $this->operationhold = $operationhold;
+        $this->loop = $loop;
+        $this->income = Operation::find(5)->price;
+    }
+
+    public function loadNumberRecept()
+    {
+      
+        $this->wasl_number=Payments::withTrashed()->where("payment_type","2")->max("wasl_number") + 1;
+    }
+
+    public function convertToQ($id)
+    {
+
+        $converted = OperationHold::find($id);
+        $setting = Setting::find(1);
+        $converted->operation_name =  "ولادة قيصرية";
+        $price = Operation::find(5)->price;
+        
+
+
+        $payment = Payments::where("wasl_number",$converted->payment_number)->first();
+
+
+
+
+        $patient_id = $converted->patinet_id;
+        $patient = Patient::find($patient_id);
+        $patient->opration_id = 5;
+
+        // Convert Code
+
+        $opPrice = ($this->income);
+
+        $doctorexp =($this->income) * ($patient->hms_nsba / 100);
+
+        if($patient->hms_nsba  >= 60){
+            if($opPrice < $setting->min_op_price){
+                $fixedNsba = $setting->min_op_price * ($setting->hnsba  / 100);
+                $doctorexp = abs($opPrice - $fixedNsba);
+            }
+        }elseif ($opPrice < $price) {
+
+            if($opPrice <= 200000){
+                $doctorexp = $opPrice / 2;
+            }else{
+                $fixedNsba = $price * ($setting->hnsba  / 100);
+                $doctorexp = abs($opPrice - $fixedNsba);
+            }
+        }
+
+        $nurse_price=$setting->nurse_price;
+
+
+
+
+        // Change Wasl Number
+
+        $newPayment = $payment->replicate();
+        $newPayment->operation_id = 5;
+        $newPayment->operation_price = $opPrice;
+        $newPayment->operation_name = "ولادة قيصرية";
+        $newPayment->description = "اجور تحويل من ولادة طبيعية من الوصل : ".$payment->wasl_number; 
+        $newPayment->amount_iqd = $this->income - $converted->operation_price;   
+        $newPayment->amount_usd = 0;
+        $this->loadNumberRecept();
+        $newPayment->wasl_number = $this->wasl_number;
+        $newPayment->save();
+
+
+
+        
+        $converted->operation_price = $opPrice;
+        $converted->doctorexp = $doctorexp;
+        $converted->helper = $setting->helper_doctor;
+        $converted->m5dr = $setting->m5dr_doctor;
+        $converted->helperm5dr  = $setting->helper_m5dr_doctor;
+        $patient->save();
+        $converted->save();
+
+        $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم تحويل العملية وانشاء سند قبض جديد " ]);
+        $this->emit('postAdded');
+
+
     }
 
     public function savedoctor($price =null)
@@ -184,6 +271,7 @@ class Single extends Component
 
     public function render()
     {
+
         return view('livewire.admin.operationhold.single')
             ->layout('admin::layouts.app');
     }

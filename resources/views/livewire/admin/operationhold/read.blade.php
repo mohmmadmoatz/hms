@@ -119,7 +119,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
                     </tr>
 
                     @foreach($operationholds as $operationhold)
-                        @livewire('admin.operationhold.single', ['operationhold' => $operationhold], key($operationhold->id))
+                        @livewire('admin.operationhold.single', ['operationhold' => $operationhold,'loop'=>$loop->iteration], key($operationhold->id))
                     @endforeach
                     </tbody>
                 </table>
