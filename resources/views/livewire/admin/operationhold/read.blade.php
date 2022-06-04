@@ -57,7 +57,7 @@
                                 <select class="form-control" data-live-search="true" wire:model="doctor_id">
                                     <option value="">يرجى اختيار طبيب</option>
                                     @foreach($doctors as $item)
-                                    <option value="{{$item->doctor->id}}">{{$item->doctor->name}}</option>
+                                    <option value="{{$item->doctor->id ?? 0}}">{{$item->doctor->name ?? ""}}</option>
             
                                     @endforeach
                                 </select>
