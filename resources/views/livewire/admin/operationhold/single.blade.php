@@ -127,8 +127,18 @@
                 <option value="{{App\Models\Setting::find(1)->m5dr_doctor}}">عملية فوق الكبرى</option>
                 <option value="{{App\Models\Setting::find(1)->m5dr_large_doctor}}">عملية  الكبرى</option>
                 <option value="{{App\Models\Setting::find(1)->m5dr_small_doctor}}">عملية وسطى او صغرى</option>
-               
+                <option value="0.07">7%</option>
             </select>
+
+            @if($optype == "0.07")
+            <label for="">مبلغ العملية</label>
+            <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price)">
+            <hr>
+            <label for="">نسبة المخدر</label>
+            <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price * 0.07)">
+
+            @endif
+
             <div class="mt-5 d-flex justify-content-between">
                 <a wire:click.prevent="savem5dr({{$optype}})" class="text-white btn btn-success shadow">{{ __('انشاء السند') }}</a>
                 <a @click.prevent="m5drisopen = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
