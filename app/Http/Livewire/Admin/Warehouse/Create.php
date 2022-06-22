@@ -54,6 +54,8 @@ class Create extends Component
 
     public function addItem()
     {
+
+       
         $product=Warehouseproduct::find($this->item);
         $qty =  $this->qtyInput * (UnitConv::where("id",$this->unit)->first()->factor ?? 1);
         $this->items[]=  [

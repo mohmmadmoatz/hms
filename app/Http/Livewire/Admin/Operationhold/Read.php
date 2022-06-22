@@ -129,7 +129,7 @@ class Read extends Component
             $data->latest('id');
         }
 
-        $data = $data->paginate(config('easy_panel.pagination_count', 15));
+        $data = $data->paginate(400);
 
         return view('livewire.admin.operationhold.read', [
             'operationholds' => $data,

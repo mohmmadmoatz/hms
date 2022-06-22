@@ -18,10 +18,30 @@
                                 data-live-search="true">
                                 <option value="">يرجى اختيار المريض</option>
                                 @foreach($pats as $item)
-                                <option value="{{$item->user->id ?? ''}}">{{$item->user->name ??""}}</option>
+                                <option value="{{$item->Patient->id ?? ''}}">{{$item->Patient->name ??""}}</option>
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="col-md-6">
+                        
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" id="reportrange" onchange="daterangeGo()"  class="form-control" wire:model.lazy="daterange"
+                                    wire:ignore>
+
+                                <div class="input-group-append">
+                                  
+                                    @if($datefilterON)
+                                    <button class="btn btn-danger" wire:click="$set('datefilterON',false)">
+                                        الغاء
+                                    </button>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div class="col-md-12">
                             <hr>
                         </div>
@@ -34,6 +54,7 @@
                 <table class="table table-hover">
                     <tbody>
                         <tr>
+                            <td>#</td>
                             <td style='cursor: pointer' wire:click="sort('id')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'id') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'id') fa-sort-amount-up ml-2 @endif'></i> {{ __('Id') }} </td>
                             <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
                             <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Room') }} </td>
@@ -43,13 +64,14 @@
                         </tr>
                         @foreach($pats as $item)
                        <tr>
-                        <td>{{$item->user->id}}</td>
-                        <td>{{$item->user->name}}</td>
-                        <td>{{$item->name}} - (الطابق {{$item->floor}}) </td>
-                        <td>{{$item->user->gender}}</td>
-                        <td>{{$item->user->phone}}</td>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$item->Patient->id}}</td>
+                        <td>{{$item->Patient->name}}</td>
+                        <td>{{$item->Patient->room->name ?? ""}} - (الطابق {{$item->Patient->room->floor ??""}}) </td>
+                        <td>{{$item->Patient->gender}}</td>
+                        <td>{{$item->Patient->phone}}</td>
                         <td>
-                            <button wire:click="$set('patient_id', {{$item->user->id}})" class="btn btn-info">ملاحظات المريض</button>
+                            <button wire:click="$set('patient_id', {{$item->Patient->id}})" class="btn btn-info">ملاحظات المريض</button>
                         </td>
                         </tr>
                         @endforeach
@@ -132,3 +154,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function daterangeGo() {
+        var element = document.getElementById("reportrange")
+        console.log(element.value)
+        Livewire.emit('searchBydate');
+        @this.searchBydate(element.value)
+    }
+</script>

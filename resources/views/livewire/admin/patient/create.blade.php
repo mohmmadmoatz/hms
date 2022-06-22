@@ -380,7 +380,7 @@ $('.selectpicker2').selectpicker();
         </div>
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-info ml-4">{{ __('Create') }}</button>
+            <button type="submit" class="btn btn-info ml-4">انشاء وطباعة باج</button>
             <a href="@route(getRouteName().'.patient.read')" class="btn btn-default float-left">{{ __('Cancel')
                 }}</a>
         </div>

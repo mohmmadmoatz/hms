@@ -79,16 +79,13 @@ table, table tr td {
         <h1>{{$data->name}}</h1>
  
         <table>
-            <tr>
-                <td><strong>هوية المريض</strong></td>
-                <td>{{$data->id}}</td>
-            </tr>
+          
             <tr>
                 <td><strong>الجنس</strong></td>
                 <td>{{$data->gender}}</td>
             </tr>
             <tr>
-                <td><strong>تاريخ الميلاد</strong></td>
+                <td><strong>العمر</strong></td>
                 <td>{{$data->age}}</td>
             </tr>
            
@@ -96,6 +93,25 @@ table, table tr td {
                 <td><strong>رقم الهاتف</strong></td>
                 <td>{{$data->phone}}</td>
             </tr>
+
+            <tr>
+                <td><strong>التوجيه</strong></td>
+                <td>
+                    {{$data->stage->name ??""}}
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>اسم الطبيب/ة</strong></td>
+                <td>
+                    @php
+                   
+                    $doctor = App\Models\User::find($data->redirect_doctor_id);
+                    @endphp
+                    {{$doctor->name ??""}}
+                </td>
+            </tr>
+
         </table>
 
         <svg class="barcode"

@@ -109,6 +109,7 @@ $date2 = explode(" - ", $dates)[1];
                     <th>التاريخ</th>
                     <th>اسم المريض</th>
                     <th>اجور المخدر</th>
+                    <th>مبلغ العملية</th>
                     <th>العملية</th>
                 </tr>
           </thead>
@@ -123,6 +124,7 @@ $date2 = explode(" - ", $dates)[1];
                         @convert($item->m5dr) د.ع
                      
                     </td>
+                    <td>@convert($item->operation_price) د.ع</td>
                     <td>{{$item->operation_name}}</td>
                 </tr>
                 @endforeach

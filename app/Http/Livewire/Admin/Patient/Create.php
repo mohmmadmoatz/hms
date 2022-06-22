@@ -117,6 +117,8 @@ class Create extends Component
         $room->save();
         }
 
+        $this->dispatchBrowserEvent('open-window', ['url' => route('printcard').'?id=' . $this->patientid->id]);
+
 
         $this->reset();
 
@@ -124,6 +126,10 @@ class Create extends Component
 
         $this->hms_nsba=100 - Setting::find(1)->hnsba;
         $this->inter_at = date("Y-m-d");
+
+        // dispatch print 
+
+
 
 
     }

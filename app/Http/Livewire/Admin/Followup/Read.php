@@ -9,7 +9,7 @@ use App\Models\Room;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use App\Models\OperationHold;
 class Read extends Component
 {
     use WithPagination;
@@ -21,6 +21,9 @@ class Read extends Component
     protected $queryString = ['search','patient_id'];
 
     protected $listeners = ['followupDeleted'];
+
+    public $datefilterON;
+    public $daterange;
 
     public $sortType;
     public $sortColumn;
@@ -39,11 +42,33 @@ class Read extends Component
         $this->sortType = $sort;
     }
 
+    public function searchBydate($date)
+    {
+        # code...
+        $this->daterange = $date;
+        $this->datefilterON = true;
+    }
+
     public function render()
     {
+
+
         $data = FollowUp::query();
-        $pats = Room::latest();
+       // $pats = Room::latest();
         
+        $pats =  OperationHold::query();
+        
+    
+
+        if($this->datefilterON){
+   
+            $date1 = explode(" - ", $this->daterange)[0];
+            $date2 = explode(" - ", $this->daterange)[1];
+
+           $pats = $pats->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+
+        }
+
         if(config('easy_panel.crud.followup.search')){
             $array = (array) config('easy_panel.crud.followup.search');
             $data->where(function (Builder $query) use ($array){
@@ -73,8 +98,9 @@ class Read extends Component
         }
 
         $pats = $pats
-        ->where("patient_id","!=",0)
-        ->with("user")->get();
+        ->with("Patient")
+        ->where("patinet_id","!=",0)->get();
+        
         //dd($pats);
         
         $data = $data->paginate(config('easy_panel.pagination_count', 15));

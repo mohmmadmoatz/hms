@@ -17,6 +17,10 @@ class OperationHold extends Model
         return $this->belongsTo("App\Models\Patient",'patinet_id');
     }
 
+    public function room()
+    {
+        return $this->Patient->room;
+    }
     
     public function doctor()
     {
