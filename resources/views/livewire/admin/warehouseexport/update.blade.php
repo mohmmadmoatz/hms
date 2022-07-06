@@ -46,6 +46,8 @@
                         <thead>
                             <tr>
                                 <th>اسم المادة</th>
+
+                                <th>الوحدة</th>
                            
                                 <th>العدد</th>
                              
@@ -63,6 +65,16 @@
                                          @endforeach
                                     </select>
                                 </td>
+
+                                <td>
+                                <select class="form-control" wire:model="unit">
+                                <option value="">{{App\Models\UnitConv::where("product_id",$productID)->first()->base->name ?? "قطعة"}}</option>
+
+                                @foreach(App\Models\UnitConv::where("product_id",$productID)->get() as $item)
+                                    <option value="{{$item->id}}">{{$item->unit->name}} ({{$item->factor}})</option>
+                                @endforeach
+                            </select>
+                                </td>
                                
                                 <td><input type="number" class="form-control" wire:model="qty"></td>
                              
@@ -75,7 +87,10 @@
         
                             
                             <td>{{$item['productname']}}</td>
-                           
+                            <td>
+                                {{$item['qtyinput']}}
+                                {{$item['unitname'] ?? "قطعة"}}
+                            </td>
                             <td>{{$item['qty']}}</td>
                            
                             <td>

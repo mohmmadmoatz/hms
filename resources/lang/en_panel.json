@@ -132,5 +132,20 @@
     "Followup": "Followup",
     "Followups": "Followups",
     "Unit": "Unit",
-    "Units": "Units"
+    "Units": "Units",
+    "Fdebitcategory": "Fdebitcategory",
+    "Fdebitcategories": "Fdebitcategories",
+    "Category Name": "Category Name",
+    "Number": "Number",
+    "Exchange_rate": "Exchange_rate",
+    "Category_id": "Category_id",
+    "Fdebittransaction": "Fdebittransaction",
+    "Fdebittransactions": "Fdebittransactions",
+    "Debitaccount": "Debitaccount",
+    "Debitaccounts": "Debitaccounts",
+    "File": "File",
+    "Account Name": "Account Name",
+    "Account_id": "Account_id",
+    "Debittransaction": "Debittransaction",
+    "Debittransactions": "Debittransactions"
 }

@@ -110,6 +110,10 @@ Route::get('/statistics', function () {
 })->name("statistics");
 
 
+Route::get('/debitaccount', function () {
+    return view('printed.debitaccount');
+})->name("debitaccount");
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

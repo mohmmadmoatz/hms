@@ -6,6 +6,7 @@ use App\Models\WarehouseExport;
 use App\Models\Warehouseproduct;
 use App\Models\WarehouseExportItem;
 use Livewire\Component;
+use App\Models\UnitConv;
 use Livewire\WithFileUploads;
 
 class Update extends Component
@@ -24,21 +25,33 @@ class Update extends Component
     public $qty;
     public $totalmenu;
     public $menu_no;
+    public $productID;
+    public $unit;
+    public $qtyInput;
+    
+
+
     protected $rules = [
         'name' => 'required',        'date' => 'required',        
     ];
 
     public function addItem()
     {
-      $product=Warehouseproduct::find($this->item);
+        $product=Warehouseproduct::find($this->item);
+        $qty =  $this->qtyInput * (UnitConv::where("id",$this->unit)->first()->factor ?? 1);
+        
        $this->items[]=  [
         "name"=>$this->item,
         "productname"=>$product->name,
         "product_id"=>$product->id,
         "amount"=>$this->amount,
         "qty"=>$this->qty,
+        "unit"=>$this->unit,
+        "qtyinput"=>$this->qtyInput,
         "total"=>$this->total
        ];
+
+       
 
        
        $this->amount = 0;
@@ -60,6 +73,13 @@ class Update extends Component
         for ($i=0; $i < count($this->items); $i++) { 
             $this->items[$i]['productname'] = Warehouseproduct::find($this->items[$i]['product_id'])->name;
         }
+
+        for ($i=0; $i < count($this->items); $i++) { 
+            $unit = UnitConv::where("id",$this->items[$i]['unit'])->first();
+            
+            $this->items[$i]['unitname'] = $unit->unit->name ??"قطعة";
+        }
+
 
     }
 
@@ -104,10 +124,15 @@ class Update extends Component
     }
     public function selectitem()
     {
+    
+
         $product=Warehouseproduct::find($this->item);
         $this->amount = $product->amount;
         $this->qty = 1;
+        $this->qtynow = $product->qtynow;
         $this->total = $product->amount;
+        $this->productID = $product->id;
+        $this->qtyInput =1;
     }
 
     public function render()

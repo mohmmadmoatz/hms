@@ -137,6 +137,16 @@ class Create extends Component
     public function create($print=null)
     {
 
+        // check if wasl number is already exist based on payment_type
+
+        $payment = Payments::where("wasl_number",$this->wasl_number)
+        ->where("payment_type",$this->payment_type)->first();
+        if($payment){
+            $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "رقم الوصل موجود بالفعل"]);
+            return;
+        }
+
+
         if(!$this->amount_iqd){
             $this->amount_iqd =0;
         }
@@ -326,7 +336,7 @@ class Create extends Component
 
     public function render()
     {
-       
+    
         
         return view('livewire.admin.payments.create')
             ->layout('admin::layouts.app', ['title' => __('CreateTitle', ['name' => __('Payments') ])]);

@@ -158,6 +158,111 @@
 </li>
 @endif
 
+
+@if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "accountant")
+
+<li class="list-divider"></li>
+<li class="nav-small-cap"><span class="hide-menu">نظام الديون</span></li>
+
+<li class='sidebar-item'>
+
+    
+
+    <a class='sidebar-link has-arrow' href="javascript:void(0)" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu"> الديون الثابتة</span>
+    </a>
+
+    <ul aria-expanded="false" class="collapse first-level base-level-line">
+      
+        <li class="sidebar-item @isActive(getRouteName().'.'.'fdebitcategory'.'.read')">
+            <a href="@route(getRouteName().'.fdebitcategory.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'fdebitcategory'.'.read')">
+                <span class="hide-menu"> اصناف الديون </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'fdebittransaction'.'.create')">
+            <a href="@route(getRouteName().'.fdebittransaction.create')"
+                class="sidebar-link @isActive(getRouteName().'.'.'fdebittransaction'.'.create')">
+                <span class="hide-menu"> وصل صرف </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'fdebittransaction'.'.read')">
+            <a href="@route(getRouteName().'.fdebittransaction.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'fdebittransaction'.'.read')">
+                <span class="hide-menu"> القائمة </span>
+            </a>
+        </li>
+
+       
+        
+    </ul>
+
+
+
+
+
+</li>
+
+
+<li class='sidebar-item'>
+
+    
+
+    <a class='sidebar-link has-arrow' href="javascript:void(0)" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu"> الديون المتغيرة</span>
+    </a>
+
+    <ul aria-expanded="false" class="collapse first-level base-level-line">
+      
+        <li class="sidebar-item @isActive(getRouteName().'.'.'debitaccount'.'.read')">
+            <a href="@route(getRouteName().'.debitaccount.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'debitaccount'.'.read')">
+                <span class="hide-menu"> الحسابات </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'debittransaction'.'.create')?payment_type=1">
+            <a href="@route(getRouteName().'.debittransaction.create')?payment_type=2"
+                class="sidebar-link @isActive(getRouteName().'.'.'debittransaction'.'.create')">
+                <span class="hide-menu"> وصل قبض </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'debittransaction'.'.create')?payment_type=2">
+            <a href="@route(getRouteName().'.debittransaction.create')?payment_type=1"
+                class="sidebar-link @isActive(getRouteName().'.'.'debittransaction'.'.create')">
+                <span class="hide-menu"> وصل صرف </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'debittransaction'.'.read')">
+            <a href="@route(getRouteName().'.debittransaction.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'debittransaction'.'.read')">
+                <span class="hide-menu"> القائمة </span>
+            </a>
+        </li>
+
+
+
+
+
+
+       
+        
+    </ul>
+
+
+
+
+
+</li>
+
+@endif
+
 <li class="list-divider"></li>
 <li class="nav-small-cap"><span class="hide-menu">القائمة العامة</span></li>
 
