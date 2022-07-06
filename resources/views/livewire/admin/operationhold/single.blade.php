@@ -42,6 +42,18 @@
        <div x-show="modalIsOpendoctor" class="cs-modal animate__animated animate__fadeIn">
         <div class="bg-white shadow rounded p-5" @click.away="modalIsOpendoctor = false" >
             <h5 class="pb-2 border-bottom">تعديل السعر</h5>
+            <p>النسبة : {{$operationhold->nsba}}</p>
+            <label>تغيير النسبة</label>
+            <select class="form-control" wire:change="updateNsba($event.target.value)">
+            <option @if($operationhold->nsba == 0) selected @endif value="0">0%</option>
+            <option @if($operationhold->nsba == 60) selected @endif value="60">60%</option>
+            <option @if($operationhold->nsba == 62) selected @endif value="62">62%</option>
+            <option @if($operationhold->nsba == 65) selected @endif value="65">65%</option>
+            <option @if($operationhold->nsba == 70) selected @endif  value="70">70%</option>
+            <option @if($operationhold->nsba == 75) selected @endif  value="75">75%</option>
+            <option @if($operationhold->nsba == 80) selected @endif  value="80">80%</option>
+            </select>
+
             <p>
              السعر الحالي
             </p>

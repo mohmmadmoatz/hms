@@ -26,16 +26,26 @@ class Single extends Component
     public $loop;
     public $income;
     public $wasl_number;
+    public $nsba;
     protected $listeners = ['postAdded'];
 
     public function postAdded(){
       
     }
 
+    public function updateNsba($value)
+    {
+      
+        $this->nsba = $value;
+        $this->doctorexp = $this->operationhold->operation_price * ($this->nsba / 100);
+
+    }
+
     public function mount(OperationHold $operationhold,$loop){
         $this->operationhold = $operationhold;
         $this->loop = $loop;
         $this->income = Operation::find(5)->price;
+        $this->nsba = $this->operationhold->nsba;
     }
 
     public function loadNumberRecept()
@@ -135,6 +145,7 @@ class Single extends Component
             $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تحديد اجور الطبيب" ]);
          
         }else{
+            $this->operationhold->nsba = $this->nsba;
             $this->operationhold->doctorexp =$this->doctorexp;
             $this->operationhold->save();
         }
