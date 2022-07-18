@@ -11,7 +11,13 @@ use Livewire\WithPagination;
 use DB;
 class ConvertedPat extends Component
 {
+
+    use WithPagination;
+
     public $search;
+
+    protected $paginationTheme = 'bootstrap';
+
 
     protected $queryString = ['search'];
     
@@ -38,17 +44,19 @@ class ConvertedPat extends Component
 
 
         $data=  $data->latest()->where('redirect',2)->whereNull("redirect_done")
-        ->with("Patient:name,id,lab")
-        ->get();
+        // where in relation
+        ->whereHas('patient', function (Builder $query) {
+            $query->WhereNotNull('lab');
+        })
+        ->with("Patient:name,id")
+        ->paginate(20);
 
-        $filtered = $data->filter(function ($value, $key) {
-            return $value->Patient->lab;
-        });
+      
 
         
 
         return view('livewire.admin.lab.convertedPat', [
-            'data' => $filtered
+            'data' => $data
         ])->layout('admin::layouts.app', ['title' => "محولين الى المختبر" ]);
     }
 }

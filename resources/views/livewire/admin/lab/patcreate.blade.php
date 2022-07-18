@@ -20,16 +20,20 @@
 
             <div class="row">
 
-                <div class="col-md-12" wire:ignore>
-                <h4>اختيار مريض</h4>
+                <div class="col-md-12" >
+                <h4>رقم المريض التعريفي</h4>
 
-                    <select class="form-control selectpicker" data-live-search="true" wire:model.lazy="patient_id">
-                        <option value="">مريض جديد</option>
-                        @foreach(App\Models\Patient::latest()->get() as $patient)
-                        <option value="{{$patient->id}}">{{$patient->id}} - {{$patient->name}}</option>
-
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" wire:model.lazy="patient_id">
+                    @php
+                    $pat = App\Models\Patient::find($patient_id);
+                    if(!$pat){
+                        $patient_id="";
+                    }
+                    @endphp
+                  
+                    <!-- display name -->
+                    <span>{{$pat->name ?? "لايوجد مريض "}}</span>
+                    
                 </div>
                
                 <div class="col-md-12">
@@ -86,6 +90,7 @@
                     <h4>الفحوصات المطلوبة</h4>
                 </div>
 
+      
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <tr>
@@ -119,7 +124,7 @@
                                             <tr>
                                                 <th>العنصر</th>
                                                 <th>السعر</th>
-                                               <th><button class="btn btn-danger" wire:click.prevent="selectall">تحديد الكل</button></th>
+                                               <th></th>
                                             </tr>
                                             @foreach(App\Models\Testcomponet::where("test_id",$testID)->get() as $x)
                                             <tr wire:key="{{$x->id}}">

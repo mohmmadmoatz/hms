@@ -61,7 +61,9 @@
                         <select class="form-control"  wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
                             <option value="">Select</option>
                             @foreach(json_decode($item['options']) as $sub)
+                            
                             <option @if($item['result'] == $sub) selected @endif value="{{$sub}}">{{$sub}}</option>
+                          
                             @endforeach
                         </select>
 

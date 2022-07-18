@@ -124,6 +124,9 @@ class Create extends Component
             $this->description = "اجور $this->stname للفترة  : " . $this->daterange;
             }
         }
+
+        
+
         $this->route = url()->previous();
     }
 

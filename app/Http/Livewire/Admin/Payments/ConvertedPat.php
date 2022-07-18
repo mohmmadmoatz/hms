@@ -15,6 +15,9 @@ use Livewire\WithPagination;
 use DB;
 class ConvertedPat extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
     public $wasl_number;
     public $income;
@@ -247,7 +250,8 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data=  $data->latest()->where('paid',0)->get();
+        $data=  $data->latest("updated_at")->where('paid',0)->paginate(20);
+
         return view('livewire.admin.payments.convertedPat', [
             'data' => $data
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('Payments')) ]);

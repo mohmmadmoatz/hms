@@ -46,6 +46,15 @@ class Create extends Component
             for ($i=0; $i < count($this->tests); $i++) { 
                 $this->tests[$i]["items"] = Testcomponet::whereIn("id",$this->tests[$i]['selectedcomponents'])->get()->toArray();
             }
+
+            // fill result field in each item
+
+            for ($i=0; $i < count($this->tests); $i++) { 
+                for ($j=0; $j < count($this->tests[$i]["items"]); $j++) { 
+                    $this->tests[$i]["items"][$j]["result"] = "";
+                }
+            }
+          
             
         }
 

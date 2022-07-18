@@ -231,4 +231,8 @@
             </tr>
             @endforeach
         </table>
+
+        <div class="m-auto pt-3 pr-3">
+                {{ $data->appends(request()->query())->links() }}
+            </div>
     </div>

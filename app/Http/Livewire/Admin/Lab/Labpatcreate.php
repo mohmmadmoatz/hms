@@ -28,7 +28,7 @@ class Labpatcreate extends Component
     public $totalamount=0;
     public $components = [];    
     public $testID;
-    public $selectall;
+    //public $selectall;
 
     public $patient_id;
     protected $queryString = ['patient_id'];
@@ -45,7 +45,7 @@ class Labpatcreate extends Component
     public function mount()
     {
         $this->inter_at = date("Y-m-d");
-        $this->hms_nsba=60;
+        
                 
     }
 
@@ -55,6 +55,7 @@ class Labpatcreate extends Component
             $item=LabTest::find($this->item);
             $this->amount = $item->amount;
             $this->testID = $this->item;
+            $this->selectall();
         }
        
     }
@@ -62,11 +63,13 @@ class Labpatcreate extends Component
 
     public function selectall()
     {   
-       
             $this->components = Testcomponet::where('test_id',$this->testID)->pluck("id");
+            // change int to string
+            $this->components = $this->components->toArray();
+            $this->components = array_map('strval', $this->components);
+            
             $this->calculateTestAmount();
 
-       
     }
 
     public function updatedComponents()
@@ -76,6 +79,8 @@ class Labpatcreate extends Component
 
     public function calculateTestAmount()
     {
+
+        
         
         $amount =0;
 
@@ -102,13 +107,28 @@ class Labpatcreate extends Component
     public function addItem()
     {
         $product=LabTest::find($this->item);
+
+        
+        if(count($this->components)){
+            $selectedcomponents =  $this->components;
+        }else{
+            $selectedcomponents =  Testcomponet::where("test_id",$this->testID)->pluck("id")->toArray();
+        }
+
+        
+
         $this->items[]=  [
          "id"=>$this->item,
          "name"=>$product->name,
          "amount"=>$this->amount,
-         "selectedcomponents"=>$this->components,
+         "selectedcomponents"=>$selectedcomponents,
          "category_id"=>$product->category_id,
         ];
+
+        
+
+       
+
         $this->amount = 0;
         $this->qty = 1;
         $this->total = "";
