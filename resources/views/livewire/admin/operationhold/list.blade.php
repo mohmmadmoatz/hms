@@ -103,21 +103,31 @@ table.table-fit tbody td, table.table-fit tfoot td {
                       
 
                         <a  href="@route(getRouteName().'.lab.read')?patient_id={{$operationhold->Patient->id??''}}" target="_blank" >الفحوصات</a>
-                        <a class="btn btn-info" href="@route('printedForm')?id={{$operationhold->Patient->id??''}}" target="_blank" >فتح الطبلة</a>
-                        <button @click.prevent="modalIsOpen = true" class="btn text-danger mt-1">
-                            <i class="icon-trash"></i>
+                        | <a  href="@route('printedForm')?id={{$operationhold->Patient->id??''}}" target="_blank" >فتح الطبلة</a>
+                        @if($operationhold->hide)
+                        <span class="badge badge-success">
+                        {{$operationhold->Patient->room->name ??""}}
+                        </span>
+                        <a href="#hide" wire:click="undo({{$operationhold->id}})"><i class="fa fa-undo"></i></a>
+                        @else
+                        
+                        <button @click.prevent="modalIsOpen = true" class="btn text-success mt-1">
+                            <i class="icon-check"></i>
                         </button>
                         <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
                             <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false" >
-                                <h5 class="pb-2 border-bottom">{{ __('DeleteTitle', ['name' => __('Patient') ]) }}</h5>
+                                <h5 class="pb-2 border-bottom">تأكيد</h5>
                                 <p>{{ __('DeleteMessage', ['name' => __('Patient') ]) }}</p>
                                 <div class="mt-5 d-flex justify-content-between">
-                                    <a wire:click.prevent="hide({{$operationhold->id}})" class="text-white btn btn-success shadow">{{ __('Yes, Delete it.') }}</a>
+                                    <a @click.prevent="modalIsOpen = false" wire:click.prevent="hide({{$operationhold->id}})" class="text-white btn btn-success shadow">موافق</a>
                                     <a @click.prevent="modalIsOpen = false" class="text-white btn btn-danger shadow">{{ __('No, Cancel it.') }}</a>
                                 </div>
                             </div>
                         </div>
+                        @endif
+                     
                     </td>
+                    
 </tr>
                     @endforeach
                     </tbody>

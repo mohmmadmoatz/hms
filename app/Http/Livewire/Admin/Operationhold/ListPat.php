@@ -47,6 +47,14 @@ class ListPat extends Component
         $this->emit('operationholdDeleted');
 
     }
+
+    public function undo($id)
+    {
+        $data = OperationHold::find($id);
+        $data->hide=false;
+        $data->save();
+        $this->emit('operationholdDeleted');   
+    }
     
 
 
@@ -90,7 +98,7 @@ class ListPat extends Component
         }
 
 
-        $data->whereNull("hide");
+        
        
 
         

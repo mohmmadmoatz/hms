@@ -15,24 +15,29 @@
     <form class="form-horizontal" wire:submit.prevent="create" enctype="multipart/form-data">
 
 
+    <style>
+        .filter-option-inner-inner{
+            text-align:right;
+        }
+    </style>
+
 
         <div class="card-body">
 
             <div class="row">
 
-                <div class="col-md-12" >
-                <h4>رقم المريض التعريفي</h4>
-
-                    <input type="text" class="form-control" wire:model.lazy="patient_id">
-                    @php
-                    $pat = App\Models\Patient::find($patient_id);
-                    if(!$pat){
-                        $patient_id="";
-                    }
-                    @endphp
+                <div class="col-md-12" wire:ignore>
+                  <h4>رقم المريض التعريفي</h4>
                   
-                    <!-- display name -->
-                    <span>{{$pat->name ?? "لايوجد مريض "}}</span>
+                 <select class="form-control selectpicker" wire:model = "patient_id" data-live-search="true">
+                    <option value="">اختيار مريض</option>
+                    @foreach(App\Models\Patient::get() as $patient)
+                    <option value="{{$patient->id}}">{{$patient->name}}</option>
+                    @endforeach
+
+                  </select>
+
+                    
                     
                 </div>
                
@@ -102,7 +107,9 @@
 
                             </th>
                             <th>السعر</th>
-                            <th></th>
+                            <th>
+                               
+                            </th>
                         </tr>
                         <tr>
                         
@@ -124,7 +131,11 @@
                                             <tr>
                                                 <th>العنصر</th>
                                                 <th>السعر</th>
-                                               <th></th>
+                                               <th>
+                                                <a  href="#x" wire:click="selectall" class="btn btn-info btn-sm">
+                                                    <i class="fas fa-check"></i>
+                </a>
+                                               </th>
                                             </tr>
                                             @foreach(App\Models\Testcomponet::where("test_id",$testID)->get() as $x)
                                             <tr wire:key="{{$x->id}}">

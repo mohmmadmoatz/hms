@@ -55,7 +55,7 @@ class Labpatcreate extends Component
             $item=LabTest::find($this->item);
             $this->amount = $item->amount;
             $this->testID = $this->item;
-            $this->selectall();
+          //  $this->selectall();
         }
        
     }
