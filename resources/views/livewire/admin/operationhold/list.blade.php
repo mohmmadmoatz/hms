@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" wire:poll.7000ms>
     <div class="col-12">
         <div class="card">
             <div class="card-header p-0">

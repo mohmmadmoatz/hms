@@ -27,6 +27,14 @@
                 <textarea wire:model.lazy='notes' class="form-control @error('notes') is-invalid @enderror"></textarea>
                 @error('notes') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
+
+            <!-- Image Input -->
+            <div class='form-group'>
+                <label for='inputimage' class='col-sm-2 control-label'> {{ __('Image') }}</label>
+                <input type="file" wire:model.lazy='image' class="form-control @error('image') is-invalid @enderror">
+                @error('image') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+            
             
           
             <hr>
@@ -57,13 +65,12 @@
                         @endif
 
                         @if($item['result_type'] == "select")
-
                         <select class="form-control"  wire:change = "updatekey({{$indexID}},{{$loop->index}},$event.target.value)">
                             <option value="">Select</option>
                             @foreach(json_decode($item['options']) as $sub)
                             
                             <option @if($item['result'] == $sub) selected @endif value="{{$sub}}">{{$sub}}</option>
-                          
+                
                             @endforeach
                         </select>
 

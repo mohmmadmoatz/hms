@@ -85,7 +85,7 @@ class Create extends Component
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('Lab') ])]);
         
         if($this->getPropertyValue('image') and is_object($this->image)) {
-            $this->image = $this->getPropertyValue('image')->store('images/labs');
+            $this->image = $this->getPropertyValue('image')->store('images/labs','public');
         }
 
        

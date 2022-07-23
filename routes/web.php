@@ -114,6 +114,10 @@ Route::get('/debitaccount', function () {
     return view('printed.debitaccount');
 })->name("debitaccount");
 
+Route::get('/fixeddebit', function () {
+    return view('printed.fixedDebit');
+})->name("fixeddebit");
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

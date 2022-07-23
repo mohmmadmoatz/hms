@@ -16,6 +16,7 @@
 }
     body {
     font-family: tajwal;
+    font-size:22px;
 
   }
   h3{
@@ -31,6 +32,8 @@
   table{
       text-align: right;
   }
+
+  
 
  .table-striped tbody tr:nth-of-type(odd) th {
     background-color: rgba(0, 0, 0, .05)!important;
@@ -72,6 +75,9 @@ $testSameCategory = $tests->groupBy('category_id');
           <img  src="{{asset('headerimage.png')}}" width="100%">
         </div>
       </div>
+
+
+
       <div class="row py-3">
         <table class="table table-bordered table-striped" style="text-align:left">
                <tr>
@@ -88,9 +94,12 @@ $testSameCategory = $tests->groupBy('category_id');
                </tr>
         </table>
 
+  
+
+
         @foreach($item as $test)
         <div class="container-fluid content-block">
-        <h2 align="center">{{$test->test->name ??""}}</h2>
+        <h2 align="center" style="font-weight:bold;color:red">{{$test->test->name ??""}}</h2>
         <hr>
         </div>
 
@@ -139,6 +148,7 @@ $testSameCategory = $tests->groupBy('category_id');
     </div>
   </div>
 
+
   
 
 
@@ -147,6 +157,8 @@ $testSameCategory = $tests->groupBy('category_id');
   </div>
   <div style="page-break-before: always"></div>
   @endforeach
+
+  <img src="{{asset('storage/'.$lab->image)}}" width="400px">
 
 </body>
 

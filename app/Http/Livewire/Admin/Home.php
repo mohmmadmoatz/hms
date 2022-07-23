@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Room;
+use App\Models\Patient;
 class Home extends Component
 {
     use WithPagination;
@@ -29,6 +30,19 @@ class Home extends Component
 
         $this->sortColumn = $column;
         $this->sortType = $sort;
+    }
+
+    public function outPat($id)
+    {
+        $room = Room::find($id);
+        $patid = $room->patient_id;
+        $room->patient_id =0;
+        $room->save();
+        $pat = Patient::find($patid);
+        $pat->room_id = 0;
+        $pat->save();
+        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => 'تم اخراج المريض بنجاح' ]);
+
     }
 
     public function render()

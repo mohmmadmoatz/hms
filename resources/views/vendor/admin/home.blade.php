@@ -120,8 +120,13 @@
                      
                             @if($room->user->name ??"")  
                             <hr x-show="open">  
-      <a x-show="open" class="btn btn-info" href="@route(getRouteName().'.patient.update', ['patient' => $room->user->id])" target="_blank" rel="noopener noreferrer">{{$room->user->name}}</a>
-      @endif
+                            <a x-show="open" class="btn btn-info" href="@route(getRouteName().'.patient.update', ['patient' => $room->user->id])" target="_blank" rel="noopener noreferrer">{{$room->user->name}}</a>
+                            @endif
+                            @if($room->user->name ?? '') 
+                            @if(Auth::user()->user_type  == "tabq")
+                            <button class="btn btn-primary" wire:click="outPat({{$room->id}})">اخراج المريض</button>
+                            @endif
+                            @endif
 
                         </button>
                     </div>

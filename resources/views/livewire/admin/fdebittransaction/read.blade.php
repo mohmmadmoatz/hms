@@ -80,6 +80,15 @@
                                 <input type="text" class="form-control" value="@convert($total_amount_usd)" readonly>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                           
+                            <a class="btn btn-warning" href="@route('fixeddebit')?id={{$category_id}}&daterange={{$daterange}}" target="_blank" rel="noopener noreferrer">
+
+    
+                                <i class="fa fa-print"></i> طباعة كشف حساب
+                           </a>
+                         
+                        </div>
                         @endif
                     </div>
                 </div>
