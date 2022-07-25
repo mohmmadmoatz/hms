@@ -60,7 +60,7 @@ class Update extends Component
         $this->clinic_id = $this->patient->clinic_id;
         if($this->status==5){
             $roomdata = Room::find($this->patient->room_id);
-            $this->floor = $roomdata->floor;
+            $this->floor = $roomdata->floor ??"";
         }
  
 
