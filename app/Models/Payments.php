@@ -10,6 +10,7 @@ class Payments extends Model
 {
     use HasFactory,SoftDeletes;
     public $guarded = [];
+    public $with = ['user','stagename','Patient'];
 
     /**
      * Get the user that owns the Payments

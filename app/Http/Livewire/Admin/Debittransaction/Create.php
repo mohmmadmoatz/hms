@@ -41,6 +41,7 @@ class Create extends Component
 
     public function create()
     {
+        $this->wasl_number=Payments::withTrashed()->where("payment_type",1)->max("wasl_number") + 1;
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('DebitTransaction') ])]);
@@ -69,7 +70,7 @@ class Create extends Component
             'payment_type' => 1,
             'amount_usd' => $this->amount_usd,
             'amount_iqd' => $this->amount_iqd,
-            'wasl_number' => $this->number,
+            'wasl_number' => $this->wasl_number,
             'account_type'=>3,
             'account_name'=>$this->name,
             'description' => $this->notes,

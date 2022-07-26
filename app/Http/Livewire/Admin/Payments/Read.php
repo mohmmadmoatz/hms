@@ -69,6 +69,8 @@ class Read extends Component
         # code...
         $data = Payments::query();
 
+       
+
         if(config('easy_panel.crud.payments.search')){
             $array = (array) config('easy_panel.crud.payments.search');
 

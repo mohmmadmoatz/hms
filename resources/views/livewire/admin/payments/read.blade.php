@@ -68,7 +68,12 @@
                             </select>
                         </div>
                         <div class="col-md-4" >
-                            <label for="">الفترة</label>
+                            <label for="">الفترة
+
+                            <a wire:target="daterange" wire:loading.remove><i class="fa fa-search"></i></a>
+                                        <a wire:loading wire:target="daterange"><i class="fas fa-spinner fa-spin"></i></a>
+
+                            </label>
                             <div class="input-group">
                                 <input onchange="daterangeGo()" autocomplete="off" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange"
                                     wire:ignore>
@@ -101,7 +106,10 @@
                             <select wire:model.lazy="patient_id" class="form-control selectpicker"
                                 data-live-search="true">
                                 <option value=""></option>
-                                @foreach(App\Models\Patient::latest()->get() as $item)
+                               
+                               
+                                @foreach(App\Models\Patient::latest()->whereBetween("created_at",[\Carbon\Carbon::now()->subMonths(1),\Carbon\Carbon::now()])
+                                ->select("name","id")->get() as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
