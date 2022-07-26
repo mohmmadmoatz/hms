@@ -245,7 +245,7 @@
                 <select wire:model="room_id" class="form-control">
                     <option value="">اختر الغرفة</option>
                     @foreach(App\Models\Room::where("floor",$floor)->get() as $item)
-                    <option value="{{$item->id}}">{{$item->name}}</option>
+                    <option @if($item->user->name ?? '') disabled style="color:#c8c8c8" @endif value="{{$item->id}}"> {{$item->name}} @if($item->user->name ?? '') ({{$item->user->name ?? ''}}) @endif </option>
                     @endforeach
                 </select>
             </div>

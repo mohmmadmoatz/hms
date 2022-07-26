@@ -1,6 +1,6 @@
 
 
-<div>
+<div wire:poll.7000ms>
 
 @if(Auth::user()->user_type  == "investor")
 
