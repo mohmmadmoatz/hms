@@ -4,9 +4,13 @@
       
         @if($debittransaction->payment_type == 2 && $debittransaction->checked == 1)
             <i class = "fa fa-check"></i>
-           
+        @endif
+
+        @if($debittransaction->payment_type == 2 && $debittransaction->checked != 1)
+        <a href="@route(getRouteName().'.debittransaction.create')?payment_type=1&number={{$debittransaction->id}}">صرف</a>
         @endif
       
+
         {{ $debittransaction->number }} 
 
 
@@ -19,10 +23,8 @@
     <td> 
         @if($debittransaction->payment_type == 1)
         <span style="font-size:15px" class="badge badge-success">صرف</span>
-            
         @elseif($debittransaction->payment_type == 2)
         <span style="font-size:15px" class="badge badge-danger">قبض</span>
-           
         @endif
       
 

@@ -113,7 +113,7 @@
                     <div class="row">
                     @foreach($rooms as $room)
                     <div class="col-md-2  py-2" x-data="{'open':false}">
-                        <button @click="open=!open" class="btn @if($room->user->name ?? '') btn-info @else btn-secondary @endif btn-block">
+                        <button wire:click="check({{$room->id}})" @click="open=!open" class="btn @if($room->user->name ?? '') @if(!$room->checked) btn-warning @else btn-info @endif @else btn-secondary @endif btn-block">
                             {{$room->name}}
                             <hr>
                             الطابق : {{$room->floor}}

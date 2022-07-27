@@ -286,6 +286,12 @@ window.addEventListener('open-window', function (event) {
         window.open(url);
     })
 
+    window.addEventListener('refreshselect', function () {
+        $(function () {
+            $('.selectpicker').selectpicker('refresh');
+        });
+    })
+
     window.addEventListener('show-message', function (event) {
         let type = event.detail.type;
         let message = event.detail.message;

@@ -142,12 +142,19 @@
                 <option value="0.07">7%</option>
             </select>
 
+            
+            @if($optype)
             @if($optype == "0.07")
             <label for="">مبلغ العملية</label>
             <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price)">
             <hr>
             <label for="">نسبة المخدر</label>
             <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price * 0.07)">
+
+            @else
+            <label for="">نسبة المخدر</label>
+            <input type="text" class="form-control" wire:model.lazy="optype">
+            @endif
 
             @endif
 

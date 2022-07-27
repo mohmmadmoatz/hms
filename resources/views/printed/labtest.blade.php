@@ -86,7 +86,7 @@ $testSameCategory = $tests->groupBy('category_id');
                </tr>
                <tr>
                    <th>Consultant:</th>
-                   <th>Date:</th>
+                   <th>Date: {{$lab->created_at->format("Y-m-d")}} </th>
                </tr>
                <tr>
                    <th>Sample Time:</th>

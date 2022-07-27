@@ -31,6 +31,7 @@
                     <option value="">اختر الطابق</option>
                     <option value="2">الطابق الثاني</option>
                     <option value="3">الطابق الثالث</option>
+                    <option value="العناية">العناية</option>
                 </select>
                 @error('floor') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>

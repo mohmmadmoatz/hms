@@ -30,6 +30,26 @@
                         @error('payment_type') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <!-- Number Input -->
+               <div class='form-group'>
+           <label for='inputnumber' class=' control-label'> {{ __('رقم القائمة') }}</label>
+           
+           @if($payment_type == 1)
+           <select  wire:model.lazy='number' class="form-control @error('number') is-invalid @enderror">
+               <option value="">اختيار القائمة</option>
+               @foreach(App\Models\DebitTransaction::where("payment_type",2)->get() as $debitTransaction)
+                   <option value='{{ $debitTransaction->id }}'>{{ $debitTransaction->number }}</option>
+               @endforeach
+               @error('number') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+           </select>
+           @else
+           <input type='number' wire:model.lazy='number' class="form-control @error('number') is-invalid @enderror" id='inputnumber'>
+           @endif
+               
+           </div>
+               </div>
                 <div class="col-md-4">
 
                  <!-- Account_id Input -->
@@ -37,7 +57,7 @@
                 <label for='inputaccount_id' class=' control-label'> {{ __('Account_id') }}</label>
                 
                
-                    <select name='account_id' class='form-control selectpicker' wire:model='account_id' data-live-search="true">
+                    <select @if($payment_type == 1) disabled @endif name='account_id' class='form-control selectpicker' wire:model='account_id' data-live-search="true">
                         <option value="">يرجى اختيار الحساب</option>
                         @foreach(App\Models\DebitAccount::get() as $account)
                             <option value='{{ $account->id }}'>{{ $account->name }}</option>
@@ -50,14 +70,7 @@
 
                 </div>
 
-                <div class="col-md-4">
-                     <!-- Number Input -->
-            <div class='form-group'>
-                <label for='inputnumber' class=' control-label'> {{ __('رقم القائمة') }}</label>
-                <input type='number' wire:model.lazy='number' class="form-control @error('number') is-invalid @enderror" id='inputnumber'>
-                @error('number') <div class='invalid-feedback'>{{ $message }}</div> @enderror
-            </div>
-                </div>
+               
 
                 <div class="col-md-4">
 <!-- Date Input -->
@@ -72,7 +85,7 @@
 <!-- Amount_iqd Input -->
 <div class='form-group'>
     <label for='inputamount_iqd' class=' control-label'> {{ __('Amount_iqd') }}</label>
-    <input type='number' wire:model.lazy='amount_iqd' class="form-control @error('amount_iqd') is-invalid @enderror" id='inputamount_iqd'>
+    <input  @if($payment_type == 1) readonly @endif type='number' wire:model.lazy='amount_iqd' class="form-control @error('amount_iqd') is-invalid @enderror" id='inputamount_iqd'>
     @error('amount_iqd') <div class='invalid-feedback'>{{ $message }}</div> @enderror
 </div>
                 </div>
@@ -81,13 +94,13 @@
 <!-- Amount_usd Input -->
 <div class='form-group'>
     <label for='inputamount_usd' class=' control-label'> {{ __('Amount_usd') }}</label>
-    <input type='number' wire:model.lazy='amount_usd' class="form-control @error('amount_usd') is-invalid @enderror" id='inputamount_usd'>
+    <input @if($payment_type == 1) readonly @endif type='number' wire:model.lazy='amount_usd' class="form-control @error('amount_usd') is-invalid @enderror" id='inputamount_usd'>
     @error('amount_usd') <div class='invalid-feedback'>{{ $message }}</div> @enderror
 </div>
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <!-- Name Input -->
             <div class='form-group'>
                 <label for='inputname' class=' control-label'> {{ __('اسم المستلم') }}</label>
@@ -96,7 +109,7 @@
             </div>
             </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
             
             <!-- Notes Input -->
             <div class='form-group'>
@@ -105,6 +118,14 @@
                 @error('notes') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
             </div>
+
+            @if($payment_type == 1)
+            <div class="col-md-4">
+            <label for="">رقم الوصل</label>
+            <input type="text" wire:model.lazy="wasl_number" class="form-control">
+            </div>
+            @endif
+
             
             <!-- Payment_type Input -->
 

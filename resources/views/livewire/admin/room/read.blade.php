@@ -38,6 +38,7 @@
                                     <option value="">اختيار الطابق</option>
                                     <option value="2">الطابق الثاني</option>
                                     <option value="3">الطابق الثالث</option>
+                                    <option value="العناية">العناية</option>
                                 </select>
                             </div>
                         </div>

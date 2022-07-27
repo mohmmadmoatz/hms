@@ -44,9 +44,7 @@
            @if(Auth::user()->user_type  == "accountant" || Auth::user()->user_type  == "superadmin")
             <a target="blank" class="btn btn-outline-info" href="@route(getRouteName().'.payments.read')?patient_id={{$patient->id}}">كشف حساب</a>
             @endif
-            @if($patient->room_id)
-            <button wire:click="checkout" class="btn btn-outline-info" >اخراج المريض</button>
-            @endif
+         
         </td>
     @endif
 </tr>

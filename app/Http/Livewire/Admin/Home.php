@@ -32,6 +32,14 @@ class Home extends Component
         $this->sortType = $sort;
     }
 
+    public function check($id)
+    {
+       $room = Room::find($id);
+       $room->checked = 1;
+       $room->save();
+
+    }
+
     public function outPat($id)
     {
         $room = Room::find($id);
@@ -80,6 +88,6 @@ class Home extends Component
 
         return view('vendor.admin.home', [
             'rooms' => $data
-        ])->layout('admin::layouts.app', ['title' => __(\Str::plural('Warehouse')) ]);
+        ])->layout('admin::layouts.app', ['title' => "الصفحة الرئيسية"]);
     }
 }
