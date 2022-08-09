@@ -19,7 +19,7 @@ class OperationHold extends Model
 
     public function room()
     {
-        return $this->Patient->room;
+        return $this->Patient->room ??"";
     }
     
     public function doctor()

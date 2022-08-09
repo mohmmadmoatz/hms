@@ -166,9 +166,31 @@
     </div>
        @else
         
-        <span @if(!$operationhold->m5dr_paid) class = "badge badge-danger" @endif>
+       
+
+        @if(!$operationhold->m5dr_paid && $operationhold->m5dr !=0)
+        <button  wire:click="$set('m5drprice',{{$operationhold->m5dr}})" @click.prevent="m5drisopen = true" class="btn btn-danger">    @convert($operationhold->m5dr)</button> 
+        
+        <div x-show="m5drisopen" class="cs-modal animate__animated animate__fadeIn">
+            <div class="bg-white shadow rounded p-5" @click.away="m5drisopen = false" >
+                <h5 class="pb-2 border-bottom">تعديل السعر</h5>
+                <p>
+                 السعر الحالي
+                </p>
+                <input type="text" class="form-control" wire:model.lazy="m5drprice">
+    
+                <div class="mt-5 d-flex justify-content-between">
+                    <a @click.prevent="m5drisopen = false" wire:click.prevent="savem5dr2" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>
+                    <a @click.prevent="m5drisopen = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
+                </div>
+            </div>
+        </div>
+
+        @else
         @convert($operationhold->m5dr)
-        </span>
+        @endif
+
+        
         @endif
     </td>
     

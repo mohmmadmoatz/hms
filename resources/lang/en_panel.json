@@ -147,5 +147,17 @@
     "Account Name": "Account Name",
     "Account_id": "Account_id",
     "Debittransaction": "Debittransaction",
-    "Debittransactions": "Debittransactions"
+    "Debittransactions": "Debittransactions",
+    "Type": "Type",
+    "Details": "Details",
+    "Saveaccount": "Saveaccount",
+    "Saveaccounts": "Saveaccounts",
+    "Salary": "Salary",
+    "Employee": "Employee",
+    "Employees": "Employees",
+    "Emp Name": "Emp Name",
+    "Emp_id": "Emp_id",
+    "Empadvance": "Empadvance",
+    "Empadvances": "Empadvances",
+    "Salaries": "Salaries"
 }

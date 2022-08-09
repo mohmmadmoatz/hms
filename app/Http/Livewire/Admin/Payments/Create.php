@@ -193,11 +193,9 @@ class Create extends Component
         'payment_type' => $this->payment_type,
         'amount_usd' => $this->amount_usd,
         'amount_iqd' => $this->amount_iqd,
-
         'redirect_doctor_price' => $this->redirect_doctor_price,
         'redirect_doctor_id' => $this->redirect_doctor_id,
         'redirect_nurse_price' => $this->redirect_nurse_price,
-
         'account_type' => $this->account_type,
         'description' => $this->description,
         'user_id' => auth()->id(),

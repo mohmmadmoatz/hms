@@ -119,6 +119,12 @@ Route::get('/fixeddebit', function () {
 })->name("fixeddebit");
 
 
+Route::get('/bankreport', function () {
+    return view('printed.bank');
+})->name("bankreport");
+
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

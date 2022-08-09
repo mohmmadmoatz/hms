@@ -15,6 +15,9 @@
 
 
     </td>
+    <td>
+    {{ $debittransaction->wasl_number }} 
+    </td>
     <td> {{ $debittransaction->date }} </td>
     <td> @convert($debittransaction->amount_iqd) </td>
     <td> @convert($debittransaction->amount_usd) </td>

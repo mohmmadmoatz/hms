@@ -117,7 +117,8 @@
                 <table class="table table-hover">
                     <tbody>
                     <tr>
-                        <td style='cursor: pointer' wire:click="sort('number')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'number') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'number') fa-sort-amount-up ml-2 @endif'></i> {{ __('رقم القائمة') }} </td>
+                        <td style='cursor: pointer' wire:click="sort('number')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'number') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'number') fa-sort-amount-up ml-2 @endif'></i> {{ __('وصل القبض') }} </td>
+                        <td style='cursor: pointer' wire:click="sort('number')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'number') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'number') fa-sort-amount-up ml-2 @endif'></i> {{ __('وصل الصرف') }} </td>
                         <td style='cursor: pointer' wire:click="sort('date')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'date') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'date') fa-sort-amount-up ml-2 @endif'></i> {{ __('Date') }} </td>
                         <td style='cursor: pointer' wire:click="sort('amount_iqd')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'amount_iqd') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'amount_iqd') fa-sort-amount-up ml-2 @endif'></i> {{ __('Amount_iqd') }} </td>
                         <td style='cursor: pointer' wire:click="sort('amount_usd')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'amount_usd') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'amount_usd') fa-sort-amount-up ml-2 @endif'></i> {{ __('Amount_usd') }} </td>

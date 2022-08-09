@@ -28,6 +28,7 @@ class Single extends Component
     public $wasl_number;
     public $nsba;
     protected $listeners = ['postAdded'];
+    public $m5drprice;
 
     public function postAdded(){
       
@@ -108,6 +109,7 @@ class Single extends Component
         $newPayment->description = "اجور تحويل من ولادة طبيعية من الوصل : ".$payment->wasl_number; 
         $newPayment->amount_iqd = $this->income - $converted->operation_price;   
         $newPayment->amount_usd = 0;
+        $newPayment->date = date("Y-m-d");
         $this->loadNumberRecept();
         $newPayment->wasl_number = $this->wasl_number;
         $newPayment->save();
@@ -225,10 +227,17 @@ class Single extends Component
 
     }
     
+    public function savem5dr2()
+    {
+        $this->operationhold->m5dr =$this->m5drprice;
+        $this->operationhold->save();
+        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "تم تحديد اجور المخدر" ]);
+
+    }
 
     public function savem5dr($price)
     {
-        
+        dd($price);
         $this->operationhold->m5dr_selected =1;
 
         if($price == 0.07)

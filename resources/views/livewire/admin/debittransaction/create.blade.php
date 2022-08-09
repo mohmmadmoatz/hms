@@ -31,13 +31,34 @@
                     </div>
                 </div>
 
+                
+                <div class="col-md-4">
+
+                 <!-- Account_id Input -->
+            <div class='form-group' wire:ignore>
+                <label for='inputaccount_id' class=' control-label'> {{ __('Account_id') }}</label>
+                
+               
+                    <select name='account_id' class='form-control selectpicker' wire:model='account_id' data-live-search="true">
+                        <option value="">يرجى اختيار الحساب</option>
+                        @foreach(App\Models\DebitAccount::get() as $account)
+                            <option value='{{ $account->id }}'>{{ $account->name }}</option>
+                        @endforeach
+                    </select>
+
+               
+                @error('account_id') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+
+                </div>
+
                 <div class="col-md-4">
                     <!-- Number Input -->
                <div class='form-group'>
-           <label for='inputnumber' class=' control-label'> {{ __('رقم القائمة') }}</label>
+           <label for='inputnumber' class=' control-label'> {{ __('وصل قبض') }}</label>
            
            @if($payment_type == 1)
-           <select  wire:model.lazy='number' class="form-control @error('number') is-invalid @enderror">
+           <select data-live-search="true"  wire:model.lazy='number' class="selectpicker form-control @error('number') is-invalid @enderror">
                <option value="">اختيار القائمة</option>
                @foreach(App\Models\DebitTransaction::where("payment_type",2)->get() as $debitTransaction)
                    <option value='{{ $debitTransaction->id }}'>{{ $debitTransaction->number }}</option>
@@ -50,25 +71,6 @@
                
            </div>
                </div>
-                <div class="col-md-4">
-
-                 <!-- Account_id Input -->
-            <div class='form-group' wire:ignore>
-                <label for='inputaccount_id' class=' control-label'> {{ __('Account_id') }}</label>
-                
-               
-                    <select @if($payment_type == 1) disabled @endif name='account_id' class='form-control selectpicker' wire:model='account_id' data-live-search="true">
-                        <option value="">يرجى اختيار الحساب</option>
-                        @foreach(App\Models\DebitAccount::get() as $account)
-                            <option value='{{ $account->id }}'>{{ $account->name }}</option>
-                        @endforeach
-                    </select>
-
-               
-                @error('account_id') <div class='invalid-feedback'>{{ $message }}</div> @enderror
-            </div>
-
-                </div>
 
                
 

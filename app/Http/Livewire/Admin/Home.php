@@ -48,6 +48,9 @@ class Home extends Component
         $room->save();
         $pat = Patient::find($patid);
         $pat->room_id = 0;
+        $pat->checkout_at = now();
+        $pat->checkout_room = $id;
+        $pat->checkout_by = auth()->user()->id;
         $pat->save();
         $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => 'تم اخراج المريض بنجاح' ]);
 

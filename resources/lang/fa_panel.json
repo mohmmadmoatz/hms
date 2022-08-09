@@ -13,7 +13,7 @@
     "Congrats": "مبروك",
     "There is nothing to do": "لايوجد شيء ",
     "Your TODO list": "تودو لیست شما",
-    "ListTitle": "قائمة :Name",
+    "ListTitle": ":Name",
     "Yes, Delete it.": "نعم احذفه",
     "No, Cancel it.": "لا الغاء",
     "DeleteMessage": "هل انت متاكد ؟",
@@ -149,5 +149,17 @@
     "Account Name": "الحساب",
     "Account_id": "الخساب",
     "Debittransaction": "Debittransaction",
-    "Debittransactions": "Debittransactions"
+    "Debittransactions": "Debittransactions",
+    "Type": "النوع",
+    "Details": "التفاصيل",
+    "Saveaccount": "حساب احتياطي",
+    "Saveaccounts": "حساب احتياطي",
+    "Salary": "الراتب",
+    "Employee": "موظف",
+    "Employees": "الموظفين",
+    "Emp Name": "الموظف",
+    "Emp_id": "الموظف",
+    "Empadvance": "سلفة",
+    "Empadvances": "السلف",
+    "Salaries": "الرواتب"
 }

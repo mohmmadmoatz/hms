@@ -30,6 +30,11 @@ class Patient extends Model
      {
          return $this->belongsTo("App\Models\Room", 'room_id');
      }
+
+     public function croom()
+     {
+         return $this->belongsTo("App\Models\Room", 'checkout_room');
+     }
      
 
      /**

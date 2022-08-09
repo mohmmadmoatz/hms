@@ -70,12 +70,13 @@ class Create extends Component
             $this->amount_iqd = $debit->amount_iqd;
             $this->amount_usd = $debit->amount_usd;
             $this->imageOut = $debit->image;  
+     
+
         }
     }
 
     public function create()
     {
-        $this->wasl_number=Payments::withTrashed()->where("payment_type",1)->max("wasl_number") + 1;
         $this->validate();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('CreatedMessage', ['name' => __('DebitTransaction') ])]);
@@ -84,20 +85,23 @@ class Create extends Component
             $this->file = $this->getPropertyValue('file')->store('images/debit');
         }
 
-        $debit =  DebitTransaction::create([
-            'number' => $this->number,
-            'date' => $this->date,
-            'amount_iqd' => $this->amount_iqd,
-            'amount_usd' => $this->amount_usd,
-            'name' => $this->name,
-            'notes' => $this->notes,
-            'payment_type' => $this->payment_type,
-            'file' => $this->file,
-            'account_id' => $this->account_id,
-            'user_id' => auth()->id(),
-        ]);
+        if($this->payment_type ==2){
+            $debit =  DebitTransaction::create([
+                'number' => $this->number,
+                'date' => $this->date,
+                'amount_iqd' => $this->amount_iqd,
+                'amount_usd' => $this->amount_usd,
+                'name' => $this->name,
+                'notes' => $this->notes,
+                'payment_type' => $this->payment_type,
+                'file' => $this->file,
+                'account_id' => $this->account_id,
+                'user_id' => auth()->id(),
+            ]);
+        }
+       
         
-        if($this->payment_type == 1) {
+        if($this->payment_type == 1 && $this->number) {
         
 
             $bank = Bank::create([
@@ -107,17 +111,17 @@ class Create extends Component
                 'amount_usd' => $this->amount_usd,
                 'date' => $this->date,
                 'user_id' => auth()->id(),
-                'wasl_number'=>$this->wasl_number
             ]);
 
 
-
-       
-        $debit->payment_id = $bank->id;
-        $debit->save();
+        
 
         if($this->number){
-            DebitTransaction::where('id', $this->number)->update(['checked' => 1]);
+            DebitTransaction::where('id', $this->number)->update([
+                'checked' => 1,
+                'bank_id' => $bank->id,
+                'wasl_number' => $this->wasl_number,
+         ]);
         }
 
     }
@@ -129,6 +133,13 @@ class Create extends Component
 
     public function render()
     {
+
+        // livewire desptach refreshselect
+
+        $this->dispatchBrowserEvent('refreshselect');
+
+
+  
         return view('livewire.admin.debittransaction.create')
             ->layout('admin::layouts.app', ['title' => __('CreateTitle', ['name' => __('DebitTransaction') ])]);
     }

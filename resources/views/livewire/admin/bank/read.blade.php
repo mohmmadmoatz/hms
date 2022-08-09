@@ -32,6 +32,31 @@
                         <div class="col-md-12">
                             <hr>
                         </div>
+
+                        <div class="col-md-12" >
+                            <label for="">الفترة
+
+                            <a wire:target="daterange" wire:loading.remove><i class="fa fa-search"></i></a>
+                                        <a wire:loading wire:target="daterange"><i class="fas fa-spinner fa-spin"></i></a>
+
+                            </label>
+                            <div class="input-group">
+                                <input onchange="daterangeGo()" autocomplete="off" type="text" id="reportrange" class="form-control" wire:model.lazy="daterange"
+                                    wire:ignore>
+
+                                <div class="input-group-append">
+                                    
+                                    @if($datefilterON)
+                                    <button class="btn btn-danger" wire:click="$set('datefilterON',false)">
+                                        الغاء
+                                    </button>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div class="col-md-6">
                                     <label for="">اجمالي السحب (دينار)</label>
                                     <input readonly type="text" class="form-control" value = "@convert($total)">    
@@ -40,6 +65,11 @@
                                     <label for="">اجمالي السحب (دولار)</label>
                                     <input readonly type="text" class="form-control" value = "@convert($total_usd)">    
                         </div>
+
+                        <div class="col-md-12 mt-3">
+                            <a href = "@route('bankreport')?daterange={{$daterange}}" class="btn btn-warning">طباعة كشف</a>
+                        </div>
+
                         @endif
                     </div>
                 </div>
@@ -73,3 +103,13 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function daterangeGo() {
+        var element = document.getElementById("reportrange")
+        console.log(element.value)
+        Livewire.emit('searchBydate');
+        @this.searchBydate(element.value)
+    }
+</script>

@@ -15,7 +15,7 @@ class Read extends Component
 
     public $search;
 
-    protected $queryString = ['search'];
+    protected $queryString = ['search','datefilterON','daterange'];
 
     protected $listeners = ['bankDeleted'];
 
@@ -24,6 +24,19 @@ class Read extends Component
 
     public $total;
     public $total_usd;
+
+    // date filter
+    public $datefilterON;
+    public $daterange;
+
+
+    
+    public function searchBydate($date)
+    {
+        # code...
+        $this->daterange = $date;
+        $this->datefilterON = true;
+    }
 
     public function bankDeleted(){
         // Nothing ..
@@ -62,8 +75,19 @@ class Read extends Component
             $data->latest('id');
         }
 
-        $this->total = Bank::sum("amount_iqd");
-        $this->total_usd = Bank::sum("amount_usd");
+        if($this->datefilterON){
+            $date1 = explode(" - ", $this->daterange)[0];
+            $date2 = explode(" - ", $this->daterange)[1];
+            $data = $data->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $this->total= Bank::whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59'])->sum("amount_iqd");
+            $this->total_usd= Bank::whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59'])->sum("amount_usd");
+        }else{
+            $this->total = Bank::sum("amount_iqd");
+            $this->total_usd = Bank::sum("amount_usd");
+        }
+
+
+      
 
         $data = $data->paginate(config('easy_panel.pagination_count', 15));
 

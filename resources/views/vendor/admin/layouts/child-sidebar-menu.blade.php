@@ -136,6 +136,14 @@
     </a>
 </li>
 
+<li
+    class='sidebar-item @isActive([getRouteName().".saveaccount.read", getRouteName().".saveaccount.create", getRouteName().".saveaccount.update"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".saveaccount.read", getRouteName().".saveaccount.create", getRouteName().".saveaccount.update"], "active") '
+        href="@route(getRouteName().'.saveaccount.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">الحساب الاحتياطي</span>
+    </a>
+</li>
 
 <li
     class='sidebar-item @isActive([getRouteName().".statement.home"], "selected")'>
@@ -160,6 +168,35 @@
 
 
 @if(Auth::user()->user_type  == "superadmin" || Auth::user()->user_type  == "accountant")
+
+<li class="list-divider"></li>
+<li class="nav-small-cap"><span class="hide-menu">نظام الموظفين</span></li>
+<li
+    class='sidebar-item @isActive([getRouteName().".employee.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".employee.read"], "active") '
+        href="@route(getRouteName().'.employee.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("users") }}" class="feather-icon"></i>
+        <span class="hide-menu">الموظفين</span>
+    </a>
+</li>
+
+<li
+    class='sidebar-item @isActive([getRouteName().".empadvance.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".empadvance.read"], "active") '
+        href="@route(getRouteName().'.empadvance.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">السلف</span>
+    </a>
+</li>
+
+<li
+    class='sidebar-item @isActive([getRouteName().".salary.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".salary.read"], "active") '
+        href="@route(getRouteName().'.salary.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("money") }}" class="feather-icon"></i>
+        <span class="hide-menu">الرواتب</span>
+    </a>
+</li>
 
 <li class="list-divider"></li>
 <li class="nav-small-cap"><span class="hide-menu">نظام الديون</span></li>
