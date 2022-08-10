@@ -237,7 +237,7 @@ class Single extends Component
 
     public function savem5dr($price)
     {
-        dd($price);
+       // dd($price);
         $this->operationhold->m5dr_selected =1;
 
         if($price == 0.07)
