@@ -1,4 +1,4 @@
-<tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false,convertModal:false}">
+<tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,m5drisopen2:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false,convertModal:false}">
     <td> {{ $loop }} </td>
     <td> {{ $operationhold->payment_number}} </td>
     <td> {{ $operationhold->Patient->name ??"" }} </td>
@@ -140,17 +140,18 @@
                 <option value="{{App\Models\Setting::find(1)->m5dr_large_doctor}}">عملية  الكبرى</option>
                 <option value="{{App\Models\Setting::find(1)->m5dr_small_doctor}}">عملية وسطى او صغرى</option>
                 <option value="0.07">7%</option>
+                <option value="0.06">6%</option>
+                <option value="0.05">5%</option>
             </select>
 
             
             @if($optype)
-            @if($optype == "0.07")
+            @if($optype == "0.07" || $optype == "0.06" || $optype == "0.05")
             <label for="">مبلغ العملية</label>
             <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price)">
             <hr>
             <label for="">نسبة المخدر</label>
-            <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price * 0.07)">
-
+            <input type="text" class="form-control" readonly value="@convert($operationhold->operation_price * $optype)">
             @else
             <label for="">نسبة المخدر</label>
             <input type="text" class="form-control" wire:model.lazy="optype">
@@ -169,10 +170,10 @@
        
 
         @if(!$operationhold->m5dr_paid && $operationhold->m5dr !=0)
-        <button  wire:click="$set('m5drprice',{{$operationhold->m5dr}})" @click.prevent="m5drisopen = true" class="btn btn-danger">    @convert($operationhold->m5dr)</button> 
+        <button  wire:click="$set('m5drprice',{{$operationhold->m5dr}})" @click.prevent="m5drisopen2 = true" class="btn btn-danger">    @convert($operationhold->m5dr)</button> 
         
-        <div x-show="m5drisopen" class="cs-modal animate__animated animate__fadeIn">
-            <div class="bg-white shadow rounded p-5" @click.away="m5drisopen = false" >
+        <div x-show="m5drisopen2" class="cs-modal animate__animated animate__fadeIn">
+            <div class="bg-white shadow rounded p-5" @click.away="m5drisopen2 = false" >
                 <h5 class="pb-2 border-bottom">تعديل السعر</h5>
                 <p>
                  السعر الحالي
@@ -180,8 +181,8 @@
                 <input type="text" class="form-control" wire:model.lazy="m5drprice">
     
                 <div class="mt-5 d-flex justify-content-between">
-                    <a @click.prevent="m5drisopen = false" wire:click.prevent="savem5dr2" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>
-                    <a @click.prevent="m5drisopen = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
+                    <a @click.prevent="m5drisopen2 = false" wire:click.prevent="savem5dr2" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>
+                    <a @click.prevent="m5drisopen2 = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
                 </div>
             </div>
         </div>

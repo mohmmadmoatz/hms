@@ -240,11 +240,12 @@ class Single extends Component
        // dd($price);
         $this->operationhold->m5dr_selected =1;
 
-        if($price == 0.07)
+        if($price == 0.07 || $price== 0.06 || $price == 0.05)
 {
-    $this->operationhold->m5dr = $this->operationhold->operation_price * 0.07;
+    $this->operationhold->m5dr = $this->operationhold->operation_price * $price;
 
 }else{
+
     $this->operationhold->m5dr =$price;
 }
 
