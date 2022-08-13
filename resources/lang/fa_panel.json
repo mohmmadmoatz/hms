@@ -161,5 +161,7 @@
     "Emp_id": "الموظف",
     "Empadvance": "سلفة",
     "Empadvances": "السلف",
-    "Salaries": "الرواتب"
+    "Salaries": "الرواتب",
+    "Empcategory": "قسم الموظف",
+    "Empcategories": "اقسام الموظفين"
 }

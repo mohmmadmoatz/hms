@@ -15,6 +15,8 @@ class Update extends Component
     public $name;
     public $salary;
     public $notes;
+    public $category_id;
+
     
     protected $rules = [
         'name' => 'required',        'salary' => 'required',        
@@ -24,7 +26,8 @@ class Update extends Component
         $this->employee = $employee;
         $this->name = $this->employee->name;
         $this->salary = $this->employee->salary;
-        $this->notes = $this->employee->notes;        
+        $this->notes = $this->employee->notes; 
+        $this->category_id = $this->employee->category_id;       
     }
 
     public function updated($input)
@@ -40,7 +43,8 @@ class Update extends Component
         
         $this->employee->update([
             'name' => $this->name,            'salary' => $this->salary,
-            'notes' => $this->notes,            
+            'notes' => $this->notes,
+            'category_id' => $this->category_id,          
         ]);
     }
 

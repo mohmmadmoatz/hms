@@ -13,6 +13,7 @@ class Create extends Component
     public $name;
     public $salary;
     public $notes;
+    public $category_id;
     
     protected $rules = [
         'name' => 'required',        'salary' => 'required',        
@@ -31,7 +32,8 @@ class Create extends Component
         
         Employee::create([
             'name' => $this->name,            'salary' => $this->salary,
-            'notes' => $this->notes,            
+            'notes' => $this->notes,          
+            'category_id' => $this->category_id,  
         ]);
 
         $this->reset();

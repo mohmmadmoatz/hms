@@ -171,6 +171,17 @@
 
 <li class="list-divider"></li>
 <li class="nav-small-cap"><span class="hide-menu">نظام الموظفين</span></li>
+
+<li
+    class='sidebar-item @isActive([getRouteName().".empcategory.read"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".empcategory.read"], "active") '
+        href="@route(getRouteName().'.empcategory.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("users") }}" class="feather-icon"></i>
+        <span class="hide-menu">الاقسام</span>
+    </a>
+</li>
+
+
 <li
     class='sidebar-item @isActive([getRouteName().".employee.read"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".employee.read"], "active") '

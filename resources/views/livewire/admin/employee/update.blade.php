@@ -14,7 +14,18 @@
 
         <div class="card-body">
 
-            
+        
+        <div class="form-group">
+                <label for="">القسم</label>
+                <select class="form-control @error('category_id') is-invalid @enderror" wire:model="category_id">
+                    <option value="">اختيار القسم</option>
+                    @foreach(App\Models\EmpCategory::all() as $empcategory)
+                        <option value="{{ $empcategory->id }}">{{ $empcategory->name }}</option>
+                    @endforeach
+                </select>
+
+            </div>
+
             <!-- Name Input -->
             <div class='form-group'>
                 <label for='inputname' class='col-sm-2 control-label'> {{ __('Name') }}</label>

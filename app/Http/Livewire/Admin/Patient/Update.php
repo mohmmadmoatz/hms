@@ -148,9 +148,14 @@ class Update extends Component
         $room = Room::find($this->room_id);
         $room->patient_id=$this->patient->id;
         $room->save();
-      
-
         $this->patient->update($updatedata);
+
+        // find operation and update patient_id
+        $operation = \App\Models\OperationHold::where('patinet_id',$this->patient->id)->first();
+        if($operation){
+            $operation->doctor_id = $this->doctor_id;
+            $operation->save();
+        }
     }
 
     public function render()

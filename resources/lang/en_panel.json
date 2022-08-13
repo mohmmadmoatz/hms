@@ -159,5 +159,7 @@
     "Emp_id": "Emp_id",
     "Empadvance": "Empadvance",
     "Empadvances": "Empadvances",
-    "Salaries": "Salaries"
+    "Salaries": "Salaries",
+    "Empcategory": "Empcategory",
+    "Empcategories": "Empcategories"
 }

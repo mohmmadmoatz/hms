@@ -123,6 +123,10 @@ Route::get('/bankreport', function () {
     return view('printed.bank');
 })->name("bankreport");
 
+Route::get('/opreport', function () {
+    return view('printed.operations');
+})->name("opreport");
+
 
 
 

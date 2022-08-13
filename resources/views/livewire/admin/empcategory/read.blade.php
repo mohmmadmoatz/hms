@@ -2,22 +2,22 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header p-0">
-                <h3 class="card-title">{{ __('ListTitle', ['name' => __(\Illuminate\Support\Str::plural('Employee')) ]) }}</h3>
+                <h3 class="card-title">اقسام الموظفين</h3>
 
                 <div class="px-2 mt-4">
 
                     <ul class="breadcrumb mt-3 py-3 px-4 rounded" style="background-color: #e9ecef!important;">
                         <li class="breadcrumb-item"><a href="@route(getRouteName().'.home')" class="text-decoration-none">{{ __('Dashboard') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __(\Illuminate\Support\Str::plural('Employee')) }}</li>
+                        <li class="breadcrumb-item active">اقسام الموظفين</li>
                     </ul>
 
                     <div class="row justify-content-between mt-4 mb-4">
-                        @if(config('easy_panel.crud.employee.create'))
+                        @if(config('easy_panel.crud.empcategory.create'))
                         <div class="col-md-4 right-0">
-                            <a href="@route(getRouteName().'.employee.create')" class="btn btn-success">{{ __('CreateTitle', ['name' => __('Employee') ]) }}</a>
+                            <a href="@route(getRouteName().'.empcategory.create')" class="btn btn-success">اضافة قسم</a>
                         </div>
                         @endif
-                        @if(config('easy_panel.crud.employee.search'))
+                        @if(config('easy_panel.crud.empcategory.search'))
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" @if(config('easy_panel.lazy_mode')) wire:model.lazy="search" @else wire:model="search" @endif placeholder="{{ __('Search') }}" value="{{ request('search') }}">
@@ -39,24 +39,20 @@
                     <tbody>
                     <tr>
                         <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
-                        <td style='cursor: pointer' wire:click="sort('salary')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'salary') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'salary') fa-sort-amount-up ml-2 @endif'></i> {{ __('Salary') }} </td>
-                        <td>القسم</td>
-                        <td style='cursor: pointer' wire:click="sort('notes')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'notes') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'notes') fa-sort-amount-up ml-2 @endif'></i> {{ __('Notes') }} </td>
-
                         
-                        @if(config('easy_panel.crud.employee.delete') or config('easy_panel.crud.employee.update'))
+                        @if(config('easy_panel.crud.empcategory.delete') or config('easy_panel.crud.empcategory.update'))
                         <td>{{ __('Action') }}</td>
                         @endif
                     </tr>
 
-                    @foreach($employees as $employee)
-                        @livewire('admin.employee.single', ['employee' => $employee], key($employee->id))
+                    @foreach($empcategorys as $empcategory)
+                        @livewire('admin.empcategory.single', ['empcategory' => $empcategory], key($empcategory->id))
                     @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="m-auto pt-3 pr-3">
-                {{ $employees->appends(request()->query())->links() }}
+                {{ $empcategorys->appends(request()->query())->links() }}
             </div>
 
         </div>
