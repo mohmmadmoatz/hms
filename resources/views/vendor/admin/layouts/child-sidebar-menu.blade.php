@@ -52,6 +52,13 @@
         </li>
 
       
+        <li class="sidebar-item @isActive(getRouteName().'.'.'cashaccount'.'.read')">
+            <a href="@route(getRouteName().'.cashaccount.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'cashaccount'.'.read')">
+                <span class="hide-menu"> الحسابات النقدية </span>
+            </a>
+        </li>
+
 
         <li class="sidebar-item @isActive(getRouteName().'.'.'user'.'.read')">
             <a href="@route(getRouteName().'.user.read')"
@@ -76,6 +83,16 @@
 
 <li class='sidebar-item'>
 @if(Auth::user()->user_type  == "accountant")
+
+<li
+    class='sidebar-item @isActive([getRouteName().".cashaccount.read", getRouteName().".cashaccount.update"], "selected")'>
+    <a class='sidebar-link @isActive([getRouteName().".cashaccount.read", getRouteName().".cashaccount.update"], "active") '
+    href="@route(getRouteName().'.cashaccount.read')" aria-expanded="false">
+        <i data-feather="{{ get_icon("users") }}" class="feather-icon"></i>
+        <span class="hide-menu">الحسابات النقدية</span>
+    </a>
+</li>
+
 <li
     class='sidebar-item @isActive([getRouteName().".setting.read", getRouteName().".setting.update"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".setting.read", getRouteName().".setting.update"], "active") '

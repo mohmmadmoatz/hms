@@ -57,6 +57,8 @@ body{
     $date1 = explode(" - ", $dates)[0];
     $date2 = explode(" - ", $dates)[1];
    
+    $cash = $_GET['account'] ?? "";
+
     $data = App\Models\Payments::where("payment_type",1)->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
     ->where("doctor_id",0)
 
@@ -71,7 +73,7 @@ body{
         
 })
 
-    
+    ->where("account_name",'LIKE','%'.$cash.'%')
     ->whereNull("is_stage")
     ->get();
     

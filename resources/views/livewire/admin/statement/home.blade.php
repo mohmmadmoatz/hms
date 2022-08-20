@@ -148,8 +148,31 @@
 
                   
 
-                    <div class="col-md-4 py-2">
-                        <a href = "@route('expense')?daterange={{$daterange}}" target="_blank" class="btn btn-warning btn-block">احتساب المصاريف</a>
+                    <div class="col-md-4 py-2" x-data="{modalIsOpen:false}">
+                        
+                        <button @click.prevent="modalIsOpen = true"  class="btn btn-warning btn-block">احتساب المصاريف</button>
+
+                        <div wire:key = "doctor" x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
+                            <div  class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false">
+                                <h5 class="pb-2 border-bottom">اختيار الحساب</h5>
+                                <div wire:ignore>
+                                    <select  wire:model.lazy="cash" class="form-control selectpicker" data-live-search = "true">
+                                        <option value="">الحساب</option>
+                                        @foreach(App\Models\Cashaccount::get() as $item)
+                                        <option value="{{$item->name}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="mt-5 d-flex justify-content-between">
+                                    <a href = "@route('expense')?daterange={{$daterange}}&account={{$cash}}" target="_blank" class="text-white btn btn-success shadow">احتساب</a>
+                                </div>
+                            </div>
+                    
+                          
+                          
+                        </div>
+
                     </div>
 
                     <div class="col-md-4 py-2">

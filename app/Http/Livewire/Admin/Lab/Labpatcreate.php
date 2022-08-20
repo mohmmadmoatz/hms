@@ -169,7 +169,7 @@ class Labpatcreate extends Component
             $patient = Patient::find($this->patient_id);
             $patient->lab = json_encode($this->items);
             $patient->paid = 0;
-            $patient->status =2;
+            $patient->status =$this->status;
             $patient->total_lab = $this->totalamount;
             $patient->save();
 
@@ -178,7 +178,7 @@ class Labpatcreate extends Component
                 'name' => $this->name,
                 'gender' => $this->gender,
                 'phone' => $this->phone,
-                'status' => 2,
+                'status' => $this->status,
                 'image' => $this->image,            
                 'age' => $this->age,     
                 'lab'=>json_encode($this->items),

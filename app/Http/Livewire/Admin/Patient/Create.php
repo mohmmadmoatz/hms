@@ -121,6 +121,7 @@ class Create extends Component
         if($this->room_id){
         $room = Room::find($this->room_id);
         $room->patient_id=$this->patientid->id;
+        $room->checked = null;
         $room->save();
         }
 

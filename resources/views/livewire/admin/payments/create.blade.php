@@ -69,7 +69,14 @@
                 <div class="col-md-6" wire:ignore x-show="account_type ==3">
                     <div class='form-group'>
                         <label for='inputdoctor_id' class=' control-label'>الأسم</label>
-                        <input @if($daterange && !$stname) readonly @endif  type="text" class="form-control" wire:model.lazy = "account_id">
+                        <select @if($daterange && !$stname) readonly @endif  type="text" class="form-control" wire:model.lazy = "account_id">
+                            <option value="">يرجى الأختيار</option>
+                            @foreach(App\Models\Cashaccount::get() as $item)
+                            <option value="{{$item->name}}">{{$item->name}}</option>
+                            @endforeach
+
+                        </select>
+
                     </div>
                 </div>
        

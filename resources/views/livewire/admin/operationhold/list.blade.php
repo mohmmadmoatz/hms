@@ -75,10 +75,17 @@ table.table-fit thead th, table.table-fit tfoot th {
 table.table-fit tbody td, table.table-fit tfoot td {
     width: auto !important;
 }
+
+.table{
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #000000;
+    background: #8080806b;
+}
                 
         </style>
             <div class="card-body table-responsive p-0">
-                <table class="table table-hover ">
+                <table class="table table-hover table-striped ">
                     <tbody>
                     <tr>
                         <td> رقم العملية</td>

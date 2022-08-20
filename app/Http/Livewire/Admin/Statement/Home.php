@@ -22,6 +22,7 @@ class Home extends Component
     public $daterange;
     public $by_doctor;
     public $query;
+    public $cash;
     public function searchBydate($date)
     {
         # code...

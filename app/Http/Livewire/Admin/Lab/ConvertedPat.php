@@ -43,7 +43,17 @@ class ConvertedPat extends Component
 
 
 
-        $data=  $data->latest()->where('redirect',2)->whereNull("redirect_done")
+        $data=  $data->latest()
+        
+        // where as function
+        ->where(function (Builder $query) {
+          
+                $query->where('redirect',2)
+                ->orWhere('redirect',8);
+            
+        })
+        
+        ->whereNull("redirect_done")
         // where in relation
         ->whereHas('patient', function (Builder $query) {
             $query->WhereNotNull('lab');

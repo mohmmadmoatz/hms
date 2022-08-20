@@ -158,15 +158,11 @@ $testSameCategory = $tests->groupBy('category_id');
   <div style="page-break-before: always"></div>
   @endforeach
 
-  <img src="{{asset('storage/'.$lab->image)}}" width="400px">
-
+  @if($lab->image)
+  <img src="{{asset('storage/'.$lab->image)}}" width="100%">
+  @endif
 </body>
 
-<script>
-  setTimeout(() => {
-            window.print()
-           window.close()
-        }, 1500);
-</script>
+
 
 </html>

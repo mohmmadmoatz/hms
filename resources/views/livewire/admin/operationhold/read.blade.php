@@ -75,7 +75,13 @@
                            
                       @endif
                         @endif
+
+                        <div class="col-md-6 mb-2">
+                            <a href="@route('opreport')?daterange={{$daterange}}" class="btn btn-warning">طباعة </a>
+                        </div>
+
                     </div>
+                    
                 </div>
                 
             </div>

@@ -89,6 +89,14 @@
                     </div>
                 </div>
                 
+                <div class="col-md-4">
+                    <label>التوجيه</label>
+                    <select required class="form-control" wire:model = "status" data-live-search="true">
+                        <option value="">اختيار التوجيه</option>
+                        <option value="2">مختبر</option>
+                        <option value="8">مصرف الدم</option>
+                    </select>
+                </div>
 
                 <div class="col-md-12">
                     <hr>
