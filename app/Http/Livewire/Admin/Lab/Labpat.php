@@ -53,7 +53,14 @@ class Labpat extends Component
             });
         }
 
-        $data->where("status",2)->where("paid",0);
+        $data->
+        where(function (Builder $query) {
+          
+            $query->where('status',2)
+            ->orWhere('status',8);
+        
+    })
+        ->where("paid",0);
 
         if($this->sortColumn) {
             $data->orderBy($this->sortColumn, $this->sortType);
