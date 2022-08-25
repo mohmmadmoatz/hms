@@ -97,7 +97,7 @@ class Update extends Component
 
         
         $room = Room::find($this->room_id);
-        if($room->patient_id){
+        if($room->patient_id != $this->patient->id){
         $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' =>  "لايمكن ادخال المريض الى هذه الغرفة  !!!"]);
         return;
         }
