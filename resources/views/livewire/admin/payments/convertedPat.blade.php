@@ -53,7 +53,7 @@
 
                
                 <td>{{$item->stage->name ?? ""}}</td>
-                @if($item->status ==2)
+                @if($item->status ==2 || $item->status == 8)
                 <td>@convert($item->total_lab) د.ع</td>
                 @else
                 <td>@convert($item->stage->total_price) د.ع</td>
@@ -72,7 +72,7 @@
 
                         @if($item->status !=5)
 
-                        @if($item->status ==2)
+                        @if($item->status ==2 || $item->status ==8)
 
                         <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->total_lab}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
                         @convert($item->total_lab) د.ع
