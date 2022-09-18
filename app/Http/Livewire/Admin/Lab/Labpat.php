@@ -34,6 +34,13 @@ class Labpat extends Component
         $this->sortType = $sort;
     }
 
+    public function hide($id)
+    {
+        $pat = Patient::find($id);
+        $pat->labhide = 1;
+        $pat->save();
+    }
+
     public function render()
     {
         $data = Patient::query();
@@ -60,7 +67,7 @@ class Labpat extends Component
             ->orWhere('status',8);
         
     })
-        ->where("paid",14);
+        ->where("paid",0)->whereNull("labhide");
 
         if($this->sortColumn) {
             $data->orderBy($this->sortColumn, $this->sortType);

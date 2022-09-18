@@ -42,13 +42,15 @@
                                   
                                     <th>رقم المريض</th>
                                     <th>الأسم</th>
-                                    
+                                    <th></th>
                                 </tr>
                               
                                 @foreach($patients as $item)
                                 <tr>
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->name}}</td>
+
+                                    <td><button class = "btn btn-danger" wire:click="hide({{$item->id}})">حذف</button></td>
                                     
                     
                     
