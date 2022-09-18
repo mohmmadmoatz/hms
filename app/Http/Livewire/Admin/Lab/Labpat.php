@@ -60,7 +60,7 @@ class Labpat extends Component
             ->orWhere('status',8);
         
     })
-        ->where("paid",0);
+        ->where("paid",14);
 
         if($this->sortColumn) {
             $data->orderBy($this->sortColumn, $this->sortType);
