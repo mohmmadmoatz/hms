@@ -13,15 +13,19 @@
 
                     <div class="row justify-content-between mt-4 mb-4">
                         @if(config('easy_panel.crud.lab.create'))
-                        <div class="col-md-6" wire:ignore>
+                        <div class="col-md-6" >
              
-                            <select wire:model.lazy="patient_id" class="form-control selectpicker"
-                                data-live-search="true">
-                                <option value="">فلترة حسب المريض</option>
-                                @foreach(App\Models\Patient::latest()->get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
+                        @if($patient_id) 
+                       <label for='name' class='control-label'> {{ __('المريض') }}</label>
+                        <input readonly @if($patient_id) disabled @endif  type='text' value="{{App\Models\Patient::find($patient_id)->name}}"
+                            class="form-control @error('name') is-invalid @enderror" id='name'>
+                            <a href="#cancel" wire:click="clear()" class="btn btn-danger">الغاء</a>
+                        @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                        @else
+                        @include('livewire.admin.widget.selectpat',['model'=>"searchpat"])
+
+                        @endif  
+                            
                         </div>
                         @endif
                         @if(config('easy_panel.crud.lab.search'))

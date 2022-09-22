@@ -55,10 +55,11 @@ class ConvertedPat extends Component
         
         ->whereNull("redirect_done")
         // where in relation
-        ->whereHas('patient', function (Builder $query) {
+        ->whereHas('rid', function (Builder $query) {
             $query->WhereNotNull('lab');
         })
         ->with("Patient:name,id")
+        ->with("rid")
         ->paginate(20);
 
       

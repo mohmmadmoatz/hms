@@ -30,8 +30,29 @@ class Read extends Component
 
     public $patient_id;
 
+    public $searchpat;
+
+    public $patinfo;
+    public $selected;
+
     public function followupDeleted(){
         // Nothing ..
+    }
+
+    public function selectpat($id)
+    {
+        $this->patinfo = Patient::find($id);
+        $this->selected = true;
+        $this->patient_id = $this->patinfo->id;
+     
+    }
+
+    public function clear()
+    {
+        $this->patinfo = "";
+        $this->selected = false;
+        $this->patient_id = "";
+       
     }
 
     public function sort($column)
@@ -65,8 +86,10 @@ class Read extends Component
             $date1 = explode(" - ", $this->daterange)[0];
             $date2 = explode(" - ", $this->daterange)[1];
 
-           $pats = $pats->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
+            $pats = $pats->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
 
+        }else{
+            $pats = $pats->where("id",0);
         }
 
         if(config('easy_panel.crud.followup.search')){

@@ -6,7 +6,7 @@ use App\Models\Lab;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use App\Models\Patient;
 class Read extends Component
 {
     use WithPagination;
@@ -23,6 +23,29 @@ class Read extends Component
     public $sortColumn;
 
     public $patient_id;
+    public $searchpat;
+
+    public $patinfo;
+    public $selected;
+
+  
+
+    public function selectpat($id)
+    {
+        $this->patinfo = Patient::find($id);
+        $this->selected = true;
+        $this->patient_id = $this->patinfo->id;
+     
+    }
+
+    public function clear()
+    {
+        $this->patinfo = "";
+        $this->selected = false;
+        $this->patient_id = "";
+       
+    }
+
 
     public function labDeleted(){
         // Nothing ..

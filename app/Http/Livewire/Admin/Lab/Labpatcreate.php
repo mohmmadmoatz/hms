@@ -9,6 +9,7 @@ use App\Models\MedicineProfile;
 use App\Models\Testcomponet;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\Redirect;
 
 
 class Labpatcreate extends Component
@@ -28,10 +29,13 @@ class Labpatcreate extends Component
     public $totalamount=0;
     public $components = [];    
     public $testID;
+    public $selected=false;
     //public $selectall;
 
     public $patient_id;
-    protected $queryString = ['patient_id'];
+    protected $queryString = [];
+
+    public $patinfo;
 
     protected $rules = [
         'name' => 'required',        
@@ -47,6 +51,28 @@ class Labpatcreate extends Component
         $this->inter_at = date("Y-m-d");
         
                 
+    }
+
+    public function clear()
+    {
+        $this->patinfo = "";
+        $this->patient_id = "";
+        $this->selected = false;
+        $this->name ="";
+        $this->age = "";
+        $this->gender = "";
+        $this->phone = "";
+    }
+
+    public function selectpat($id)
+    {
+        $this->patient_id = $id;
+        $this->patinfo = Patient::find($id);
+        $this->selected = true;
+        $this->name = $this->patinfo->name;
+        $this->age = $this->patinfo->age;
+        $this->gender = $this->patinfo->gender;
+        $this->phone = $this->patinfo->phone;
     }
 
     public function selectitem()
@@ -166,12 +192,16 @@ class Labpatcreate extends Component
         }
         
         if($this->patient_id){
-            $patient = Patient::find($this->patient_id);
-            $patient->lab = json_encode($this->items);
-            $patient->paid = 0;
-            $patient->status =$this->status;
-            $patient->total_lab = $this->totalamount;
-            $patient->save();
+           
+            Redirect::create([
+                "pat_id"=>$this->patinfo->id,
+                "redirect_id"=>$this->status,
+                "total_lab"=>$this->totalamount,
+                "lab"=>json_encode($this->items)
+            ]);
+
+           
+          
 
         }else{
             Patient::create([

@@ -8,7 +8,7 @@ use App\Models\Patient;
 use App\Models\Testcomponet;
 use App\Models\PatTests;
 use App\Models\PatTestComponet;
-
+use App\Models\Redirect;
 
 
 use Livewire\Component;
@@ -22,9 +22,10 @@ class Create extends Component
     public $notes;
     public $image;
     public $payment_id;
-    protected $queryString = ['patient_id','payment_id'];
+    protected $queryString = ['patient_id','payment_id','rid'];
     public $tests = [];
     public $indexID = 0;
+    public $rid;
  
 
     protected $rules = [
@@ -34,10 +35,11 @@ class Create extends Component
     public function mount()
     {
         $pat = Patient::find($this->patient_id);
+        $rid = Redirect::find($this->rid);
         if($pat){
 
        
-        $this->tests = json_decode($pat->lab,true);
+        $this->tests = json_decode($rid->lab,true);
         
         if(count($this->tests)){
            

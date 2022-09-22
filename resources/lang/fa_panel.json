@@ -130,7 +130,7 @@
     "Temp": "Temp",
     "Treatment": "Treatment",
     "Pat Name": "Pat Name",
-    "Pat_id": "Pat_id",
+    "Pat_id": "المريض",
     "Followup": "Followup",
     "Followups": "Followups",
     "Unit": "الوحدة",
@@ -165,5 +165,9 @@
     "Empcategory": "قسم الموظف",
     "Empcategories": "اقسام الموظفين",
     "Cashaccount": "حساب نقدي",
-    "Cashaccounts": "الحسابات النقدية"
+    "Cashaccounts": "الحسابات النقدية",
+    "Redirect_id": "الى ",
+    "Redirect_doctor_id": "الطبيب",
+    "Redirect": "توجيه",
+    "Redirects": "التوجيهات"
 }

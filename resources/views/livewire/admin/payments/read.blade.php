@@ -108,10 +108,7 @@
                                 <option value=""></option>
                                
                                
-                                @foreach(App\Models\Patient::latest()->whereBetween("created_at",[\Carbon\Carbon::now()->subMonths(1),\Carbon\Carbon::now()])
-                                ->select("name","id")->get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
+                                
                             </select>
                         </div>
                         <div class="col-md-6" wire:ignore x-show="account_type ==1">

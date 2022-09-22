@@ -11,7 +11,7 @@ use App\Models\OperationHold;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use App\Models\Redirect;
 use DB;
 class ConvertedPat extends Component
 {
@@ -50,7 +50,7 @@ class ConvertedPat extends Component
 
    
 
-    public function saveOpSand($income,$doctorexp,$helper,$m5dr,$helperm5dr,$id,$print)
+    public function saveOpSand($income,$doctorexp,$helper,$m5dr,$helperm5dr,$id,$print,$rid)
     {
 
         
@@ -189,6 +189,11 @@ class ConvertedPat extends Component
         $patdata->paid =1;
         $patdata->save();
 
+        $rd = Redirect::find($rid);
+        $rd->paid= 1;
+        $rd->save();
+
+
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم انشاء سند صرف وقبض" ]);
         if($print){
             $this->dispatchBrowserEvent('open-window', ['url' => route("printrecept") . "?id=$number->id"]);
@@ -222,7 +227,6 @@ class ConvertedPat extends Component
         // Payments::create($data);
 
         $patdata = Patient::find($id);
-
         $patdata->paid =1;
         $patdata->save();
 
@@ -234,10 +238,10 @@ class ConvertedPat extends Component
 
     public function render()
     {
-        $data = Patient::query();
+        $data = Redirect::query();
 
-        if(config('easy_panel.crud.patient.search')){
-            $array = (array) config('easy_panel.crud.patient.search');
+        if(config('easy_panel.crud.redirect.search')){
+            $array = (array) config('easy_panel.crud.redirect.search');
             $data->where(function (Builder $query) use ($array){
                 foreach ($array as $item) {
                     if(!is_array($item)) {
@@ -250,7 +254,8 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data=  $data->latest("updated_at")->where('paid',0)->paginate(20);
+        $data->where("paid",0);
+        $data=  $data->latest("updated_at")->paginate(20);
 
         return view('livewire.admin.payments.convertedPat', [
             'data' => $data

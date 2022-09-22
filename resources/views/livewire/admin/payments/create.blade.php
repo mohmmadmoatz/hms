@@ -52,16 +52,22 @@
                         
                     </div>
                 </div>
-                <div class="col-md-6" wire:ignore x-show="account_type ==2">
+                <div class="col-md-6"  x-show="account_type ==2">
                     <div class='form-group'>
-                        <label for='inputdoctor_id' class=' control-label'>المريض</label>
+                      
                         
-                        <select class="form-control selectpicker" data-live-search="true" wire:model="account_id">
-                            <option value="">المريض</option>
-                            @foreach(App\Models\Patient::get() as $item)
-                            <option value="{{$item->id}}">{{$item->name}} - {{$item->id}}</option>
-                            @endforeach
-                        </select>
+                    @if($patinet_id) 
+                       <label for='name' class='control-label'> {{ __('المريض') }}</label>
+                        <input readonly @if($patinet_id) disabled @endif  type='text' value="{{App\Models\Patient::find($patinet_id)->name}}"
+                            class="form-control @error('name') is-invalid @enderror" id='name'>
+                            <a href="#cancel" wire:click="clear()" class="btn btn-danger">الغاء</a>
+                        @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                        @else
+                        @include('livewire.admin.widget.selectpat',['model'=>"searchpat"])
+                        @endif
+
+                    
+                        
                         
                     </div>
                 </div>

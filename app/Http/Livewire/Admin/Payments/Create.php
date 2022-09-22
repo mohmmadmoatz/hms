@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 use App\Models\Patient;
 use App\Models\User;
 use App\Models\OperationHold;
+use App\Models\Redirect;
 
 class Create extends Component
 {
@@ -38,7 +39,13 @@ class Create extends Component
     public $stname;
     public $stid;
     public $date;
-    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid','redirect_doctor_id','paydoctor','date'];
+    public $searchpat;
+    public $rid;
+
+    public $patinfo;
+    public $selected =false;
+
+    protected $queryString = ['payment_type','account_type','account_id','amount_iqd','daterange','payto','redirect','stname','stid','redirect_doctor_id','paydoctor','date','rid'];
 
     
     protected $rules = [
@@ -65,6 +72,20 @@ class Create extends Component
             }
         }
         
+    }
+
+    public function selectpat($id)
+    {
+        $this->patinfo = Patient::find($id);
+        $this->selected = true;
+        $this->patinet_id = $id;
+    }
+
+    public function clear()
+    {
+        $this->patinfo = "";
+        $this->selected = false;
+        $this->patinet_id = "";
     }
 
     public function initDirect()
@@ -212,10 +233,19 @@ class Create extends Component
         if($this->account_type == 1){
             $data['doctor_id'] = $this->account_id;
         }else if($this->account_type ==2){
+            
             $data['patinet_id'] = $this->account_id;    
             $patdata = Patient::find($this->account_id);
             $patdata->paid =1;
-           $patdata->save();
+            $patdata->save();
+
+            if($this->rid){
+                $rd = Redirect::find($this->rid);
+                $rd->paid=1;
+                $rd->save();
+                $data['rid']=$rd->id;   
+            }
+
         }else if($this->account_type ==3){
             $data['account_name'] = $this->account_id;
         }

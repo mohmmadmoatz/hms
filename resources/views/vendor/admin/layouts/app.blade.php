@@ -182,6 +182,8 @@
 <script src="{{asset('assets/admin/js/custom.min.js')}}"></script>
 
 
+
+
 @livewireScripts
 
 
@@ -273,6 +275,9 @@ $(function() {
 
 <script src="{{asset('assets/admin/js/alpine.min.js')}}"></script>
 <script src="{{asset('assets/admin/js/bootstrap-select.min.js')}}"></script>
+
+
+
 <script>
                         $(function () {
         $('.selectpicker2').selectpicker();
@@ -280,6 +285,8 @@ $(function() {
                     </script>
 
 <script>
+
+    
 
 window.addEventListener('open-window', function (event) {
         let url = event.detail.url;

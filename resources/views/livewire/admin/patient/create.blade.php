@@ -22,23 +22,31 @@
                 <div class="col-md-4">
                     <!-- Name Input -->
                     <div class='form-group'>
-                        <label for='inputname' class='control-label'> {{ __('Name') }}</label>
-                        <input type='text' wire:model.lazy='name'
-                            class="form-control @error('name') is-invalid @enderror" id='inputname'>
-                        @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                     
+                       @if($patinfo) 
+                       <label for='name' class='control-label'> {{ __('المريض') }}</label>
+                        <input readonly @if($patinfo) disabled @endif  type='text' wire:model.lazy='name'
+                            class="form-control @error('name') is-invalid @enderror" id='name'>
+                            <a href="#cancel" wire:click="clear()" class="btn btn-danger">الغاء</a>
+                        @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                        @else
+                       @include('livewire.admin.widget.selectpat',['model'=>"name"])
+
+                        @endif  
+                       
+
+                     
+                      
                     </div>
                 </div>
                 <div class="col-md-4">
                     <!-- Gender Input -->
                     <div class='form-group'>
-                        <label for='inputgender' class='control-label'> {{ __('Gender') }}</label>
-
-                        <select wire:model="gender" class="form-control">
+                        <label  for='inputgender' class='control-label'> {{ __('Gender') }}</label>
+                        <select @if($patinfo) disabled @endif wire:model="gender" class="form-control">
                             <option value=""></option>
-
                             <option>ذكر</option>
                             <option>انثى</option>
-
                         </select>
                     </div>
                 </div>
@@ -47,7 +55,7 @@
                     <!-- Phone Input -->
                     <div class='form-group'>
                         <label for='inputphone' class='control-label'> {{ __('Phone') }}</label>
-                        <input type='text' wire:model.lazy='phone'
+                        <input @if($patinfo) disabled @endif  type='text' wire:model.lazy='phone'
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
@@ -57,7 +65,7 @@
 
                     <div class='form-group'>
                         <label for='inputphone' class='control-label'> {{ __('العمر') }}</label>
-                        <input type='number' wire:model.lazy='age' 
+                        <input @if($patinfo) disabled @endif  type='number' wire:model.lazy='age' 
                             class="form-control @error('phone') is-invalid @enderror" id='inputphone'>
                         @error('age') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>

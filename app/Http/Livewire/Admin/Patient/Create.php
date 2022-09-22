@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\MedicineProfile;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\Redirect;
 
 class Create extends Component
 {
@@ -36,7 +37,6 @@ class Create extends Component
     public $mother;
     public $Nationality = "عراقي";
     public $adress;
-
     public $husbandname;
     public $idSingle;
     public $iddate;
@@ -44,6 +44,8 @@ class Create extends Component
     public $identity_number;
     public $hms_nsba;
     public $redirect_doctor_id;
+    public $patinfo;
+    public $selected;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -57,8 +59,31 @@ class Create extends Component
     {
         $this->inter_at = date("Y-m-d");
         $this->hms_nsba= 100 - Setting::find(1)->hnsba;
+    }
 
-                
+    public function selectpat($id)
+    {
+        $this->patinfo = Patient::find($id);
+        $this->selected = true;
+        $this->name = $this->patinfo->name;
+        $this->age = $this->patinfo->age;
+        $this->gender = $this->patinfo->gender;
+        $this->phone = $this->patinfo->phone;
+    }
+
+    public function updatedName()
+    {
+        $this->selected = false;
+    }
+
+    public function clear()
+    {
+        $this->patinfo = "";
+        $this->selected = false;
+        $this->name ="";
+        $this->age = "";
+        $this->gender = "";
+        $this->phone = "";
     }
 
     public function create()
@@ -86,7 +111,18 @@ class Create extends Component
             $this->image = $this->getPropertyValue('image')->store('images/patients','public');
         }
         
-        $this->patientid=Patient::create([
+        if($this->patinfo){
+            
+        $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم اعادة توجيه المريض"]);
+
+        Redirect::create([
+            "pat_id"=>$this->patinfo->id,
+            "redirect_id"=>$this->status,
+            "redirect_doctor_id"=>$this->redirect_doctor_id,
+        ]);
+
+        $updatepat = Patient::find($this->patinfo->id);
+        $updatepat->update([
             'name' => $this->name,
             'gender' => $this->gender,
             'phone' => $this->phone,
@@ -101,13 +137,46 @@ class Create extends Component
             'identity_circule'=>$this->identity_circule,
             'identity_page'=>$this->identity_page,
             'identity_book'=>$this->identity_book,
+            'relaitve_name'=>$this->relaitve_name,
+            'relaitve_phone'=>$this->relaitve_phone,
+            'job'=>$this->job,
+            'mother'=>$this->mother,
+            'Nationality'=>$this->Nationality,
+            'adress'=>$this->adress,  
+            'husbandname'=>$this->husbandname,           
+            'idSingle'=>$this->idSingle,           
+            'iddate'=>$this->iddate,           
+            'idcreatejeha'=>$this->idcreatejeha   ,
+            'identity_number'=>$this->identity_number,
+            'hms_nsba'=>$this->hms_nsba,
+            'redirect_doctor_id'=>$this->redirect_doctor_id,
+                       
+        ]);
+
+
+
+        }else{
+            $this->patientid=Patient::create([
+                'name' => $this->name,
+                'gender' => $this->gender,
+                'phone' => $this->phone,
+                'status' => $this->status,
+                'image' => $this->image,            
+                'age' => $this->age,            
+                'clinic_id' => $this->clinic_id,
+                'room_id' =>$this->room_id,
+                'doctor_id'=>$this->doctor_id,
+                'opration_id'=>$this->opration_id,       
+                'inter_at'=>$this->inter_at,
+                'identity_circule'=>$this->identity_circule,
+                'identity_page'=>$this->identity_page,
+                'identity_book'=>$this->identity_book,
                 'relaitve_name'=>$this->relaitve_name,
                 'relaitve_phone'=>$this->relaitve_phone,
                 'job'=>$this->job,
                 'mother'=>$this->mother,
                 'Nationality'=>$this->Nationality,
                 'adress'=>$this->adress,  
-
                 'husbandname'=>$this->husbandname,           
                 'idSingle'=>$this->idSingle,           
                 'iddate'=>$this->iddate,           
@@ -115,17 +184,21 @@ class Create extends Component
                 'identity_number'=>$this->identity_number,
                 'hms_nsba'=>$this->hms_nsba,
                 'redirect_doctor_id'=>$this->redirect_doctor_id,
-                       
-        ]);
+                           
+            ]);
+    
+            if($this->room_id){
+            $room = Room::find($this->room_id);
+            $room->patient_id=$this->patientid->id;
+            $room->checked = null;
+            $room->save();
+            }
+        $this->dispatchBrowserEvent('open-window', ['url' => route('printcard').'?id=' . $this->patientid->id]);
 
-        if($this->room_id){
-        $room = Room::find($this->room_id);
-        $room->patient_id=$this->patientid->id;
-        $room->checked = null;
-        $room->save();
         }
 
-        $this->dispatchBrowserEvent('open-window', ['url' => route('printcard').'?id=' . $this->patientid->id]);
+       
+
 
 
         $this->reset();

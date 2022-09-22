@@ -26,17 +26,12 @@
 
             <div class="row">
 
-                <div class="col-md-12" wire:ignore>
-                  <h4>رقم المريض التعريفي</h4>
-                  
-                 <select class="form-control selectpicker" wire:model = "patient_id" data-live-search="true">
-                    <option value="">اختيار مريض</option>
-                    @foreach(App\Models\Patient::get() as $patient)
-                    <option value="{{$patient->id}}">{{$patient->name}}</option>
-                    @endforeach
+                <div class="col-md-12" >
 
-                  </select>
-
+                @include('livewire.admin.widget.selectpat',['model'=>"patientid"])
+                @if($patinfo)
+                <a href="#test" wire:click="clear()" class="btn btn-danger">الغاء</a>
+                @endif
                     
                     
                 </div>

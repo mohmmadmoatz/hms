@@ -50,6 +50,13 @@ class Payments extends Model
         return $this->belongsTo("App\Models\Patient",'patinet_id');
     }
 
+    public function rid()
+    {
+        return $this->belongsTo("App\Models\Redirect",'rid');
+    }
+
+    
+
 
     // public function setWaslNumberAttribute()
     // {

@@ -45,15 +45,15 @@
            
             @endphp
             @foreach($data as $item)
-            <tr wire:key="{{$item->id}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
-                <td>{{$item->id}}</td>
-                <td>{{$item->name}}</td>
+            <tr wire:key="{{$item->Patient->id}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
+                <td>{{$item->Patient->id}}</td>
+                <td>{{$item->Patient->name ?? ""}}</td>
 
-                @if($item->status != 5)
+                @if($item->redirect_id != 5)
 
                
                 <td>{{$item->stage->name ?? ""}}</td>
-                @if($item->status ==2 || $item->status == 8)
+                @if($item->redirect_id ==2 || $item->redirect_id == 8)
                 <td>@convert($item->total_lab) د.ع</td>
                 @else
                 <td>@convert($item->stage->total_price) د.ع</td>
@@ -64,17 +64,17 @@
 
               
 
-                @if($item->status == 5)
-                <td>{{$item->operation->name ?? ""}}</td>
-                <td>{{$item->operation->price + $setting->pat_profile}} د.ع</td>
+                @if($item->redirect_id == 5)
+                <td>{{$item->Patient->operation->name ?? ""}}</td>
+                <td>{{$item->Patient->operation->price + $setting->pat_profile}} د.ع</td>
                 @endif
                         <td>
 
-                        @if($item->status !=5)
+                        @if($item->redirect_id !=5)
 
-                        @if($item->status ==2 || $item->status ==8)
+                        @if($item->redirect_id ==2 || $item->redirect_id ==8)
 
-                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->total_lab}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
+                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->total_lab}}&account_type=2&account_id={{$item->Patient->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}&rid={{$item->id}}">قبض 
                         @convert($item->total_lab) د.ع
                         من المريض
                         </a>
@@ -99,19 +99,19 @@
                         @endif
 
                         @else
-                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}">قبض 
+                        <a  href="@route(getRouteName().'.payments.create')?payment_type=2&amount_iqd={{$item->stage->total_price}}&account_type=2&account_id={{$item->Patient->id}}&redirect={{$item->stage->id}}&redirect_doctor_id={{$item->redirect_doctor_id}}&rid={{$item->id}}">قبض 
                         @convert($item->stage->total_price) د.ع
                         من المريض
                         </a>
                         @endif
 
-                        @elseif($item->status == 5)
+                        @elseif($item->redirect_id == 5)
                             @php
                             
                         
 
-                            $doctor_amount = ($item->operation->price) * ($item->hms_nsba / 100);
-                            $hms_amount = ($item->operation->price) - $doctor_amount;
+                            $doctor_amount = ($item->Patient->operation->price) * ($item->Patient->hms_nsba / 100);
+                            $hms_amount = ($item->Patient->operation->price) - $doctor_amount;
                             $helperdoctor = $setting->helper_doctor;
                             $m5dr_doctor = $setting->m5dr_doctor;
                             $helper_m5dr_doctor = $setting->helper_m5dr_doctor;
@@ -120,15 +120,15 @@
 
                             @endphp
 
-                            @if($item->operation->name =="ولادة طبيعية")
-                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla=1000;income={{$item->operation->price}};description="{{$item->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
+                            @if($item->Patient->operation->name =="ولادة طبيعية")
+                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla=1000;income={{$item->Patient->operation->price}};description="{{$item->Patient->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
                                 
                             قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
                             </button>
                             @else
-                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla={{$setting->pat_profile}};income={{$item->operation->price}};description="{{$item->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
-                            قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
+                            <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla={{$setting->pat_profile}};income={{$item->Patient->operation->price}};description="{{$item->Patient->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
+                            قبض : @convert($item->Patient->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
                             </button>
                            @endif
@@ -167,7 +167,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>اسم الجراح</label>
-                                <input type="text" class="form-control" readonly value="{{$item->doctor->name ?? ''}}">
+                                <input type="text" class="form-control" readonly value="{{$item->Patient->doctor->name ?? ''}}">
                             </div>
                            
                             <div class="col-md-6">
@@ -203,12 +203,12 @@
 
                         </div>
                         <div class="mt-5 d-flex justify-content-between">
-                           @if($item->operation->name !="ولادة طبيعية")
-                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
-                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
+                           @if($item->Patient->operation->name !="ولادة طبيعية")
+                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->Patient->id}},0,{{$item->id}})" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
+                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},{{$helperdoctor}},{{$m5dr_doctor}},{{$helper_m5dr_doctor}},{{$item->Patient->id}},1,{{$item->id}})" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
                             @else
-                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},0,0,0,{{$item->id}},0)" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
-                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},0,0,0,{{$item->id}},1)" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
+                            <a  @click.prevent="receptModal = false"  wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},0,0,0,{{$item->Patient->id}},0,{{$item->id}})" class="text-white btn btn-success shadow" >{{ __('قبض') }}</a>
+                            <a  @click.prevent="receptModal = false" wire:click.prevent ="saveOpSand({{$income}},{{$doctor_amount}},0,0,0,{{$item->Patient->id}},1,{{$item->id}})" class="text-white btn btn-primary btn-block shadow">{{ __('قبض وطباعة') }}</a>
                             @endif
                             <a  @click.prevent="receptModal = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
 

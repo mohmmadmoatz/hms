@@ -14,18 +14,21 @@
                     <div class="row">
                         <div class="col-md-6" wire:ignore>
              
-                            <select wire:model.lazy="patient_id" class="form-control selectpicker"
-                                data-live-search="true">
-                                <option value="">يرجى اختيار المريض</option>
-                                @foreach($pats as $item)
-                                <option value="{{$item->Patient->id ?? ''}}">{{$item->Patient->name ??""}}</option>
-                                @endforeach
-                            </select>
+                        @if($patient_id) 
+                       <label for='name' class='control-label'> {{ __('المريض') }}</label>
+                        <input readonly @if($patient_id) disabled @endif  type='text' value="{{App\Models\Patient::find($patient_id)->name}}"
+                            class="form-control @error('name') is-invalid @enderror" id='name'>
+                            <a href="#cancel" wire:click="clear()" class="btn btn-danger">الغاء</a>
+                        @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+                        @else
+                        @include('livewire.admin.widget.selectpat',['model'=>"searchpat"])
+                        @endif
                         </div>
 
                         <div class="col-md-6">
-                        
+                        <label for="">الفترة</label>
                             <div class="input-group">
+                               
                                 <input autocomplete="off" type="text" id="reportrange" onchange="daterangeGo()"  class="form-control" wire:model.lazy="daterange"
                                     wire:ignore>
 

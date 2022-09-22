@@ -163,5 +163,9 @@
     "Empcategory": "Empcategory",
     "Empcategories": "Empcategories",
     "Cashaccount": "Cashaccount",
-    "Cashaccounts": "Cashaccounts"
+    "Cashaccounts": "Cashaccounts",
+    "Redirect_id": "Redirect_id",
+    "Redirect_doctor_id": "Redirect_doctor_id",
+    "Redirect": "Redirect",
+    "Redirects": "Redirects"
 }

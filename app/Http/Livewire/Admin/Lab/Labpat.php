@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Lab;
 
 use App\Models\Patient;
+use App\Models\Redirect;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -36,35 +37,22 @@ class Labpat extends Component
 
     public function hide($id)
     {
-        $pat = Patient::find($id);
+        $pat = Redirect::find($id);
         $pat->labhide = 1;
         $pat->save();
     }
 
     public function render()
     {
-        $data = Patient::query();
+        $data = Redirect::query();
 
-        if(config('easy_panel.crud.patient.search')){
-            $array = (array) config('easy_panel.crud.patient.search');
-            $data->where(function (Builder $query) use ($array){
-                foreach ($array as $item) {
-                    if(!is_array($item)) {
-                        $query->orWhere($item, 'like', '%' . $this->search . '%');
-                    } else {
-                        $query->orWhereHas(array_key_first($item), function (Builder $query) use ($item) {
-                            $query->where($item[array_key_first($item)], 'like', '%' . $this->search . '%');
-                        });
-                    }
-                }
-            });
-        }
+      
 
         $data->
         where(function (Builder $query) {
           
-            $query->where('status',2)
-            ->orWhere('status',8);
+            $query->where('redirect_id',2)
+            ->orWhere('redirect_id',8);
         
     })
         ->where("paid",0)->whereNull("labhide");
