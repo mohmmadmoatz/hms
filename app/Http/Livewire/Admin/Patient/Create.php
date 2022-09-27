@@ -188,7 +188,7 @@ class Create extends Component
             ]);
 
             Redirect::create([
-                "pat_id"=>$this->patientid,
+                "pat_id"=>$this->patientid->id,
                 "redirect_id"=>$this->status,
                 "redirect_doctor_id"=>$this->redirect_doctor_id,
             ]);
