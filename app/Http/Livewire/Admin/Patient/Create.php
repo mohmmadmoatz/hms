@@ -153,6 +153,9 @@ class Create extends Component
                        
         ]);
 
+        $this->dispatchBrowserEvent('open-window', ['url' => route('printcard').'?id=' . $this->patientid->id]);
+
+
 
 
         }else{

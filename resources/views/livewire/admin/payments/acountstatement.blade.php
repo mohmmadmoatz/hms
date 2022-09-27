@@ -83,7 +83,7 @@
 
                    
                                     <td>
-                                    <a href="@route(getRouteName().'.payments.read')?patient_id={{$item->Patient->id}}&account_type=2&daterange={{$daterange}}" class="btn btn-info">عرض السندات</a>
+                                    <a href="@route(getRouteName().'.payments.read')?patient_id={{$item->Patient->id}}&account_type=2&daterange={{$daterange}}&datefilterON=true" class="btn btn-info">عرض السندات</a>
                                     <a href="@route(getRouteName().'.payments.create')?account_id={{$item->Patient->id}}&payment_type=2&account_type=2" class="btn btn-info">سند قبض</a>
                                     </td>
                                 </tr>
