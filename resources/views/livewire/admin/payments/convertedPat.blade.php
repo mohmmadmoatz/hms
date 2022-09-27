@@ -126,7 +126,7 @@
                             @if($item->Patient->operation->name =="ولادة طبيعية")
                             <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla=1000;income={{$item->Patient->operation->price}};description="{{$item->Patient->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
                                 
-                            قبض : @convert($item->operation->price + $setting->pat_profile) د.ع 
+                            قبض : @convert($item->Patient->operation->price + $setting->pat_profile) د.ع 
                             من المريض 
                             </button>
                             @else
