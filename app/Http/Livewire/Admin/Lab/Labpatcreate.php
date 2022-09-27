@@ -204,7 +204,7 @@ class Labpatcreate extends Component
           
 
         }else{
-            Patient::create([
+            $pat = Patient::create([
                 'name' => $this->name,
                 'gender' => $this->gender,
                 'phone' => $this->phone,
@@ -215,6 +215,14 @@ class Labpatcreate extends Component
                 "total_lab"=>$this->totalamount
                            
             ]);
+
+            Redirect::create([
+                "pat_id"=>$pat->id,
+                "redirect_id"=>$this->status,
+                "total_lab"=>$this->totalamount,
+                "lab"=>json_encode($this->items)
+            ]);
+
         }
 
         
