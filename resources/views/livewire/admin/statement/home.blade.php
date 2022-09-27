@@ -141,8 +141,10 @@
                     
 
                     
-
-                    <div class="col-md-12 py-2">
+                    <div class="col-md-6 py-2">
+                        <a href = "@route('balance')?daterange={{$daterange}}" target="_blank" class="btn btn-primary btn-block">الرصيد</a>
+                    </div>
+                    <div class="col-md-6 py-2">
                     <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">الميزانية</a>
                     </div>
 
@@ -309,7 +311,11 @@
                     </div>
                     @endif
                     @else
-                    <div class="col-md-12 py-2">
+
+                    <div class="col-md-6 py-2">
+                        <a href = "@route('balance')?daterange={{$daterange}}" target="_blank" class="btn btn-primary btn-block">الرصيد</a>
+                    </div>
+                    <div class="col-md-6 py-2">
                         <a href = "@route('hmsstatement')?daterange={{$daterange}}" target="_blank" class="btn btn-secondary btn-block">الميزانية</a>
                     </div>
 

@@ -97,10 +97,13 @@ class Update extends Component
 
         
         $room = Room::find($this->room_id);
-        if($room->patient_id){
-        $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' =>  "لايمكن ادخال المريض الى هذه الغرفة  !!!"]);
-        return;
+        if($room){
+            if($room->patient_id){
+                $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' =>  "لايمكن ادخال المريض الى هذه الغرفة  !!!"]);
+                return;
+                }
         }
+        
        
 
         $this->validate();
@@ -156,8 +159,11 @@ class Update extends Component
 
 
         $room = Room::find($this->room_id);
-        $room->patient_id=$this->patient->id;
-        $room->save();
+        if($room){
+            $room->patient_id=$this->patient->id;
+            $room->save();
+        }
+      
         $this->patient->update($updatedata);
 
         // find operation and update patient_id

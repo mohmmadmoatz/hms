@@ -27,6 +27,12 @@
                 <input type='text' wire:model.lazy='email' class="form-control @error('email') is-invalid @enderror" id='inputemail'>
                 @error('email') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
+
+            <div class='form-group'>
+                <label for='phone' class='col-sm-2 control-label'> {{ __('رقم الواتس اب') }}</label>
+                <input type='text' wire:model.lazy='phone' class="form-control @error('phone') is-invalid @enderror" id='phone'>
+                @error('phone') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
             
             <!-- Password Input -->
             <div class='form-group'>

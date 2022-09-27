@@ -59,6 +59,10 @@ Route::get('/hmsstatement', function () {
     return view('printed.hospitalstatement');
 })->name("hmsstatement");
 
+Route::get('/balance', function () {
+    return view('printed.balance');
+})->name("balance");
+
 Route::get('/income', function () {
     return view('printed.income');
 })->name("income");

@@ -16,6 +16,8 @@ class Create extends Component
     public $image;
     public $user_type;
     public $mqema;
+    public $phone;
+
     
     protected $rules = [
         'name' => 'required',        
@@ -42,7 +44,8 @@ class Create extends Component
             'password' => bcrypt($this->password) ,
             'image' => $this->image,            
             'user_type' => $this->user_type,            
-            'mqema' => $this->mqema,            
+            'mqema' => $this->mqema,
+            "phone"=>$this->phone            
         ]);
 
         $this->reset();

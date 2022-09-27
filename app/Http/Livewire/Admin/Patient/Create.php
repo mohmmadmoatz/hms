@@ -186,6 +186,12 @@ class Create extends Component
                 'redirect_doctor_id'=>$this->redirect_doctor_id,
                            
             ]);
+
+            Redirect::create([
+                "pat_id"=>$this->patientid,
+                "redirect_id"=>$this->status,
+                "redirect_doctor_id"=>$this->redirect_doctor_id,
+            ]);
     
             if($this->room_id){
             $room = Room::find($this->room_id);

@@ -17,6 +17,7 @@ class Update extends Component
     public $password;
     public $image;
     public $user_type;
+    public $phone;
     
     protected $rules = [
         'name' => 'required',        
@@ -26,7 +27,7 @@ class Update extends Component
         $this->user = $user;
         $this->name = $this->user->name;
         $this->email = $this->user->email;
-     
+        $this->phone = $this->user->phone;
         $this->image = $this->user->image;        
         $this->user_type = $this->user->user_type;        
     }
@@ -55,7 +56,8 @@ class Update extends Component
             'email' => $this->email,
             'password' => $this->password,
             'user_type' => $this->user_type,            
-            'image' => $this->image,            
+            'image' => $this->image,  
+            "phone"=>$this->phone          
         ]);
     }
 

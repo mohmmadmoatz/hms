@@ -82,6 +82,22 @@
                         @error('output') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
                 </div>
+
+
+                <div class="col-md-4">
+                    <!-- Temp Input -->
+                    <div class='form-group'>
+                        <label for='output'  class=' control-label'>Bowol Sounds</label>
+                       
+                        <select wire:model.lazy="bowol_sounds" class="form-control">
+                            <option value="">Select</option>
+                            <option>+ve</option>
+                            <option>-ve</option>
+                        </select>
+                        
+                    </div>
+                </div>
+
             </div>
 
 
@@ -107,12 +123,7 @@
             <!-- Pat_id Input -->
             <div class='form-group' wire:ignore>
                 <label for='inputpat_id' class=' control-label'> {{ __('المريض') }}</label>
-                <select wire:model.lazy="pat_id" class="form-control selectpicker" data-live-search="true">
-                    <option value="">فلترة حسب المريض</option>
-                    @foreach(App\Models\Patient::latest()->get() as $item)
-                    <option value="{{$item->id}}">{{$item->name}}</option>
-                    @endforeach
-                </select>
+                <input type="text" readonly value="{{App\Models\Patient::find($pat_id)->name}}" class="form-control">
                 @error('pat_id') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
 

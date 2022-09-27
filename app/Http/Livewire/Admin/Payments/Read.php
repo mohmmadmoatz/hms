@@ -126,6 +126,8 @@ class Read extends Component
             $summations = $summations->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
             $summations2 = $summations2->whereBetween('date',[$date1 .' 00:00:00',$date2 .' 23:59:59']);
 
+        }else{
+            $data = $data->where("id",0);
         }
 
 

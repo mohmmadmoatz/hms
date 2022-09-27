@@ -45,8 +45,11 @@
            
             @endphp
             @foreach($data as $item)
-            <tr wire:key="{{$item->Patient->id}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
-                <td>{{$item->Patient->id}}</td>
+            @if(!$item->Patient)
+            @continue
+            @else
+            <tr wire:key="{{$item->Patient->id ?? ''}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
+                <td>{{$item->Patient->id ??""}}</td>
                 <td>{{$item->Patient->name ?? ""}}</td>
 
                 @if($item->redirect_id != 5)
@@ -229,6 +232,7 @@
 
 
             </tr>
+            @endif
             @endforeach
         </table>
 
