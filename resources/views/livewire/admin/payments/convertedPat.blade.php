@@ -120,6 +120,9 @@
                             $helper_m5dr_doctor = $setting->helper_m5dr_doctor;
 
 
+                            if(!$item->Patient->operation){
+                                continue;
+                            }
 
                             @endphp
 
