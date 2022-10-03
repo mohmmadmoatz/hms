@@ -41,11 +41,11 @@
                 <th></th>
             </tr>
             @php
+
             $setting = App\Models\Setting::first();
-           
             @endphp
             @foreach($data as $item)
-            @if(!$item->Patient)
+            @if(!$item->Patient && !$item->Patient->operation)
             @continue
             @else
             <tr wire:key="{{$item->Patient->id ?? ''}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
