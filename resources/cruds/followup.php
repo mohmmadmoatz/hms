@@ -4,7 +4,7 @@ return [
     'model' => App\Models\FollowUp::class,
 
     // searchable fields, if you dont want search feature, remove it
-    'search' => [['pat'=>"name"]],
+    'search' => [['pat'=>"name"],'treatment'],
 
     // Manage actions in crud
     'create' => true,

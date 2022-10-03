@@ -77,7 +77,7 @@
                         @endif
 
                         <div class="col-md-6 mb-2">
-                            <a href="@route('opreport')?daterange={{$daterange}}" class="btn btn-warning">طباعة </a>
+                            <a href="@route('opreport')?daterange={{$daterange}}&doctor={{$doctor_id}}" class="btn btn-warning">طباعة </a>
                         </div>
 
                     </div>
@@ -125,7 +125,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
                     </tr>
 
                     @foreach($operationholds as $operationhold)
-                        @livewire('admin.operationhold.single', ['operationhold' => $operationhold,'loop'=>$loop->iteration], key($operationhold->id))
+                        @livewire('admin.operationhold.single', ['operationhold' => $operationhold,'loop'=>$loop->iteration,'settings'=>$settings,'doctors_res'=>$doctors_res], key($operationhold->id))
                     @endforeach
                     </tbody>
                 </table>

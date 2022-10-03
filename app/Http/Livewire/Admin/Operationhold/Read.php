@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Admin\Operationhold;
 
 use App\Models\OperationHold;
 use App\Models\Payments;
+use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -136,9 +138,14 @@ class Read extends Component
         
         ->paginate(20);
 
+        $settings = Setting::find(1);
+        $doctors_res = User::where("user_type","doctor")->orWhere("user_type","resident")->get();
+
         return view('livewire.admin.operationhold.read', [
             'operationholds' => $data,
             'doctors' => $doctors,
+            'settings'=>$settings,
+            'doctors_res'=>$doctors_res,
           
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('OperationHold')) ]);
     }

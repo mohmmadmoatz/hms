@@ -126,6 +126,9 @@
                             @if(Auth::user()->user_type  == "tabq")
                             <button class="btn btn-primary" wire:click="outPat({{$room->id}})">اخراج المريض</button>
                             @endif
+                            @if(Auth::user()->user_type  == "tabq")
+                            <a href="@route(getRouteName().'.followup.read')?patient_id={{$room->user->id}}" class="btn btn-warning" >ملاحظات المريض</a>
+                            @endif
                             @endif
 
                         </button>

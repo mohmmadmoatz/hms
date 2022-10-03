@@ -12,7 +12,7 @@
                     </ul>
 
                     <div class="row">
-                        <div class="col-md-6" wire:ignore>
+                        <div class="col-md-6" >
              
                         @if($patient_id) 
                        <label for='name' class='control-label'> {{ __('المريض') }}</label>

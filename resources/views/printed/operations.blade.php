@@ -48,11 +48,19 @@
 
     @php
   
+    $doctor = $_GET['doctor'] ?? 0;
+
     $dates = $_GET['daterange'];
     
     $datesrange = explode(' - ', $dates);
 
-    $data = App\Models\OperationHold::whereBetween('date', [$datesrange])->get();
+    $data = App\Models\OperationHold::whereBetween('date', [$datesrange]);
+
+    if($doctor){
+      $data = $data->where("doctor_id",$doctor);
+    }
+
+    $data = $data->get();
    
 
    

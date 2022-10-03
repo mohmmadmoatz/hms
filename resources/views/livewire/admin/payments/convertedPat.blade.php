@@ -131,7 +131,7 @@
                             </button>
                             @else
                             <button class="btn btn-danger" wire:click="loadNumberRecept()" @click.prevent='receptModal=true;tabla={{$setting->pat_profile}};income={{$item->Patient->operation->price}};description="{{$item->Patient->operation->name}}";amount_iqd=income + tabla;amount_usd=0;'>
-                            قبض : @convert($item->Patient->operation->price + $setting->pat_profile) د.ع 
+                            قبض : @convert(($item->Patient->operation->price ?? 0)  + $setting->pat_profile) د.ع 
                             من المريض 
                             </button>
                            @endif

@@ -76,10 +76,10 @@
             <hr>
             <select wire:model="supervisedPrice" class="form-control">
                 <option value="">مشرفة ام لا</option>
-                <option value="{{App\Models\Setting::find(1)->supervised}},1">مشرفة</option>
+                <option value="{{$settings->supervised}},1">مشرفة</option>
 
                 @if($operationhold->nsba ==60)
-                <option value="{{App\Models\Setting::find(1)->not_supervised}},2">لا</option>
+                <option value="{{$settings->not_supervised}},2">لا</option>
                 @else
                 <option value="0,2">لا</option>
 
@@ -136,9 +136,9 @@
             <hr>
             <select wire:model="optype" class="form-control">
                 <option value="">نوع العملية</option>
-                <option value="{{App\Models\Setting::find(1)->m5dr_doctor}}">عملية فوق الكبرى</option>
-                <option value="{{App\Models\Setting::find(1)->m5dr_large_doctor}}">عملية  الكبرى</option>
-                <option value="{{App\Models\Setting::find(1)->m5dr_small_doctor}}">عملية وسطى او صغرى</option>
+                <option value="{{$settings->m5dr_doctor}}">عملية فوق الكبرى</option>
+                <option value="{{$settings->m5dr_large_doctor}}">عملية  الكبرى</option>
+                <option value="{{$settings->m5dr_small_doctor}}">عملية وسطى او صغرى</option>
                 <option value="0.07">7%</option>
                 <option value="0.06">6%</option>
                 <option value="0.05">5%</option>
@@ -237,7 +237,7 @@
        @else
    
        @if($operationhold->operation_name =="ولادة طبيعية")
-       @convert(App\Models\Setting::find(1)->qabla)
+       @convert($settings->qabla)
        @else
        0
        @endif
@@ -348,7 +348,7 @@
 
              <select class="form-control selectpicker2" data-live-search="true" wire:model="ambulance_doctor">
                                     <option value="">يرجى اختيار طبيب</option>
-                                    @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)
+                                    @foreach($doctors_res as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                                 </select>

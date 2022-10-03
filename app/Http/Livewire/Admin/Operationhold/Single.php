@@ -8,6 +8,7 @@ use App\Models\Payments;
 use App\Models\Setting;
 use App\Models\Patient;
 use App\Models\Operation;
+use App\Models\User;
 class Single extends Component
 {
 
@@ -29,6 +30,8 @@ class Single extends Component
     public $nsba;
     protected $listeners = ['postAdded'];
     public $m5drprice;
+    public $settings;
+    public $doctors_res;
 
     public function postAdded(){
       
@@ -42,11 +45,13 @@ class Single extends Component
 
     }
 
-    public function mount(OperationHold $operationhold,$loop){
+    public function mount(OperationHold $operationhold,$loop,$doctors_res){
         $this->operationhold = $operationhold;
         $this->loop = $loop;
+        $this->doctors_res = $doctors_res;
         $this->income = Operation::find(5)->price;
         $this->nsba = $this->operationhold->nsba;
+        
     }
 
     public function loadNumberRecept()

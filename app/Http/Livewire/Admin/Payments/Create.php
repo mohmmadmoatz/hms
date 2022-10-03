@@ -79,6 +79,7 @@ class Create extends Component
         $this->patinfo = Patient::find($id);
         $this->selected = true;
         $this->patinet_id = $id;
+        $this->account_id = $id;
     }
 
     public function clear()

@@ -254,7 +254,7 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data->where("paid",0);
+        $data->where("paid",0)->whereNull("labhide");
         $data=  $data->latest("updated_at")->paginate(20);
 
         return view('livewire.admin.payments.convertedPat', [

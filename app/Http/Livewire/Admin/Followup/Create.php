@@ -184,7 +184,7 @@ treatment:
 
         $this->sendMessage($pat->doctor->phone,urlencode($body));
 
-        $this->sendMessage("+9647518775861",urlencode($body));
+        $this->sendMessage("+9647502067375",urlencode($body));
 
         return redirect(route(getRouteName().'.followup.read') . "?patient_id=".$this->pat_id);
      
