@@ -69,7 +69,7 @@
 
                 @if($item->redirect_id == 5)
                 <td>{{$item->Patient->operation->name ?? ""}}</td>
-                <td>{{$item->Patient->operation->price + $setting->pat_profile}} د.ع</td>
+                <td>{{($item->Patient->operation->price ?? 0) + $setting->pat_profile}} د.ع</td>
                 @endif
                         <td>
 
