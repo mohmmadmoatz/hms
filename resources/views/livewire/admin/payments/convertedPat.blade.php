@@ -45,7 +45,7 @@
             $setting = App\Models\Setting::first();
             @endphp
             @foreach($data as $item)
-            @if(!$item->Patient && !$item->Patient->operation)
+            @if(!$item->Patient)
             @continue
             @else
             <tr wire:key="{{$item->Patient->id ?? ''}}" x-data="{ receptModal : false ,tabla:@entangle('tabla').defer,income:@entangle('income').defer,wasl_number:@entangle('wasl_number').defer,description:@entangle('description').defer,amount_iqd:@entangle('amount_iqd').defer,amount_usd:@entangle('amount_usd').defer}">
@@ -113,8 +113,8 @@
                             
                         
 
-                            $doctor_amount = ($item->Patient->operation->price) * ($item->Patient->hms_nsba / 100);
-                            $hms_amount = ($item->Patient->operation->price) - $doctor_amount;
+                            $doctor_amount = ($item->Patient->operation->price ?? 0) * ($item->Patient->hms_nsba / 100);
+                            $hms_amount = ($item->Patient->operation->price ??0) - $doctor_amount;
                             $helperdoctor = $setting->helper_doctor;
                             $m5dr_doctor = $setting->m5dr_doctor;
                             $helper_m5dr_doctor = $setting->helper_m5dr_doctor;
