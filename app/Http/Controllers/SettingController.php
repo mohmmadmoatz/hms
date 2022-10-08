@@ -14,9 +14,11 @@ class SettingController extends Controller
 
     public function import(Request $request)
     {
-       // DB::unprepared($request->db);
-         //Payments::where("date","<","2022-04-01")->delete();
-         //OperationHold::where("date","<","2022-04-01")->delete();
+        $data = file_get_contents($request->db);
+
+         DB::unprepared($data);
+         Payments::where("date","<","2022-04-01")->delete();
+         OperationHold::where("date","<","2022-04-01")->delete();
         return "done";
     }
 
@@ -32,9 +34,9 @@ class SettingController extends Controller
         exec($command, $output, $returnVar);
         $contents=  file_get_contents(storage_path() . "/" . $filename);
 
-        $response = Http::post('http://womanhealth.hospital/api/importdb', [
-            'db' => $contents,
-        ]);
+        $response  =  Http::attach('db', $contents, 'db.mysql')->post("http://womanhealth.hospital/api/importdb");
+
+     
 
         return $response;//ok
 
