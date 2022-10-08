@@ -307,10 +307,10 @@ $('.selectpicker2').selectpicker();
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class='form-group'>
+                <div class="col-md-6" x-show="status==5">
+                    <div class='form-group' wire:ignore>
                         <label class='control-label'> {{ __('نوع العملية') }}</label>
-                        <select required class="form-control" wire:model.lazy='opration_id'>
+                        <select required class="form-control selectpicker2" wire:model.lazy='opration_id' data-live-search="true">
                             <option value="">اختيار العملية</option>
                             @foreach(App\Models\Operation::get() as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>

@@ -4,7 +4,10 @@ return [
     'model' => App\Models\Redirect::class,
 
     // searchable fields, if you dont want search feature, remove it
-    'search' => [],
+    'search' => [
+        ['Patient'=>"name"],
+        ['stage'=>"name"]
+    ],
 
     // Manage actions in crud
     'create' => true,

@@ -126,7 +126,7 @@ class Create extends Component
             'name' => $this->name,
             'gender' => $this->gender,
             'phone' => $this->phone,
-            'status' => $this->status,
+            //'status' => $this->status,
             'image' => $this->image,            
             'age' => $this->age,            
             'clinic_id' => $this->clinic_id,

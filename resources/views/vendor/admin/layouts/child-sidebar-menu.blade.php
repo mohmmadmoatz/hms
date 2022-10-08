@@ -331,7 +331,7 @@
 <li class="list-divider"></li>
 <li class="nav-small-cap"><span class="hide-menu">القائمة العامة</span></li>
 
-@if(Auth::user()->user_type  == "info" || Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" )
+@if(Auth::user()->user_type  == "info" || Auth::user()->user_type  == "accountant" ||  Auth::user()->user_type  == "superadmin" ||  Auth::user()->user_type  == "tabq" )
 <li
     class='sidebar-item @isActive([getRouteName().".patient.read", getRouteName().".patient.create", getRouteName().".patient.update"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".patient.read", getRouteName().".patient.create", getRouteName().".patient.update"], "active") '
