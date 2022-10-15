@@ -24,7 +24,7 @@
             <!-- Price Input -->
             <div class='form-group'>
                 <label for='inputprice' class='col-sm-2 control-label'> {{ __('Price') }}</label>
-                <input type='text' wire:model.lazy='price' class="form-control @error('price') is-invalid @enderror" id='inputprice'>
+                <input type='number' wire:model.lazy='price' class="form-control @error('price') is-invalid @enderror" id='inputprice'>
                 @error('price') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
             

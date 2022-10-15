@@ -29,8 +29,6 @@ class Update extends Component
     public $m5dr_large_doctor;
     public $m5dr_small_doctor;
     public $helper_m5dr_doctor;
-
-
     public $qabla;
     public $mqema;
     public $not_supervised;
@@ -40,6 +38,8 @@ class Update extends Component
     public $ambulance;
     public $min_op_price;
     public $hnsba;
+
+    public $box_date;
     
     protected $rules = [
         'xray' => 'required',        
@@ -76,7 +76,8 @@ class Update extends Component
         $this->ambulance = $this->setting->ambulance;   
 
         $this->min_op_price = $this->setting->min_op_price;        
-        $this->hnsba = $this->setting->hnsba;        
+        $this->hnsba = $this->setting->hnsba;
+        $this->box_date = $this->setting->box_date;        
     }
 
     public function updated($input)
@@ -114,6 +115,7 @@ class Update extends Component
 
             'min_op_price' => $this->min_op_price,  
             'hnsba' => $this->hnsba,  
+            'box_date' => $this->box_date,  
         ]);
     }
 

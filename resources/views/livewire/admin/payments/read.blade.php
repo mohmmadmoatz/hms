@@ -141,6 +141,7 @@
                                     <th>اجمالي القبض</th>
                                     <th>اجمالي الصرف</th>
                                     <th>الرصيد</th>
+                                    <th>الصندوق</th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -165,6 +166,34 @@
                                         
                 
                 
+                                    </td>
+                                    <td>
+                                        @php
+                                        $setting = App\Models\Setting::find(1);
+                                        
+                                        $debit = App\Models\Payments::where("date",">",$setting->box_date)
+                                        ->where("payment_type",2)
+                                        ->sum("amount_iqd");
+
+                                        $debit_usd = App\Models\Payments::where("date",">",$setting->box_date)
+                                        ->where("payment_type",2)
+                                        ->sum("amount_usd");
+
+                                        $credit = App\Models\Payments::where("date",">",$setting->box_date)
+                                        ->where("payment_type",1)
+                                        ->sum("amount_iqd");
+
+                                        $credit_usd = App\Models\Payments::where("date",">",$setting->box_date)
+                                        ->where("payment_type",1)
+                                        ->sum("amount_usd");
+                                        
+                                        @endphp
+
+                                        <a href="@route('balance')">
+                                            @convert($debit - $credit) د.ع | 
+                                            @convert($debit_usd - $credit_usd) $
+                                        </a>
+
                                     </td>
                                 </tr>
                             </table>

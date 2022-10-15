@@ -13,6 +13,10 @@ class Warehouseproduct extends Model
     protected $appends=["qtynow",'incomeqty','exportqty'];
     
 
+    public function base()
+    {
+        return $this->belongsTo(Unit::class, 'baseunit');
+    }
 
     public function getIncomeqtyAttribute()
     {

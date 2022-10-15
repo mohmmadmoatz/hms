@@ -10,4 +10,6 @@ class WarehouseItem extends Model
     use HasFactory;
     protected $guarded =[];
    
+   
+
 }

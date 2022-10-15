@@ -14,11 +14,11 @@ class SettingController extends Controller
 
     public function import(Request $request)
     {
-        $data = file_get_contents($request->db);
+//        $data = file_get_contents($request->db);
 
-         DB::unprepared($data);
-         Payments::where("date","<","2022-04-01")->delete();
-         OperationHold::where("date","<","2022-04-01")->delete();
+    //     DB::unprepared($data);
+      //   Payments::where("date","<","2022-04-01")->delete();
+        // OperationHold::where("date","<","2022-04-01")->delete();
         return "done";
     }
 

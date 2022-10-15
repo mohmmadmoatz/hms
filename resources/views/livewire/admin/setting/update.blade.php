@@ -261,6 +261,13 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>تاريخ فتح الصندوق</label>
+                    <input type="date" class="form-control" wire:model.lazy="box_date">
+                </div>
+            </div>
+
             @endif
          
             

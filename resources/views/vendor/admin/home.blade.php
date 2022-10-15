@@ -1,6 +1,6 @@
 
 
-<div wire:poll.7000ms>
+<div wire:poll.7000ms >
 
 @if(Auth::user()->user_type  == "investor")
 
@@ -112,7 +112,7 @@
 
                     <div class="row">
                     @foreach($rooms as $room)
-                    <div class="col-md-2  py-2" x-data="{'open':false}">
+                    <div class="col-md-2  py-2" x-data="{'open':false,modalIsOpen:false}">
                         <button wire:click="check({{$room->id}})" @click="open=!open" class="btn @if($room->user->name ?? '') @if(!$room->checked) btn-warning @else btn-info @endif @else btn-secondary @endif btn-block">
                             {{$room->name}}
                             <hr>
@@ -124,7 +124,23 @@
                             @endif
                             @if($room->user->name ?? '') 
                             @if(Auth::user()->user_type  == "tabq")
-                            <button class="btn btn-primary" wire:click="outPat({{$room->id}})">اخراج المريض</button>
+                            
+                          
+
+                            <button @click.prevent="modalIsOpen = true" class="btn btn-primary mt-1">
+                            اخراج المريض
+                </button>
+                <div x-show="modalIsOpen" class="cs-modal animate__animated animate__fadeIn">
+                    <div class="bg-white shadow rounded p-5" @click.away="modalIsOpen = false" >
+                        <h5 class="pb-2 border-bottom">هل انت متأكد ؟ </h5>
+                        <p>اخراج المريض من الغرفة </p>
+                        <div class="mt-5 d-flex justify-content-between">
+                            <a wire:click.prevent="outPat({{$room->id}})"  class="text-white btn btn-success shadow">نعم</a>
+                            <a @click.prevent="modalIsOpen = false" class="text-white btn btn-danger shadow">لا</a>
+                        </div>
+                    </div>
+                </div>
+
                             @endif
                             @if(Auth::user()->user_type  == "tabq")
                             <a href="@route(getRouteName().'.followup.read')?patient_id={{$room->user->id}}" class="btn btn-warning" >ملاحظات المريض</a>

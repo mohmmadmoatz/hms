@@ -217,7 +217,11 @@
                           
 
                                 <div class="mt-5 d-flex justify-content-between">
-                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}&type=doctor&doctor={{$by_doctor}}" class="text-white btn btn-success shadow">احتساب</a>
+                                    <a target="_blank" href = "@route('incomebystage')?stage={{$stage}}&daterange={{$daterange}}&type=doctor&doctor={{$by_doctor}}" class="text-white btn btn-success shadow">احتساب
+
+                                    <a wire:loading wire:target="by_doctor"><i class="fas fa-spinner fa-spin" ></i></a>
+
+                                    </a>
                                 </div>
                             </div>
 
@@ -290,7 +294,7 @@
                     </script>
                
 
-                    <div class="col-md-12" wire:ignore>
+                    <div class="col-md-12">
                         <select wire:model.lazy="by_doctor" class="form-control selectpicker2" data-live-search="true" >
                             <option value="">اختيار الطبيب</option>
                             @foreach(App\Models\User::where("user_type","doctor")->orWhere("user_type","resident")->get() as $item)

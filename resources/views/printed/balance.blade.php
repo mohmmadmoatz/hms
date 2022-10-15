@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
+  <title>رصيد الصندوق</title>
 </head>
 
 <style>
@@ -60,18 +61,39 @@ table.table-fit tbody td, table.table-fit tfoot td {
 <body dir="rtl">
 
     @php
+    $setting = App\Models\Setting::find(1);
+
+    $dates = $_GET['daterange'] ??"";
+
+    if($dates){
+      $date1 = explode(" - ", $dates)[0];
+      $date2 = explode(" - ", $dates)[1];
+    }
+    
+
+    $debit = App\Models\Payments::where("date",">",$setting->box_date);
+
+    
+    if($dates){
+      $debit = $debit->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"]);
+    }
    
-    $dates = $_GET['daterange'];
+    
+    $debit =  $debit->where("payment_type",2)->get();
 
-    $date1 = explode(" - ", $dates)[0];
-    $date2 = explode(" - ", $dates)[1];
 
-    $debit = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("payment_type",2)->get();
+    $credit = App\Models\Payments::where("date",">",$setting->box_date);
 
-    $credit = App\Models\Payments::whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"])
-    ->where("payment_type",1)->get();
+    if($dates){
+      $credit = $credit->whereBetween("date",[$date1 . " 00:00:00",$date2 . " 23:59:59"]);
+
+    }
+    
+    $credit = $credit->where("payment_type",1)->get();
    
+
+
+
     @endphp
 
   <div class="py-2">
@@ -105,13 +127,13 @@ table.table-fit tbody td, table.table-fit tfoot td {
 
                 <tr>
                     <th>
-                        دائن
+                        مدين
                     </th>
                     <th>
                         @convert($debit->sum("amount_iqd")) د.ع | @convert($debit->sum("amount_usd")) دولار
                     </th>
                     <th>
-                    مدين 
+                    دائن 
                     </th>
                     <th>
                     @convert($credit->sum("amount_iqd")) د.ع | @convert($credit->sum("amount_usd")) دولار
@@ -146,7 +168,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
     color: green;
     font-weight: bold;
 "
-                >دائن</h4>
+                >مدين</h4>
                 <table class="table table-bordered table-striped table-fit">
         
         <thead>
@@ -188,7 +210,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
     color: red;
     font-weight: bold;
 "
-                >مدين</h4>
+                >دائن</h4>
             <table class="table table-bordered table-striped table-fit">
         
         <thead>
