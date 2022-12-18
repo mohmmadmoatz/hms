@@ -19,10 +19,15 @@
             <div class="row">
                 <div class="col-md-4">
                     <!-- Name Input -->
-                    <div class='form-group'>
+                    <div class='form-group' wire:ignore>
                         <label for='inputname' class=' control-label'> {{ __('القسم') }}</label>
-                        <input type='text' wire:model.lazy='name'
-                            class="form-control @error('name') is-invalid @enderror" id='inputname'>
+                        <select data-live-search="true" class="selectpicker form-control @error('name') is-invalid @enderror" id='name'  wire:model.lazy='name'>
+                                <option value=""></option>
+                                @foreach(App\Models\Stocksup::where("type","قسم")->get() as $item)
+                                <option value="{{$item->name}}">{{$item->name}}</option>
+
+                                @endforeach
+                            </select>
                         @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
                 </div>
@@ -49,7 +54,7 @@
                             <tr>
                                 <th>اسم المادة</th>
                               
-                             <th>الوحدة</th>
+                              <th>الوحدة</th>
 
                                 <th>العدد</th>
                                 <th>العدد الحالي</th>

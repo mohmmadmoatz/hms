@@ -14,4 +14,14 @@ class WarehouseExport extends Model
     {
         return $this->belongsTo("App\Models\User");
     }
+
+    /**
+     * Get all of the items for the WarehouseExport
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(WarehouseExportItem::class,"export_id");
+    }
 }

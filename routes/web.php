@@ -131,6 +131,9 @@ Route::get('/opreport', function () {
     return view('printed.operations');
 })->name("opreport");
 
+Route::get('/stockreport', function () {
+    return view('printed.stockreport');
+})->name("stockreport");
 
 
 

@@ -19,11 +19,19 @@
             <div class="row">
                 <div class="col-md-4">
                     <!-- Supplier_name Input -->
-                    <div class='form-group'>
+                    <div class='form-group' wire:ignore>
                         <label for='inputsupplier_name' class=' control-label'>
                             {{ __('اسم المندوب او الشركة') }}</label>
-                        <input type='text' wire:model.lazy='supplier_name'
-                            class="form-control @error('supplier_name') is-invalid @enderror" id='inputsupplier_name'>
+
+                            <select data-live-search="true" class="selectpicker form-control @error('supplier_name') is-invalid @enderror" id='inputsupplier_name'  wire:model.lazy='supplier_name'>
+                                <option value=""></option>
+                                @foreach(App\Models\Stocksup::where("type","شركة")->get() as $item)
+                                <option value="{{$item->name}}">{{$item->name}}</option>
+
+                                @endforeach
+                            </select>
+
+                        
                         @error('supplier_name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
                     </div>
 

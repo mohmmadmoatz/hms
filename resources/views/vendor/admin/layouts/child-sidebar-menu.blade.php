@@ -578,6 +578,13 @@
 
     <ul aria-expanded="false" class="collapse first-level base-level-line">
 
+    <li class="sidebar-item @isActive(getRouteName().'.'.'stocksup'.'.read')">
+            <a href="@route(getRouteName().'.stocksup.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'stocksup'.'.read')">
+                <span class="hide-menu"> الأقسام والشركات </span>
+            </a>
+        </li>
+
     <li class="sidebar-item @isActive(getRouteName().'.'.'unit'.'.read')">
             <a href="@route(getRouteName().'.unit.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'unit'.'.read')">
@@ -603,6 +610,13 @@
             <a href="@route(getRouteName().'.warehouseexport.read')"
                 class="sidebar-link @isActive(getRouteName().'.'.'warehouseexport'.'.read')">
                 <span class="hide-menu"> الطلبات </span>
+            </a>
+        </li>
+
+        <li class="sidebar-item @isActive(getRouteName().'.'.'stockreport'.'.read')">
+            <a href="@route(getRouteName().'.'.'stockreport'.'.read')"
+                class="sidebar-link @isActive(getRouteName().'.'.'stockreport'.'.read')">
+                <span class="hide-menu"> كشف قسم </span>
             </a>
         </li>
 

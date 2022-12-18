@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\WarehouseItem;
 use App\Models\Warehouseproduct;
-
+use App\Models\UnitConv;
 
 
 class Update extends Component
@@ -30,7 +30,10 @@ class Update extends Component
     public $total;
     public $totalmenu;
 
+    public $unit;
+    public $productID;
 
+    public $qtyInput;
     public $items = [];
     
     protected $rules = [
@@ -40,15 +43,19 @@ class Update extends Component
     public function addItem()
     {
         $product=Warehouseproduct::find($this->item);
+        $qty =  $this->qtyInput * (UnitConv::where("id",$this->unit)->first()->factor ?? 1);
         $this->items[]=  [
          "name"=>$this->item,
          "productname"=>$product->name,
          "amount"=>$this->amount,
-         "qty"=>$this->qty,
+         "qty"=>$qty,
+         "unit"=>$this->unit,
+         "qtyinput"=>$this->qtyInput,
          "total"=>$this->total
         ];
  
-        
+        $this->unit = "";
+        $this->qtyInput = 1;
         $this->amount = 0;
         $this->qty = 1;
         $this->total = "";
@@ -62,6 +69,9 @@ class Update extends Component
         $this->qty = 1;
         $this->qtynow = $product->qtynow;
         $this->total = $product->amount;
+        $this->productID = $product->id;
+        $this->unit = "";
+        $this->qtyInput = 1;
     }
 
     public function deleteItem($index)

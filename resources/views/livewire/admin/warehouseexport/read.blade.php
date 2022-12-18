@@ -31,6 +31,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="input-group" wire:ignore>
+                           
+                                <select data-live-search="true" class="form-control selectpicker" wire:model.lazy="product">
+                                    <option value="">كشف حسب المادة</option>
+                                    @foreach(App\Models\Warehouseproduct::get()  as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
                         @endif
                     </div>
                 </div>
