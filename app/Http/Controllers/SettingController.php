@@ -14,12 +14,28 @@ class SettingController extends Controller
 
     public function import(Request $request)
     {
-//        $data = file_get_contents($request->db);
 
-    //     DB::unprepared($data);
-      //   Payments::where("date","<","2022-04-01")->delete();
-        // OperationHold::where("date","<","2022-04-01")->delete();
-        return "done";
+        
+        $fileTemp = $request->file('db');
+           
+        //Storage::putFile('uploadbackup', $request->file('db'));
+
+        $path = $fileTemp->storeAs(
+            'uploadbackup', "newdb.gz"
+        );
+        
+
+
+
+       
+       // return system("gunzip -c /var/www/html/hms/storage/$path | mysql -u root -phmsrootpassword  hms2");
+        
+       $file ="/var/www/html/hms/storage/app/$path";
+       system("gzip -dc < ".$file." | mysql -u root -phmsrootpassword hms2");
+
+     
+
+        return $path;
     }
 
     public function backup()
@@ -28,7 +44,7 @@ class SettingController extends Controller
         $mysqlPath = "mysqldump";
 
     try{
-        $command = "$mysqlPath --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  > " . storage_path() . "/" . $filename."  2>&1";
+        $command = "$mysqlPath --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . " | gzip -c > " . storage_path() . "/" . $filename."  2>&1";
         $returnVar = NULL;
         $output  = NULL;
         exec($command, $output, $returnVar);
