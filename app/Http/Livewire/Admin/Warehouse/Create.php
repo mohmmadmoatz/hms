@@ -140,7 +140,7 @@ class Create extends Component
     public function render()
     {
         $this->totalmenu = 0;
-        $this->total = $this->qty *  $this->amount;
+        $this->total = $this->qtyInput *  $this->amount;
         foreach ($this->items as $item) {
            $this->totalmenu+= $item['total'];
         }

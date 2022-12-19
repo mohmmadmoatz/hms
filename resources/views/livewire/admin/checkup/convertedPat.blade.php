@@ -47,7 +47,7 @@
 
               
                 <td>
-                    <a href="@route(getRouteName().'.checkup.create')?patient_id={{$item->Patient->id}}&payment_id={{$item->id}}">
+                    <a href="@route(getRouteName().'.checkup.create')?patient_id={{$item->Patient->id ?? ''}}&payment_id={{$item->id}}">
                         انشاء فحص</a></td>
 
 
