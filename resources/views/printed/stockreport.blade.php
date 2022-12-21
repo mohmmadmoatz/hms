@@ -136,7 +136,7 @@ $date2 = explode(" - ", $dates)[1];
                       
                     {{$itemscollection->where("product_id",$item->id)->sum("qty")}}
 
-                    {{$item->base->name}}
+                    {{$item->base->name ??""}}
 
                     </td>
                 </tr>
