@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header p-0">
-                <h3 class="card-title">كشف قسم</h3>
+                <h3 class="card-title">كشف قسم او حساب</h3>
 
                 <div class="px-2 mt-4">
 
@@ -18,7 +18,7 @@
           <div class="card-body">
             <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-12">
             <label for="">الفترة</label>
                             <div class="input-group">
                                 <input wire:ignore autocomplete="off" type="text" id="reportrange"  onchange="daterangeGo()" class="form-control" wire:model.lazy="daterange">
@@ -34,7 +34,8 @@
                                 
                             </div>
             </div>
-                <div class="col-md-12" wire:ignore>
+
+                <div class="col-md-6" wire:ignore>
                     <label for='inputname' class=' control-label'> {{ __('القسم') }}</label>
                         <select data-live-search="true" class="selectpicker form-control @error('name') is-invalid @enderror" id='name'  wire:model.lazy='name'>
                                 <option value=""></option>
@@ -44,9 +45,26 @@
                                 @endforeach
                             </select>
                 </div>
-                <div class="col-md-12 mt-4">
-                    <a  class="btn btn-info" href="@route('stockreport')?cat={{$name}}&dates={{$daterange}}" target="_blank" rel="noopener noreferrer">كشف</a>
+
+                <div class="col-md-6" wire:ignore>
+                    <label for='inputname' class=' control-label'> {{ __('الحساب') }}</label>
+                        <select data-live-search="true" class="selectpicker form-control @error('name') is-invalid @enderror" id='name'  wire:model.lazy='company'>
+                                <option value=""></option>
+                                @foreach(App\Models\Stocksup::where("type","شركة")->get() as $item)
+                                <option value="{{$item->name}}">{{$item->name}}</option>
+
+                                @endforeach
+                            </select>
                 </div>
+
+                <div class="col-md-6 mt-4">
+                    <a  class="btn btn-info btn-block" href="@route('stockreport')?cat={{$name}}&dates={{$daterange}}" target="_blank" rel="noopener noreferrer">كشف</a>
+                </div>
+
+                <div class="col-md-6 mt-4">
+                    <a  class="btn btn-info btn-block" href="@route('companyreport')?cat={{$company}}&dates={{$daterange}}" target="_blank" rel="noopener noreferrer">كشف</a>
+                </div>
+
             </div>
           </div>
 

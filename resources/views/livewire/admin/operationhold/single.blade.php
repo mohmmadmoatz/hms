@@ -1,4 +1,4 @@
-<tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,m5drisopen2:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false,convertModal:false}">
+<tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,m5drisopen2:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false,convertModal:false,outexpmodal:false}">
     <td> {{ $loop }} </td>
     <td> {{ $operationhold->payment_number}} </td>
     <td> {{ $operationhold->Patient->name ??"" }} </td>
@@ -32,6 +32,28 @@
     @else
         {{$operationhold->operation_name}} 
         @endif
+    </td>
+
+    <td>
+    
+    <button  wire:click="$set('outexp',{{$operationhold->outexp}})" x-on:click="outexpmodal = true;" class="btn btn-danger">@convert($operationhold->outexp ?? 0)</button> 
+    
+    <div x-show="outexpmodal" class="cs-modal animate__animated animate__fadeIn">
+    <div class="bg-white shadow rounded p-5" @click.away="outexpmodal = false" >
+            <p>
+             السعر الحالي
+            </p>
+            <input type="text" class="form-control" wire:model.lazy="outexp">
+            <div class="mt-5 d-flex justify-content-between">
+                <a  @click.prevent="outexpmodal = false;" wire:click.prevent="saveOutExp()" class="text-white btn btn-success shadow">{{ __('موافق') }}</a>
+                <a @click.prevent="outexpmodal = false" class="text-white btn btn-danger shadow">{{ __('الغاء') }}</a>
+            </div>
+
+</div>
+
+    </div>
+
+
     </td>
 
     <td> 

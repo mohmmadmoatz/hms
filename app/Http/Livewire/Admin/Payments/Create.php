@@ -124,9 +124,23 @@ class Create extends Component
 
     public function mount()
     {
+
+        $setting = Setting::find(1);
+        
+
         $this->date = date("Y-m-d");
         
-        $this->wasl_number=Payments::withTrashed()->where("payment_type",$this->payment_type)->max("wasl_number") + 1;
+        if($this->payment_type == 1){
+            $this->wasl_number=$setting->wasl_no;
+        }
+
+        if($this->payment_type == 2){
+            $this->wasl_number=$setting->income_no;
+        }
+        
+        
+
+
         if($this->redirect){
             $this->initDirect();
         }
@@ -166,6 +180,8 @@ class Create extends Component
 
         $payment = Payments::where("wasl_number",$this->wasl_number)
         ->where("payment_type",$this->payment_type)->first();
+
+
         if($payment){
             $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "رقم الوصل موجود بالفعل"]);
             return;
@@ -257,6 +273,17 @@ class Create extends Component
 
           $printid =   Payments::create($data);
 
+        $setting = Setting::find(1);
+
+        if($this->payment_type == 1){
+            $setting->wasl_no = $setting->wasl_no + 1;
+        }
+
+        if($this->payment_type == 2){
+            $setting->income_no = $setting->income_no + 1;
+        }
+        $setting->save();
+            
      
       
         if($this->daterange){

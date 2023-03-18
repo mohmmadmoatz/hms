@@ -22,6 +22,7 @@ class Stockreport extends Component
     public $sortType;
     public $sortColumn;
     public $name;
+    public $company;
     public $daterange;
     public $datefilterON;
 

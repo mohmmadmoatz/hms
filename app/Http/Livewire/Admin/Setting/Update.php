@@ -38,9 +38,9 @@ class Update extends Component
     public $ambulance;
     public $min_op_price;
     public $hnsba;
-
     public $box_date;
-    
+    public $wasl_no;
+    public $income_no;
     protected $rules = [
         'xray' => 'required',        
     ];
@@ -77,7 +77,9 @@ class Update extends Component
 
         $this->min_op_price = $this->setting->min_op_price;        
         $this->hnsba = $this->setting->hnsba;
-        $this->box_date = $this->setting->box_date;        
+        $this->box_date = $this->setting->box_date;   
+        $this->wasl_no = $this->setting->wasl_no;     
+        $this->income_no = $this->setting->income_no;
     }
 
     public function updated($input)
@@ -116,6 +118,8 @@ class Update extends Component
             'min_op_price' => $this->min_op_price,  
             'hnsba' => $this->hnsba,  
             'box_date' => $this->box_date,  
+            'wasl_no' => $this->wasl_no,
+            'income_no'=> $this->income_no,
         ]);
     }
 

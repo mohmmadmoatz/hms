@@ -25,6 +25,11 @@ Route::get('/printForm', function () {
     return view('printed.patientForm');
 })->name("printedForm");
 
+Route::get('/patinfo', function () {
+    return view('printed.patinfo');
+})->name("patinfo");
+
+
 Route::get('/printfollow', function () {
     return view('printed.followup');
 })->name("printfollow");
@@ -134,6 +139,12 @@ Route::get('/opreport', function () {
 Route::get('/stockreport', function () {
     return view('printed.stockreport');
 })->name("stockreport");
+
+
+Route::get('/companyreport', function () {
+    return view('printed.companyreport');
+})->name("companyreport");
+
 
 
 

@@ -54,7 +54,7 @@
                         <div class='form-group'>
                                 <label for='inputdoctor_id' class=' control-label'>الطبيب</label>
                                 
-                                <select class="form-control" data-live-search="true" wire:model="doctor_id">
+                                <select class="form-control selectpicker" data-live-search="true" wire:model="doctor_id">
                                     <option value="">يرجى اختيار طبيب</option>
                                     @foreach($doctors as $item)
                                     <option value="{{$item->doctor->id ?? 0}}">{{$item->doctor->name ?? ""}}</option>
@@ -110,6 +110,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
                         <td class="fit" style='cursor: pointer' wire:click="sort('doctor_id')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'doctor_id') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'doctor_id') fa-sort-amount-up ml-2 @endif'></i> {{ __('الطبيب') }} </td>
                         <td style='cursor: pointer' wire:click="sort('operation_price')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'operation_price') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'operation_price') fa-sort-amount-up ml-2 @endif'></i> {{ __('سعر العملية') }} </td>
                         <td style='cursor: pointer' wire:click="sort('operation_name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'operation_name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'operation_name') fa-sort-amount-up ml-2 @endif'></i> {{ __('اسم العملية') }} </td>
+                        <td style='cursor: pointer' wire:click="sort('outexp')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'outexp') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'outexp') fa-sort-amount-up ml-2 @endif'></i> {{ __('مصاريف العملية') }} </td>
                         <td style='cursor: pointer' wire:click="sort('doctorexp')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'doctorexp') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'doctorexp') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور الجراح') }} </td>
                         <td style='cursor: pointer' wire:click="sort('helper')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'helper') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'helper') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور مساعد الجراح') }} </td>
                         <td style='cursor: pointer' wire:click="sort('m5dr')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'm5dr') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'm5dr') fa-sort-amount-up ml-2 @endif'></i> {{ __('اجور المخدر') }} </td>

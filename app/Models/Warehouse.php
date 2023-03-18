@@ -19,4 +19,11 @@ class Warehouse extends Model
     {
         return $this->belongsTo("App\Models\User");
     }
+
+
+    public function items()
+    {
+        return $this->hasMany(WarehouseItem::class,"warehouses_id");
+    }
+
 }

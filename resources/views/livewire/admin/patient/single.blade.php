@@ -1,19 +1,16 @@
 <tr x-data="{ modalIsOpen : false }">
     <td> {{ $patient->id }} </td>
     <td> {{ $patient->name }} </td>
-    <td> {{ $patient->gender }} </td>
+    
     <td> {{ $patient->phone }} </td>
     <td> {{ $patient->stage->name  ??""}} </td>    
 
     <td>
         @if($patient->checkout_at)
         <span class="badge badge-success">تم اخراج المريض من الغرفة  : 
-
             {{$patient->croom->name ??""}}
             في تاريخ 
             {{$patient->checkout_at}}
-           
-
         </span>
       
         
@@ -54,12 +51,11 @@
             
             @if($patient->status==5)
             <a target="blank" class="btn btn-outline-info" href="@route('printedForm')?id={{$patient->id}}">طباعة الطبلة</a>
+            <a href="@route('patinfo')?id={{$patient->id}}" target="_blank"><i class="fa fa-print"></i></a>
             @endif
           
 
-           @if(Auth::user()->user_type  == "accountant" || Auth::user()->user_type  == "superadmin")
-            <a target="blank" class="btn btn-outline-info" href="@route(getRouteName().'.payments.read')?patient_id={{$patient->id}}">كشف حساب</a>
-            @endif
+           
          
         </td>
     @endif

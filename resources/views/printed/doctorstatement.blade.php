@@ -127,7 +127,8 @@
               <th>التاريخ</th>
               <th>اسم المريض</th>
               <th>سعر العملية</th>
-            @if($doctor->user_type=="doctor")  <th>نسبة الطبيب</th> @endif
+              <th>مصاريف العملية</th>
+               @if($doctor->user_type=="doctor")  <th>نسبة الطبيب</th> @endif
               <th>اجور الطبيب</th>
               <th>العملية</th>
           </tr>
@@ -139,6 +140,9 @@
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->patient->name ?? ""}}</td>
                     <td>@convert($item->operation_price == "" ? 0 :$item->operation_price)</td>
+                    <td>
+                      @convert($item->outexp)
+                    </td>
                     @if($doctor->user_type=="doctor")  <td>{{$item->nsba ?? "0"}} %</td> @endif
                     <td>
                     @if($doctor->user_type=="doctor")

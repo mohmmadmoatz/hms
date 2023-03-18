@@ -63,6 +63,15 @@
                     </div>
                 </div>
 
+                <div class="col-md-4">
+                    <label>التوجيه</label>
+                    <select required class="form-control" wire:model = "status" data-live-search="true">
+                        <option value="">اختيار التوجيه</option>
+                        <option value="2">مختبر</option>
+                        <option value="8">مصرف الدم</option>
+                    </select>
+                </div>
+
                 <div class="col-md-12">
                     <hr>
                     <h4>الفحوصات المطلوبة</h4>
@@ -71,19 +80,54 @@
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <tr>
-                            <th>اسم الفحص</th>
+                            <th>
+                                اسم الفحص
+
+                                <a wire:loading ><i class="fas fa-spinner fa-spin" ></i></a>
+
+
+                            </th>
                             <th>السعر</th>
-                            <th></th>
+                            <th>
+                               
+                            </th>
                         </tr>
                         <tr>
                         
-                                <td wire:ignore>
-                                    <select wire:change="selectitem" class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
+                                <td >
+                                    <div wire:ignore>
+                                    <select  wire:change="selectitem" class="form-control selectpicker" wire:model.lazy="item" data-live-search="true" wire:change="selectitem">
                                         <option value="">يرجى اختيار الفحص</option>
-                                         @foreach(App\Models\LabSetting::get() as $item)
+                                         @foreach(App\Models\LabTest::get() as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
                                          @endforeach
                                     </select>
+                                    </div>
+                                    
+
+                                    <hr>
+                                    <p>حدد العناصر المطلوبة </p>
+                                    
+                                    <table class="table table-hover">
+                                            <tr>
+                                                <th>العنصر</th>
+                                                <th>السعر</th>
+                                               <th>
+                                                <a  href="#x" wire:click="selectall" class="btn btn-info btn-sm">
+                                                    <i class="fas fa-check"></i>
+                </a>
+                                               </th>
+                                            </tr>
+                                            @foreach(App\Models\Testcomponet::where("test_id",$testID)->get() as $x)
+                                            <tr wire:key="{{$x->id}}">
+                                                <td>{{$x->name}}</td>
+                                                <td>{{$x->price}}</td>
+                                                <td>
+                                                    <input type="checkbox" wire:model="components" value="{{$x->id}}">
+                                                </td>
+                                            @endforeach
+                                    </table>
+
                                 </td>
                             <td>
                                 <input type="text" class="form-control" wire:model.lazy="amount">

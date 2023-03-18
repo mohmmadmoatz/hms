@@ -37,8 +37,12 @@ class ConvertedPat extends Component
 
     public function loadNumberRecept()
     {
+        $setting = Setting::find(1);
+
       
-        $this->wasl_number=Payments::withTrashed()->where("payment_type","2")->max("wasl_number") + 1;
+        $this->wasl_number=$setting->income_no;
+
+        
     }
 
     public function changeCheck()
@@ -103,7 +107,12 @@ class ConvertedPat extends Component
 
         $number = Payments::create($data);
 
+
         $setting = Setting::find(1);
+
+
+        $setting->income_no = $setting->income_no + 1;
+        $setting->save();
        
         $nurse_price =0;
         $ambulance=$setting->ambulance;

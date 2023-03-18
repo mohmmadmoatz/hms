@@ -7,7 +7,7 @@ use App\Models\Payments;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use App\Models\Room;
 class ListPat extends Component
 {
     use WithPagination;
@@ -22,6 +22,7 @@ class ListPat extends Component
 
     public $total_doctor;
 
+    public $room;
 
     protected $queryString = ['search'];
 
@@ -56,6 +57,14 @@ class ListPat extends Component
         $this->emit('operationholdDeleted');   
     }
     
+    public function notify($id)
+    {
+        $data = Room::find($id);
+        $data->nt_at = date("Y-m-d H:i:s");
+        $data->save();
+        $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم اشعار الغرفة بتهيئة المريض الى العمليات  " ]);
+
+    }
 
 
     public function operationholdDeleted(){

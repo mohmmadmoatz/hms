@@ -32,9 +32,20 @@ class Single extends Component
     public $m5drprice;
     public $settings;
     public $doctors_res;
+    public $outexp;
 
     public function postAdded(){
       
+    }
+
+    public function saveOutExp()
+    {
+            $this->operationhold->outexp = $this->outexp;
+            $this->operationhold->save();
+
+            $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم اضافة المصاريف الخارجية  " ]);
+            $this->emit('postAdded');
+
     }
 
     public function updateNsba($value)

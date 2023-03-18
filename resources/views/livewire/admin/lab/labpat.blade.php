@@ -50,7 +50,12 @@
                                     <td>{{$item->Patient->id ??""}}</td>
                                     <td>{{$item->Patient->name ??""}}</td>
 
-                                    <td><button class = "btn btn-danger" wire:click="hide({{$item->id}})">حذف</button></td>
+                                    <td>
+                                        
+                                        <button class = "btn btn-danger" wire:click="hide({{$item->id}})">حذف</button>
+                                        <a class="btn btn-default" href="@route(getRouteName().'.lab.patedit', ['redirect' => $item->id])"><i class="fa fa-edit"></i></a>
+                                
+                                </td>
                                     
                     
                     

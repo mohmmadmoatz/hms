@@ -40,6 +40,13 @@ class Home extends Component
 
     }
 
+    public function checknt($id)
+    {
+        $room = Room::find($id);
+       $room->nt_at = null;
+       $room->save();
+    }
+
     public function outPat($id)
     {
         $room = Room::find($id);

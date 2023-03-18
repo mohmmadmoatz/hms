@@ -113,8 +113,12 @@
                     <div class="row">
                     @foreach($rooms as $room)
                     <div class="col-md-2  py-2" x-data="{'open':false,modalIsOpen:false}">
+                      
                         <button wire:click="check({{$room->id}})" @click="open=!open" class="btn @if($room->user->name ?? '') @if(!$room->checked) btn-warning @else btn-info @endif @else btn-secondary @endif btn-block">
-                            {{$room->name}}
+                           
+                          
+
+                             {{$room->name}}
                             <hr>
                             الطابق : {{$room->floor}}
                      
@@ -124,9 +128,6 @@
                             @endif
                             @if($room->user->name ?? '') 
                             @if(Auth::user()->user_type  == "tabq")
-                            
-                          
-
                             <button @click.prevent="modalIsOpen = true" class="btn btn-primary mt-1">
                             اخراج المريض
                 </button>
@@ -144,6 +145,21 @@
                             @endif
                             @if(Auth::user()->user_type  == "tabq")
                             <a href="@route(getRouteName().'.followup.read')?patient_id={{$room->user->id}}" class="btn btn-warning" >ملاحظات المريض</a>
+                            @endif
+
+                           
+
+                            @endif
+
+                            @if($room->user->name ??"")  
+                            @php
+                            $nt_at = $room->nt_at;
+
+                            $date = DateTime::createFromFormat('Y-m-d H:i:s', $nt_at);
+                            @endphp
+                            @if($date >= new DateTime('today'))
+                            <button style="font-size: 13px;" class="btn btn-warning" wire:click="checknt({{$room->id}})"><i class="fa fa-bell"></i>يرجى تهئية المريض</button>
+                           
                             @endif
                             @endif
 

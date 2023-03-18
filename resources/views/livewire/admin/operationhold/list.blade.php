@@ -29,6 +29,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-12">
                             <hr>
                         </div>
@@ -50,6 +51,17 @@
                                     </div>
                                 </div>
     
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="">اشعار بتهئية مريض</label>
+                                 <select class="form-control" wire:model.lazy="room">
+                                        <option value="">يرجى اختيار المريض</option>
+                                        @foreach(App\Models\Room::where("patient_id","!=",0)->get() as $item)
+                                        <option @if($item->nt_at) disabled style="color:red" @endif value="{{$item->id}}"> {{$item->name}} ({{$item->user->name ??""}}) </option>
+                                        @endforeach
+                                 </select>
+                                 <button class="btn btn-danger" wire:click="notify({{$room}})">اشعار</button>
                             </div>
 
                             <div class="col-md-12 mt-4">

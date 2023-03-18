@@ -268,6 +268,20 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>ترقيم وصل الصرف</label>
+                    <input type="number" class="form-control" wire:model.lazy="wasl_no">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>ترقيم وصل القبض</label>
+                    <input type="number" class="form-control" wire:model.lazy="income_no">
+                </div>
+            </div>
+
             @endif
          
             

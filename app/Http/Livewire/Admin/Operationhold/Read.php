@@ -141,6 +141,9 @@ class Read extends Component
         $settings = Setting::find(1);
         $doctors_res = User::where("user_type","doctor")->orWhere("user_type","resident")->get();
 
+        $this->dispatchBrowserEvent('refreshselect');
+
+
         return view('livewire.admin.operationhold.read', [
             'operationholds' => $data,
             'doctors' => $doctors,
