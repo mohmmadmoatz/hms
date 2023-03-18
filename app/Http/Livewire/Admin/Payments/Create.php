@@ -182,10 +182,10 @@ class Create extends Component
         ->where("payment_type",$this->payment_type)->first();
 
 
-        if($payment){
-            $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "رقم الوصل موجود بالفعل"]);
-            return;
-        }
+        // if($payment){
+        //     $this->dispatchBrowserEvent('show-message', ['type' => 'error', 'message' => "رقم الوصل موجود بالفعل"]);
+        //     return;
+        // }
 
 
         if(!$this->amount_iqd){
