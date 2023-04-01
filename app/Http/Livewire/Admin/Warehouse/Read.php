@@ -15,12 +15,13 @@ class Read extends Component
 
     public $search;
 
-    protected $queryString = ['search'];
+    protected $queryString = ['search','product'];
 
     protected $listeners = ['warehouseDeleted'];
 
     public $sortType;
     public $sortColumn;
+    public $product;
 
     public function warehouseDeleted(){
         // Nothing ..
@@ -57,6 +58,13 @@ class Read extends Component
             $data->orderBy($this->sortColumn, $this->sortType);
         } else {
             $data->latest('id');
+        }
+
+        if($this->product){
+            $pr = $this->product;
+            $data->whereHas('items', function($q) use($pr){
+                $q->where('product_id', $pr);
+            });
         }
 
         $data = $data->paginate(config('easy_panel.pagination_count', 15));
