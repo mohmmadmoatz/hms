@@ -26,6 +26,7 @@ class Read extends Component
     public function warehouseDeleted(){
         // Nothing ..
     }
+    
 
     public function sort($column)
     {

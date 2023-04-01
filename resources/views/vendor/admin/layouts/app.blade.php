@@ -87,7 +87,7 @@
                     @endif
 
                     @if(Auth::user()->user_type  == "superadmin")
-                    <a href="@route('backup')"  class="btn btn-success mx-2"> رفع البيانات  <i class="fa fa-upload"></i> </a>
+                    <!-- <a href="@route('backup')"  class="btn btn-success mx-2"> رفع البيانات  <i class="fa fa-upload"></i> </a> -->
                     @endif
 
                     @if(config('easy_panel.todo'))

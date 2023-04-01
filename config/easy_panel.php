@@ -12,7 +12,7 @@ return [
     'rtl_mode' => true,
 
     // Package Language
-    'lang' => 'fa',
+    'lang' => 'ar',
 
     // Your user Model
     'user_model' => file_exists(app_path('User.php')) ? App\User::class : App\Models\User::class,

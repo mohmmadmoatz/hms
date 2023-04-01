@@ -72,7 +72,7 @@ $testSameCategory = $tests->groupBy('category_id');
     <div class="container">
       <div class="row">
         <div class="col-md-12" align="center">
-          <img  src="{{asset('headerimage.png')}}" width="100%">
+          <img  src="{{asset('headerimage.png')}}?changed=1" width="100%">
         </div>
       </div>
 
