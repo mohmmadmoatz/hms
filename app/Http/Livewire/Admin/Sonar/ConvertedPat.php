@@ -39,7 +39,7 @@ class ConvertedPat extends Component
 
 
         $data=  $data->where('redirect',4)
-        ->where("created_at",">=","2023-04-01")
+        ->where("created_at",">=","2023-04-18")
         ->latest()
         ->whereNull("redirect_done")->get();
         return view('livewire.admin.sonar.convertedPat', [
