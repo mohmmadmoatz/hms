@@ -33,7 +33,15 @@ class ConvertedPat extends Component
                 }
             });
         }
-        $data=  $data->where('redirect',4)->whereNull("redirect_done")->get();
+        // get data from 01-04-2023 to now
+
+        
+
+
+        $data=  $data->where('redirect',4)
+        ->where("created_at",">=","2023-04-01")
+        ->latest()
+        ->whereNull("redirect_done")->get();
         return view('livewire.admin.sonar.convertedPat', [
             'data' => $data
         ])->layout('admin::layouts.app', ['title' => __(\Str::plural('Payments')) ]);

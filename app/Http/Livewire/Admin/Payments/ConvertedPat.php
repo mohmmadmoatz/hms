@@ -173,6 +173,7 @@ class ConvertedPat extends Component
             "helperm5dr"=>$helperm5dr,
             "user_id"=>auth()->id(),
             "payment_number"=>$number->wasl_number,
+            "payment_id"=>$number->id,
             "nsba"=>$patient->hms_nsba,
             "mqema_id"=>$setting->mqema_id,
             "mqema_price"=>$setting->mqema,

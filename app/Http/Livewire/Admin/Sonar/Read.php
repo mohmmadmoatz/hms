@@ -68,6 +68,7 @@ class Read extends Component
 
 
 
+
         $this->reset();
     }
 
@@ -106,6 +107,9 @@ class Read extends Component
         }
 
         $this->patients = Patient::where("status","4")->get();
+
+        
+
         if($this->sortColumn) {
             $data->orderBy($this->sortColumn, $this->sortType);
         } else {

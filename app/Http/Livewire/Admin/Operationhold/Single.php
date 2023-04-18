@@ -67,8 +67,10 @@ class Single extends Component
 
     public function loadNumberRecept()
     {
-      
-        $this->wasl_number=Payments::withTrashed()->where("payment_type","2")->max("wasl_number") + 1;
+        $setting = Setting::find(1);
+        
+        $this->wasl_number= $setting->income_no;
+        
     }
 
     public function convertToQ($id)
@@ -81,8 +83,10 @@ class Single extends Component
         
 
 
-        $payment = Payments::where("wasl_number",$converted->payment_number)->first();
 
+        $payment = Payments::where("id",$converted->payment_id)
+        
+        ->first();
 
 
 
@@ -130,6 +134,8 @@ class Single extends Component
         $newPayment->wasl_number = $this->wasl_number;
         $newPayment->save();
 
+        
+
 
 
         
@@ -140,6 +146,9 @@ class Single extends Component
         $converted->helperm5dr  = $setting->helper_m5dr_doctor;
         $patient->save();
         $converted->save();
+
+        $setting->income_no = $setting->income_no + 1;
+        $setting->save();
 
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => "تم تحويل العملية وانشاء سند قبض جديد " ]);
         $this->emit('postAdded');
