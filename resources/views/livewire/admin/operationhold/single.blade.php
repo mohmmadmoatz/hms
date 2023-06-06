@@ -1,5 +1,19 @@
 <tr x-data="{ modalIsOpen : false ,modalIsOpendoctor:false,modalIsOpendoctor2:false,modalIsOpendoctor3:false,m5drisopen:false,m5drisopen2:false,modalIsOpendoctor4:false,supervised:false,mqema:false,modalIsOpenNurse:false,modalIsOpenAmb:false,convertModal:false,outexpmodal:false}">
-    <td> {{ $loop }} </td>
+    <td> 
+        {{ $loop }} 
+
+        <hr>
+        @if(!$operationhold->hasPostpond)
+        <a href="@route(getRouteName().'.opostpond.create')?operationhold_id={{$operationhold->id}}" target="_blank" >تأجيل العملية</a>
+        @else
+        <span class="badge badge-danger">
+        العملية مؤجلة الى : 
+        {{$operationhold->haspostpond->date}}
+        </span>
+        
+        @endif
+
+    </td>
     <td> {{ $operationhold->payment_number}} </td>
     <td> {{ $operationhold->Patient->name ??"" }} </td>
     <td> {{ $operationhold->doctor->name ?? "" }} </td>

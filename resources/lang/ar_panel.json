@@ -171,5 +171,9 @@
     "Redirect": "توجيه",
     "Redirects": "التوجيهات",
     "Stocksup": "قسم او شركة",
-    "Stocksups": "الاقسام والشركات"
+    "Stocksups": "الاقسام والشركات",
+    "Reason": "سبب التاجيل",
+    "Operationhold_id": "رقم العملية",
+    "Opostpond": "العمليات المؤجلة",
+    "Opostponds": "العمليات المؤجلة"
 }

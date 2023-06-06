@@ -141,7 +141,9 @@
                                     <th>اجمالي القبض</th>
                                     <th>اجمالي الصرف</th>
                                     <th>الرصيد</th>
+                                    @if(auth()->user()->user_type == 'superadmin')
                                     <th>الصندوق</th>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <td>
@@ -167,6 +169,7 @@
                 
                 
                                     </td>
+                                    @if(auth()->user()->user_type == 'superadmin')
                                     <td>
                                         @php
                                         $setting = App\Models\Setting::find(1);
@@ -195,6 +198,7 @@
                                         </a>
 
                                     </td>
+                                    @endif
                                 </tr>
                             </table>
                         </div>

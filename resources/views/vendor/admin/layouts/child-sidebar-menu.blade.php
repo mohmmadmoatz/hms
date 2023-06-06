@@ -9,7 +9,7 @@
 <li class="list-divider"></li>
 <li class="nav-small-cap"><span class="hide-menu">قائمة النظام</span></li>
 <li class="sidebar-item @isActive(getRouteName().'.home', 'selected')">
-    <a class="sidebar-link @isActive(getRouteName().'.home', 'active') " href="@route(getRouteName().'.home')" aria-expanded="false">
+    <a class="sidebar-link @isActive(getRouteName().'.home', 'active')" href="@route(getRouteName().'.home')" aria-expanded="false">
         <i data-feather="home" class="feather-icon"></i>
         <span class="hide-menu">{{ __('Home') }}</span>
     </a>
@@ -44,6 +44,8 @@
                 <span class="hide-menu"> العمليات </span>
             </a>
         </li>
+
+     
 
         <li class="sidebar-item @isActive(getRouteName().'.'.'setting'.'.read')">
             <a href="@route(getRouteName().'.setting.read')"
@@ -143,6 +145,16 @@
         <span class="hide-menu">العمليات</span>
     </a>
 </li>
+
+<li
+class='sidebar-item @isActive([getRouteName().".opostpond.read"], "selected")'>
+<a class='sidebar-link @isActive([getRouteName().".opostpond.read"], "active") '
+    href="@route(getRouteName().'.opostpond.read')" aria-expanded="false">
+    <i data-feather="{{ get_icon("list") }}" class="feather-icon"></i>
+    <span class="hide-menu">العمليات المؤجلة</span>
+</a>
+</li>
+
 <li
     class='sidebar-item @isActive([getRouteName().".payments.read", getRouteName().".payments.create", getRouteName().".payments.update"], "selected")'>
     <a class='sidebar-link @isActive([getRouteName().".payments.read", getRouteName().".payments.create", getRouteName().".payments.update"], "active") '
@@ -371,6 +383,8 @@
         <span class="hide-menu">العمليات</span>
     </a>
 </li>
+
+
 
 <li
     class='sidebar-item @isActive([getRouteName().".setting.update"], "selected")'>

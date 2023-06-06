@@ -37,6 +37,20 @@ class OperationHold extends Model
         return $this->belongsTo("App\Models\User",'mqema_id');
     }
 
+    public function getHaspostpondAttribute()
+    {
+        $data = Opostpond::where('operationhold_id',$this->id)->where('status','pending')->first();
+        
+        if($data)
+        {
+            return $data;
+        }
+        return false;
+
+    }
+
+    
+
     /**
      * Get the payment that owns the OperationHold
      *
