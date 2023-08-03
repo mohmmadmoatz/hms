@@ -34,36 +34,57 @@ class Create extends Component
     }
 
     public function sendMessage($number,$body){
-        $curl = curl_init();
+        
+
+        $ch = curl_init();
+
+        // set URL and other appropriate options
+        // encode the message
+        
+        
+        curl_setopt($ch, CURLOPT_URL, "http://104.238.176.133:5000/?phone=$number&message=$body");
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        
+        // grab URL and pass it to the browser
+        curl_exec($ch);
+        
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+
+        return redirect(route(getRouteName().'.followup.read') . "?patient_id=".$this->pat_id);
+      
+
+    //     $curl = curl_init();
 
         
 
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://api.ultramsg.com/instance18364/messages/chat",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
-          CURLOPT_SSL_VERIFYHOST => 0,
-          CURLOPT_SSL_VERIFYPEER => 0,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "token=k56owergv4hbbq8i&to=$number&body=$body&priority=1&referenceId=",
-          CURLOPT_HTTPHEADER => array(
-            "content-type: application/x-www-form-urlencoded"
-          ),
-        ));
+    //     curl_setopt_array($curl, array(
+    //       CURLOPT_URL => "https://api.ultramsg.com/instance18364/messages/chat",
+    //       CURLOPT_RETURNTRANSFER => true,
+    //       CURLOPT_ENCODING => "",
+    //       CURLOPT_MAXREDIRS => 10,
+    //       CURLOPT_TIMEOUT => 30,
+    //       CURLOPT_SSL_VERIFYHOST => 0,
+    //       CURLOPT_SSL_VERIFYPEER => 0,
+    //       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //       CURLOPT_CUSTOMREQUEST => "POST",
+    //       CURLOPT_POSTFIELDS => "token=k56owergv4hbbq8i&to=$number&body=$body&priority=1&referenceId=",
+    //       CURLOPT_HTTPHEADER => array(
+    //         "content-type: application/x-www-form-urlencoded"
+    //       ),
+    //     ));
         
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+    //     $response = curl_exec($curl);
+    //     $err = curl_error($curl);
         
-        curl_close($curl);
+    //     curl_close($curl);
         
-        if ($err) {
-        //  echo "cURL Error #:" . $err;
-        } else {
-      //    echo $response;
-        }
+    //     if ($err) {
+    //     //  echo "cURL Error #:" . $err;
+    //     } else {
+    //   //    echo $response;
+    //     }
+
     }
 
     public function updated($input)
@@ -184,9 +205,9 @@ treatment:
 
         $this->sendMessage($pat->doctor->phone,urlencode($body));
 
-        $this->sendMessage("+9647502067375",urlencode($body));
+        $this->sendMessage("+9647518775861",urlencode($body));
 
-        return redirect(route(getRouteName().'.followup.read') . "?patient_id=".$this->pat_id);
+       
      
     }
 

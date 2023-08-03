@@ -20,4 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/importdb', [App\Http\Controllers\SettingController::class, 'import'])->name('import');
 
+Route::get('/send/{number}/{body}', [App\Http\Controllers\FollowUpController::class, 'sendMessage']);
+
+
+
+
 

@@ -16,7 +16,8 @@
         "laravel/ui": "^3.3",
         "league/flysystem-sftp": "~1.0",
         "rats/zkteco": "^002.0",
-        "rezaamini-ir/laravel-easypanel": "1.5"
+        "rezaamini-ir/laravel-easypanel": "1.5",
+        "robertogallea/laravel-python": "^0.1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
