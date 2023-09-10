@@ -36,4 +36,13 @@ class Warehouseproduct extends Model
         return $this->incomeqty - $this->exportqty;
     }
 
+    // get price
+    public function getPriceAttribute()
+    {
+        $income = WarehouseItem::where("product_id",$this->id)->sum("total");
+        return $income;
+    }
+
+
+
 }

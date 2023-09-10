@@ -3,6 +3,9 @@
     <td> {{ $warehouseitem->incomeqty }} {{$warehouseitem->base->name ??""}} </td>    
     <td> {{ $warehouseitem->exportqty }} {{$warehouseitem->base->name ??""}}</td>    
     <td> {{ $warehouseitem->qtynow }} {{$warehouseitem->base->name ??""}}</td>  
+    <td>
+        {{ $warehouseitem->price ??""}}
+    </td>
     @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
     @if(config('easy_panel.crud.warehouseitem.delete') or config('easy_panel.crud.warehouseitem.update'))
         <td>

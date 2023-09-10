@@ -45,6 +45,7 @@
                         <td> {{ __('الكمية الواردة') }} </td>
                         <td> {{ __('الكمية المستهلكة') }} </td>
                         <td> {{ __('الكمية الباقية') }} </td>
+                        <td> {{ __('السعر') }} </td>
                         
                         @if(config('easy_panel.crud.warehouseitem.delete') or config('easy_panel.crud.warehouseitem.update'))
                         <td>{{ __('Action') }}</td>

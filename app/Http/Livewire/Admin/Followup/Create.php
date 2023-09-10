@@ -205,7 +205,7 @@ treatment:
 
         $this->sendMessage($pat->doctor->phone,urlencode($body));
 
-        $this->sendMessage("+9647518775861",urlencode($body));
+        $this->sendMessage("+9647708999623",urlencode($body));
 
        
      
