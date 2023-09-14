@@ -43,6 +43,20 @@ class Warehouseproduct extends Model
         return $income;
     }
 
+    function getSinglePriceAttribute() {
+        if($this->incomeqty == 0)
+            return 0;
+        $single = $this->price / $this->incomeqty;
+        return $single;
+    }
+
+    function getPriceNowAttribute() {
+        
+        $totalOut = $this->exportqty * $this->single_price;
+        $net = $this->price - $totalOut;
+        return round($net,2);
+    }
+
 
 
 }
