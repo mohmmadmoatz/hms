@@ -2,7 +2,7 @@
 
 <li class="nav-small-cap"><span class="hide-menu">
     اخر تحديث للنظام 
-    <span class="badge badge-pill badge-success ml-auto"> {{\Carbon\Carbon::parse("14-09-2023 05:10:00")->diffForHumans()}} </span>
+    <span class="badge badge-pill badge-success ml-auto"> {{\Carbon\Carbon::parse("14-09-2023 19:47:00")->diffForHumans()}} </span>
 </span></li>
 
 
