@@ -286,6 +286,11 @@ $(function() {
 
 <script>
 
+window.addEventListener('refselect', function (event) {
+        console.log("ok i will refresh")
+        $('.selectpicker').selectpicker();
+     
+    })
     
 
 window.addEventListener('open-window', function (event) {

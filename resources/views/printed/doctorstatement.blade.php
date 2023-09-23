@@ -73,11 +73,15 @@
 
     }
 
+    foreach($data as $item){
+      $subvalue = $item->outexp * ($item->nsba / 100);
+                  $item->doctornet = $item->doctorexp - $subvalue;
+    }
   
     @endphp
 
   <div class="py-2">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-12" align="center">
           <img  src="{{asset('formimages/hmslogo.png')}}" width="250px">
@@ -111,7 +115,7 @@
    @if($doctor->user_type == "resident")
                       <a  href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('mqema_price')}}&payto=mqema">دفع وطباعة</button>
      @else
-     <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('doctorexp')}}&payto=doctor">دفع وطباعة</button>
+     <a   href="@route(getRouteName().'.payments.create')?payment_type=1&account_type=1&account_id={{$doctor->id ??''}}&daterange={{$dates}}&amount_iqd={{$data->sum('doctornet')}}&payto=doctor">دفع وطباعة</button>
      
      @endif
                     </th>
@@ -130,11 +134,13 @@
               <th>مصاريف العملية</th>
                @if($doctor->user_type=="doctor")  <th>نسبة الطبيب</th> @endif
               <th>اجور الطبيب</th>
+              <th>صافي اجور الطبيب</th>
               <th>العملية</th>
           </tr>
           </thead>
                
                 @foreach($data as $item)
+             
                 <tr>
                    <td>{{$item->payment_number}}</td>
                     <td>{{$item->created_at}}</td>
@@ -143,20 +149,27 @@
                     <td>
                       @convert($item->outexp)
                     </td>
+
                     @if($doctor->user_type=="doctor")  <td>{{$item->nsba ?? "0"}} %</td> @endif
+                    
                     <td>
-                    @if($doctor->user_type=="doctor")
+                      @if($doctor->user_type=="doctor")
                         @convert($item->doctorexp) د.ع
                      @else
                      @convert($item->mqema_price) د.ع
-
                      @endif
                     </td>
+ @if($doctor->user_type=="doctor") 
+                    <td>
+                      @convert($item->doctornet) د.ع
+                    </td>
+                    @endif
+
                     <td>{{$item->operation_name}}</td>
                 </tr>
                 @endforeach
                 <tr>
-                    <td  @if($doctor->user_type=="doctor") colspan="5" @else colspan="4" @endif >المجموع</td>
+                    <td  @if($doctor->user_type=="doctor") colspan="6" @else colspan="4" @endif >المجموع</td>
                     <td style="font-weight: bold;">
                     @if($doctor->user_type=="doctor")
                         @convert($data->sum("doctorexp")) د.ع
@@ -164,7 +177,11 @@
                       @convert($data->sum("mqema_price")) د.ع
                       @endif
                     </td>
-                    <td></td>
+                    <td style="font-weight:bold">
+                    @if($doctor->user_type=="doctor")
+                      @convert($data->sum("doctornet")) د.ع
+                    @endif
+                    </td>
                 </tr>
         </table>
 
