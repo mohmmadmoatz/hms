@@ -64,7 +64,7 @@
                               <th>الوحدة</th>
 
                                 <th>العدد</th>
-                                <th>السعر</th>
+                                <!-- <th>السعر</th> -->
                             
                                 <th></th>
                             </tr>
@@ -96,7 +96,7 @@
                              {{App\Models\UnitConv::where("id",$unit)->first()->base->name ?? ""}} : {{(App\Models\UnitConv::where("id",$unit)->first()->factor ?? 1) * ($qtyInput == ""? 1 : $qtyInput)}}
                             @endif
                             </td>
-                                <td>@convert($amount)</td>
+                                <!-- <td>@convert($amount)</td> -->
                                 
                                 <td>
                                     <a href="#addPlus" wire:click="addItem()" class="btn btn-info"><i class="fa fa-plus"></i></a>
@@ -117,9 +117,9 @@
 </td>
                          </td>
                             <td>{{$item['qty']}}</td>
-                            <td>
+                            <!-- <td>
                                 @convert($item['total'])
-                            </td>
+                            </td> -->
                           
                             <td>
                                 <a href="#delete" class="btn btn-danger" wire:click="deleteItem({{$loop->index}})"><i class="fa fa-trash"></i></a>
@@ -130,11 +130,11 @@
                     </table>
                 </div>
 
-                <div class="col-12">
+                <!-- <div class="col-12" >
                     <h4>اجمالي السعر :  
                         @convert($totalmenu)
                     </h4>
-                </div>
+                </div> -->
 
 
               

@@ -8,7 +8,7 @@ use App\Models\WarehouseExportItem;
 use Livewire\Component;
 use App\Models\UnitConv;
 use Livewire\WithFileUploads;
-
+use App\Models\OperationHold;
 class Update extends Component
 {
     use WithFileUploads;
@@ -28,6 +28,7 @@ class Update extends Component
     public $productID;
     public $unit;
     public $qtyInput;
+    public $expout;
     
 
 
@@ -68,6 +69,8 @@ class Update extends Component
         $this->name = $this->warehouseexport->name;
         $this->date = $this->warehouseexport->date;
         $this->totalmenu = $this->warehouseexport->totalmenu;   
+        
+        
         $this->menu_no = $this->warehouseexport->menu_no;   
         $this->items =  WarehouseExportItem::where("export_id",$this->warehouseexport->id)->get();
         
@@ -109,7 +112,7 @@ class Update extends Component
         $op = OperationHold::find($this->warehouseexport->opid);
 
         if($op){
-            $op->outexp = $this->totalmenu;
+            $op->outexp = $this->expout;
             $op->save();
         }
 
@@ -153,9 +156,12 @@ class Update extends Component
     {
         $this->totalmenu = 0;
         $this->total = $this->qty *  $this->amount;
+
         foreach ($this->items as $item) {
            $this->totalmenu+= $item['total'];
         }
+     
+
         return view('livewire.admin.warehouseexport.update', [
             'warehouseexport' => $this->warehouseexport
         ])->layout('admin::layouts.app', ['title' => __('UpdateTitle', ['name' => __('WarehouseExport') ])]);

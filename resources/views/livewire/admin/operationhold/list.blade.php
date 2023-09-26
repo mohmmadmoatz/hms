@@ -107,6 +107,8 @@ table.table-fit tbody td, table.table-fit tfoot td {
                         <td class="fit" style='cursor: pointer' wire:click="sort('doctor_id')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'doctor_id') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'doctor_id') fa-sort-amount-up ml-2 @endif'></i> {{ __('الطبيب') }} </td>
                         <td style='cursor: pointer' wire:click="sort('operation_name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'operation_name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'operation_name') fa-sort-amount-up ml-2 @endif'></i> {{ __('اسم العملية') }} </td>
                         
+                        <td>مصاريف العملية</td>
+
                         @if(config('easy_panel.crud.operationhold.delete') or config('easy_panel.crud.operationhold.update'))
                         <td>{{ __('Action') }}</td>
                         @endif
@@ -122,6 +124,14 @@ table.table-fit tbody td, table.table-fit tfoot td {
                     <td> {{ $operationhold->doctor->name ?? "" }} </td>
                     
                     <td> {{$operationhold->operation_name}} </td>
+                    
+                    <td>
+                    @if(!$operationhold->ware_id)
+    <a  target="_blank" href="@route(getRouteName().'.operationhold.exp')?opid={{$operationhold->id}}" class="btn btn-danger">مصاريف العملية</a> 
+    @else
+    <a  target="_blank" href="@route(getRouteName().'.warehouseexport.update', ['warehouseexport' => $operationhold->ware_id])" class="btn btn-warning">مصاريف العملية</a>
+    @endif
+                    </td>
 
                     <td>
                       
@@ -134,6 +144,8 @@ table.table-fit tbody td, table.table-fit tfoot td {
                         </span>
                         <a href="#hide" wire:click="undo({{$operationhold->id}})"><i class="fa fa-undo"></i></a>
                         @else
+
+                
                         
                         <button @click.prevent="modalIsOpen = true" class="btn text-success mt-1">
                             <i class="icon-check"></i>

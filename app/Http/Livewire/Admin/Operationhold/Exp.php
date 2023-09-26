@@ -135,7 +135,7 @@ class Exp extends Component
             $newitem->save();
         }
 
-        return redirect(route('admin.operationhold.read'));
+        return redirect(route('admin.operationhold.list'));
     }
 
     public function selectitem()

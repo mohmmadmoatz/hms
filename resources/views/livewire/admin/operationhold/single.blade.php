@@ -51,7 +51,7 @@
     <td>
     
     @if(!$operationhold->ware_id)
-    <a  target="_blank" href="@route(getRouteName().'.operationhold.exp')?opid={{$operationhold->id}}" class="btn btn-danger">@convert($operationhold->outexp ?? 0)</a> 
+    0
     @else
     <a  target="_blank" href="@route(getRouteName().'.warehouseexport.update', ['warehouseexport' => $operationhold->ware_id])" class="btn btn-warning">@convert($operationhold->outexp ?? 0)</a>
     @endif

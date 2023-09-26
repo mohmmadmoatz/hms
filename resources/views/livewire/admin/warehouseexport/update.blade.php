@@ -106,7 +106,17 @@
                         </tbody>
                     </table>
                 </div>
+ <div class="col-6" >
+                    <h4>اجمالي السعر :  
+                        @convert($totalmenu)
+                    </h4>
+                </div>
 
+                <div class="col-6" >
+                    <h4>يرجى ادخال السعر الجديد :  
+                        <input type="text" wire:model.lazy="expout" class="form-control">
+                    </h4>
+                </div>
 
               
 
