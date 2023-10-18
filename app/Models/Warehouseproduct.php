@@ -26,7 +26,16 @@ class Warehouseproduct extends Model
 
     public function getExportqtyAttribute()
     {
-        $export = WarehouseExportItem::where("product_id",$this->id)->sum("qty");
+        $export = WarehouseExportItem::where("product_id",$this->id)
+        
+        // where wharehouseexport opid is null
+
+        ->whereHas("export",function($q){
+            $q->whereNull("opid");
+        })
+
+        ->sum("qty");
+        
         return $export;
     }
 

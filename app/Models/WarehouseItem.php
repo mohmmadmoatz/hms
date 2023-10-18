@@ -10,6 +10,12 @@ class WarehouseItem extends Model
     use HasFactory;
     protected $guarded =[];
    
+    /**
+     * Get the export that owns the WarehouseItem
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+   
    
 
 }

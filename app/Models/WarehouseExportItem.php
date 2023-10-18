@@ -9,5 +9,10 @@ class WarehouseExportItem extends Model
 {
     use HasFactory;
     protected $guarded=[];
+
+    public function export()
+    {
+        return $this->belongsTo(WarehouseExport::class, 'export_id', 'id');
+    }
     
 }
