@@ -1,10 +1,33 @@
 <tr x-data="{ modalIsOpen : false }">
+    <td> {{ $warehouseitem->cat->name ?? "" }} </td>
     <td> {{ $warehouseitem->name }} </td>
     <td> {{ $warehouseitem->incomeqty }} {{$warehouseitem->base->name ??""}} </td>    
     <td> {{ $warehouseitem->exportqty }} {{$warehouseitem->base->name ??""}}</td>    
     <td> {{ $warehouseitem->qtynow }} {{$warehouseitem->base->name ??""}}</td>  
     <td>
         @convert($warehouseitem->price_now ??"")
+    </td>
+    <td>
+        @php
+        
+        $expire = \Carbon\Carbon::parse($warehouseitem->expire);
+        $now = \Carbon\Carbon::now();
+
+        // Calculate the difference in days between now and the expire date negative if expired
+        $diff = $now->diffInDays($expire, false);
+
+
+       
+        @endphp
+        @if ($diff <= 0)
+            <span class="badge badge-danger">منتهي</span>
+        @elseif($diff < 30 && $diff > 0)
+            <span class="badge badge-success">تبقى 
+                {{$diff}} يوم
+            </span>
+        @endif
+
+        {{ $warehouseitem->expire }} 
     </td>
     @if( Auth::user()->user_type  == "stockmanagment" ||  Auth::user()->user_type  == "superadmin" )
     @if(config('easy_panel.crud.warehouseitem.delete') or config('easy_panel.crud.warehouseitem.update'))

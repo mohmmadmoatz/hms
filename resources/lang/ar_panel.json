@@ -175,5 +175,7 @@
     "Reason": "سبب التاجيل",
     "Operationhold_id": "رقم العملية",
     "Opostpond": "العمليات المؤجلة",
-    "Opostponds": "العمليات المؤجلة"
+    "Opostponds": "العمليات المؤجلة",
+    "Stockcat": "فئة مادة",
+    "Stockcats": "فئة مادة"
 }

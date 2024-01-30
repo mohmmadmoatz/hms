@@ -22,6 +22,10 @@ class Read extends Component
     public $sortType;
     public $sortColumn;
 
+    public $expire;
+
+    public $cat;
+
     public function warehouseitemDeleted(){
         // Nothing ..
     }
@@ -59,7 +63,21 @@ class Read extends Component
             $data->latest('id');
         }
 
+
+        if($this->expire == 1){
+            $data->whereDate('expire', '<', now());
+        }elseif($this->expire == 2){
+            $data->whereDate('expire', '>', now());
+            $data->whereDate('expire', '<', now()->addDays(30));
+        }
+        
+        if($this->cat){
+            $data->where('cat_id', $this->cat);
+        }
+
         $data = $data->paginate(config('easy_panel.pagination_count', 15));
+
+
 
         return view('livewire.admin.warehouseitem.read', [
             'warehouseitems' => $data

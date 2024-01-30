@@ -66,6 +66,12 @@ class Warehouseproduct extends Model
         return round($net,2);
     }
 
+    // belongs to category
+    public function cat()
+    {
+        return $this->belongsTo(Stockcat::class, 'cat_id');
+    }
+
 
 
 }

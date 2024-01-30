@@ -21,6 +21,22 @@
                 <input type='text' wire:model.lazy='name' class="form-control @error('name') is-invalid @enderror" id='inputname'>
                 @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
             </div>
+
+            <div class='form-group'>
+                <label for='inputname' class='col-sm-2 control-label'>تاريخ الانتهاء</label>
+                <input type='date' wire:model.lazy='expire' class="form-control @error('name') is-invalid @enderror" id='inputname'>
+                @error('name') <div class='invalid-feedback'>{{ $message }}</div> @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="">الفئة</label>
+                <select class="form-control" wire:model="cat">
+                                <option value="">-- بدون --</option>
+                                @foreach(App\Models\Stockcat::all() as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+            </div>
             
       
             <hr>

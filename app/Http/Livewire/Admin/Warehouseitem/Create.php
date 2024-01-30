@@ -13,7 +13,8 @@ class Create extends Component
 
     public $name;
     public $amount;
-    
+    public $expire;
+    public $cat;
     protected $rules = [
         'name' => 'required',        
     ];
@@ -29,7 +30,9 @@ class Create extends Component
         $this->dispatchBrowserEvent('show-message', ['type' => 'success', 'message' => __('UpdatedMessage', ['name' => __('WarehouseItem') ]) ]);
         
         Warehouseproduct::create([
-            'name' => $this->name     
+            'name' => $this->name,
+            "expire" => $this->expire,
+            "cat_id" => $this->cat, 
         ]);
 
         $this->reset();

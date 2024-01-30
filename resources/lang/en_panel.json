@@ -173,5 +173,7 @@
     "Reason": "Reason",
     "Operationhold_id": "Operationhold_id",
     "Opostpond": "Opostpond",
-    "Opostponds": "Opostponds"
+    "Opostponds": "Opostponds",
+    "Stockcat": "Stockcat",
+    "Stockcats": "Stockcats"
 }

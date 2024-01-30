@@ -18,6 +18,8 @@ class Update extends Component
     public $unit_id;
     public $baseunit;
     public $unitfactor;
+    public $expire;
+    public $cat;
     
     //protected $queryString = ['baseunit','unit_id'];
 
@@ -54,6 +56,8 @@ class Update extends Component
         $this->name = $this->warehouseitem->name;
         $this->amount = $this->warehouseitem->amount;   
         $this->baseunit = $this->warehouseitem->baseunit;   
+        $this->expire = $this->warehouseitem->expire;
+        $this->cat = $this->warehouseitem->cat_id;
 
     }
 
@@ -71,7 +75,9 @@ class Update extends Component
         $this->warehouseitem->update([
             'name' => $this->name,
             'amount' => $this->amount,
-            "baseunit"=>$this->baseunit,            
+            "baseunit"=>$this->baseunit,
+            "expire" => $this->expire,
+            "cat_id" => $this->cat,            
         ]);
     }
 

@@ -31,6 +31,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="">فلترة حسب تاريخ الانتهاء</label>
+                            <select class="form-control" wire:model="expire">
+                                <option value="">-- بدون --</option>
+                                <option value="1">منتهية</option>
+                                <option value="2">تبقى اقل من 30 يوم</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label for="">فلترة حسب الفئة</label>
+                            <select class="form-control" wire:model="cat">
+                                <option value="">-- بدون --</option>
+                                @foreach(App\Models\Stockcat::all() as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -40,12 +58,14 @@
                 <table class="table table-hover">
                     <tbody>
                     <tr>
+                        <td>الفئة</td>
                         <td style='cursor: pointer' wire:click="sort('name')"> <i class='fa @if($sortType == 'desc' and $sortColumn == 'name') fa-sort-amount-down ml-2 @elseif($sortType == 'asc' and $sortColumn == 'name') fa-sort-amount-up ml-2 @endif'></i> {{ __('Name') }} </td>
            
                         <td> {{ __('الكمية الواردة') }} </td>
                         <td> {{ __('الكمية المستهلكة') }} </td>
                         <td> {{ __('الكمية الباقية') }} </td>
                         <td> {{ __('السعر') }} </td>
+                        <td> تاريخ الانتهاء </td>
                         
                         @if(config('easy_panel.crud.warehouseitem.delete') or config('easy_panel.crud.warehouseitem.update'))
                         <td>{{ __('Action') }}</td>

@@ -41,6 +41,6 @@ return [
 
     // enabled actions, If you want to create crud you must put action name here
     'actions' => ["user","clinic","patient","checkup",'operation','stock','stockoperation','rays','sonar','room','payments','warehouse','setting',"warehouseexport","warehouseitem",'operationhold','stage','bank',"lab","labsetting","labtest","labcategory",'followup',"unit","fdebitcategory","fdebittransaction","debitaccount","debittransaction","saveaccount",'employee','empadvance','salary','empcategory','cashaccount',"redirect",
-    "stocksup","opostpond"
+    "stocksup","opostpond","stockcat"
 ],
 ];
