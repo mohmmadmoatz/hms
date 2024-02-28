@@ -83,14 +83,26 @@ $testSameCategory = $tests->groupBy('category_id');
                <tr>
                    <th>Name: <span style="float:right"> {{$lab->patient->name}} </span> </th>
                    <th>Age:  <span style="float:right"> {{$lab->patient->age}} </span> </th>
+              
                </tr>
                <tr>
                    <th>Consultant:</th>
                    <th>Date: {{$lab->created_at->format("Y-m-d")}} </th>
+                  
                </tr>
                <tr>
                    <th>Sample Time:</th>
                    <th>Report time:</th>
+                   
+               </tr>
+               <tr>
+                <th>Barcode</th>
+                <th> <svg class="barcode"
+  jsbarcode-value="GS-{{$lab->id}}"
+  jsbarcode-height="40"
+  jsbarcode-textmargin="0"
+  jsbarcode-fontoptions="bold">
+</svg></th>
                </tr>
         </table>
 
@@ -163,6 +175,10 @@ $testSameCategory = $tests->groupBy('category_id');
   @endif
 </body>
 
+<script src="{{asset('js/barcode.js')}}"></script>
+ <script>
+     JsBarcode(".barcode").init();
 
+ </script>
 
 </html>
