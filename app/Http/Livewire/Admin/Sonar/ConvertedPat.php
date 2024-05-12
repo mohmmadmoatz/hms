@@ -14,7 +14,18 @@ class ConvertedPat extends Component
     public $search;
 
     protected $queryString = ['search'];
+
+    protected $listeners = ['refresh' => '$refresh'];
+
+    function hidePat($id) {
+        Payments::where('id',$id)->update(['redirect_done'=>1]);
+        $this->emit('refresh');
+    }
     
+    public function refresh(){
+        // Nothing ..
+    }
+
     public function render()
     {
         $data = Payments::query();
@@ -40,7 +51,6 @@ class ConvertedPat extends Component
 
         $data=  $data->where('redirect',4)
         ->where("created_at",">=","2023-04-18")
-        ->latest()
         ->whereNull("redirect_done")->get();
         return view('livewire.admin.sonar.convertedPat', [
             'data' => $data

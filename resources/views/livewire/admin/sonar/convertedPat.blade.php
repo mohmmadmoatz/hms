@@ -16,8 +16,8 @@
                 <div class="col-md-4">
                     <div class="input-group">
                         <input type="text" class="form-control" @if(config('easy_panel.lazy_mode'))
-                            wire:model.lazy="search" @else wire:model="search" @endif
-                            placeholder="{{ __('Search') }}" value="{{ request('search') }}">
+                            wire:model.lazy="search" @else wire:model="search" @endif placeholder="{{ __('Search') }}"
+                            value="{{ request('search') }}">
                         <div class="input-group-append">
                             <button class="btn btn-default">
                                 <a wire:target="search" wire:loading.remove><i class="fa fa-search"></i></a>
@@ -30,24 +30,42 @@
         </div>
     </div>
 
-    <div class="col-12 card table-responsive" wire:poll.7000ms>
+    @if($data->count())
+
+    <div class="col-md-12"
+        style="height: 423px;background: #16a085;text-align: center;display: flex;flex-direction: column;/* align-content: flex-end; */justify-content: center;color: white;margin: 10px;/* font-size: 68px; */">
+        <h1 style="
+    font-size: 68px;
+">{{$data[0]->Patient->name}}</h1>
+        <hr>
+        <h1>المريض الحالي</h1>
+    </div>
+    @endif
+
+
+    <div class="col-12 card table-responsive" wire:poll.7000ms> 
         <table class="table table-hover">
-        <tr>
+            <tr>
                 <th>رقم الوصل</th>
                 <th>رقم المريض</th>
                 <th>الأسم</th>
                 <th></th>
             </tr>
-          
+
             @foreach($data as $item)
             <tr>
                 <td>{{$item->wasl_number}}</td>
                 <td>{{$item->Patient->id ??""}}</td>
                 <td>{{$item->Patient->name ??""}}</td>
-              
+
                 <td>
-                    <a href="@route(getRouteName().'.sonar.create')?patient_id={{$item->Patient->id}}&payment_id={{$item->id}}">
-                        انشاء سونار</a></td>
+
+                    <a href="#hide" wire:click="hidePat({{$item->id}})">اكتمل</a>
+
+                    <!-- <a
+                        href="@route(getRouteName().'.sonar.create')?patient_id={{$item->Patient->id}}&payment_id={{$item->id}}">
+                        انشاء سونار</a> -->
+                </td>
 
 
             </tr>

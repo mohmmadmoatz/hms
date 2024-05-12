@@ -125,6 +125,8 @@
                             @if($room->user->name ??"")  
                             <hr x-show="open">  
                             <a x-show="open" class="btn btn-info" href="@route(getRouteName().'.patient.update', ['patient' => $room->user->id])" target="_blank" rel="noopener noreferrer">{{$room->user->name}}</a>
+                            <br>
+                            <span x-show="open">{{$room->user->doctor->name ??""}}</span>
                             @endif
                             @if($room->user->name ?? '') 
                             @if(Auth::user()->user_type  == "tabq")

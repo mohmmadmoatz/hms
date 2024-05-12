@@ -36,20 +36,27 @@ class Create extends Component
     public function sendMessage($number,$body){
         
 
+        
         $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://45.77.74.237:8080/chat/send/text');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $headers = [
+            'Content-Type: application/json', // Adjust the content type as needed
+          // Add any other headers you need
+          'Token:ges112233'
+        ];
+        
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $data = [
+            'Phone' => $number,
+            'Body' => $body,
+            'Id'=>"90B2F8B13FAC8A9CF6B06E99C7834DC5"
+        ];
+    
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        $response = curl_exec($ch);
 
-        // set URL and other appropriate options
-        // encode the message
-        
-        
-        curl_setopt($ch, CURLOPT_URL, "http://104.238.176.133:5000/?phone=$number&message=$body");
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        
-        // grab URL and pass it to the browser
-        curl_exec($ch);
-        
-        // close cURL resource, and free up system resources
-        curl_close($ch);
 
         return redirect(route(getRouteName().'.followup.read') . "?patient_id=".$this->pat_id);
       
@@ -205,7 +212,7 @@ treatment:
 
         $this->sendMessage($pat->doctor->phone,urlencode($body));
 
-        $this->sendMessage("+9647708999623",urlencode($body));
+        $this->sendMessage("+9647518775861",urlencode($body));
 
        
      
