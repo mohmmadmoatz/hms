@@ -210,9 +210,9 @@ treatment:
             'user_id' => auth()->id(),
         ]);
 
-        $this->sendMessage($pat->doctor->phone,urlencode($body));
+        $this->sendMessage($pat->doctor->phone ??"",($body));
 
-        $this->sendMessage("+9647518775861",urlencode($body));
+        $this->sendMessage("+9647518775861",($body));
 
        
      
