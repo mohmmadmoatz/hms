@@ -75,6 +75,7 @@
             <option @if($operationhold->nsba == 60) selected @endif value="60">60%</option>
             <option @if($operationhold->nsba == 62) selected @endif value="62">62%</option>
             <option @if($operationhold->nsba == 65) selected @endif value="65">65%</option>
+            <option @if($operationhold->nsba == 68) selected @endif value="68">68%</option>
             <option @if($operationhold->nsba == 70) selected @endif  value="70">70%</option>
             <option @if($operationhold->nsba == 75) selected @endif  value="75">75%</option>
             <option @if($operationhold->nsba == 80) selected @endif  value="80">80%</option>

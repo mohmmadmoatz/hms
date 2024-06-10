@@ -21,6 +21,11 @@ class ConvertedPat extends Component
         Payments::where('id',$id)->update(['redirect_done'=>1]);
         $this->emit('refresh');
     }
+
+    function allDone() {
+        Payments::where('redirect',4)->where("created_at",">=","2023-04-18")->whereNull("redirect_done")->update(['redirect_done'=>1]);
+        $this->emit('refresh');
+    }
     
     public function refresh(){
         // Nothing ..

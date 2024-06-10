@@ -42,6 +42,7 @@
     </div>
     @endif
 
+    <button class="btn btn-danger" wire:click="allDone">اكتمل الكل</button>
 
     <div class="col-12 card table-responsive" wire:poll.7000ms> 
         <table class="table table-hover">
